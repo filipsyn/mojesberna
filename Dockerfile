@@ -1,0 +1,32 @@
+FROM python:alpine
+
+
+# Stage for copying only requirements.txt file
+#
+# This file is copied by itself and not with the rest of the source code
+# due to the caching mechanism in Docker (each step is cached, so if there were no changes to requirements.txt, there is
+# no need to copy and install it)
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+# Copying application source files into image
+#
+# /app has to be copied separately due to the faulty copying
+#
+# COPY directive copies into folder specified by WORKDIR above, and we want to copy files into current directory,
+# so that is why we copy into ./ (alias for current directory)
+COPY src/ /src/
+
+# Setting envrionmental variables needed to run the application
+ENV FLASK_APP='src/app.py'
+ENV FLASK_DEBUG=1
+
+# Running flask local server
+#
+# --port flag specifies that application will be listening on port :80
+#
+# --host flag specifies that application will be hosted at wildcard address 0.0.0.0
+# 	That means the app will be accessible not only from localhost address but also from address in local network.
+#	Accessibility from local network is useful for testing application on mobile devices.
+
+CMD ["flask", "run", "--port", "80", "--host", "0.0.0.0"]

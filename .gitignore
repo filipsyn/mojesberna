@@ -1,0 +1,13 @@
+# IDE specific files
+.idea/
+.vscode/
+
+# Python specific files
+venv/
+__pycache__/
+
+# Environment files
+.env
+container.env
+
+pgdata/
