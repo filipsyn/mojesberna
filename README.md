@@ -5,10 +5,12 @@
 Web application for managing recycling center.
 
 ## Installation
-- Prerequisites
-  - [Git](https://git-scm.com/downloads)
-  - [Docker](https://docs.docker.com/get-docker/)
-  - Preferably UNIX-based operating system
+
+Prerequisites
+
+- [Git](https://git-scm.com/downloads)
+- [Docker](https://docs.docker.com/get-docker/)
+- Preferably UNIX-based operating system
   or [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install), because some things
   are written with UNIX in mind.
 
@@ -48,11 +50,13 @@ cp .example.env .env
 ```
 
 #### Running docker containers
+
 ```shell
 docker-compose up -d
 ```
 
 Turning off docker containers.
+
 ```shell
 docker-compose down 
 ```
