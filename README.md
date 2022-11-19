@@ -4,58 +4,28 @@
 
 Web application for managing recycling center.
 
-## Used technologies
-
-- Python
-- Flask
-- SQLAlchemy
-- Docker
-- PostgreSQL
-- HTML
-- CSS
-
-## Running the application
-
-### Prerequisites
-
-- [Git](https://git-scm.com/downloads)
-- [Docker](https://docs.docker.com/get-docker/)
-- Preferably UNIX-based operating system
+## Installation
+- Prerequisites
+  - [Git](https://git-scm.com/downloads)
+  - [Docker](https://docs.docker.com/get-docker/)
+  - Preferably UNIX-based operating system
   or [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install), because some things
   are written with UNIX in mind.
 
-### Downloading the project
-
-```shell
-git clone git@bitbucket.org:filipsynek/mojesberna.git
-
-cd mojesberna/
-```
-
 ### Using GNU/Make (optional)
 
-#### Installation
-
 If you have [GNU/Make](https://www.gnu.org/software/make/#download) installed on your system (usually can be found on
-UNIX-based systems or in WSL), you can use install script
-to set everything up for you.
+UNIX-based systems or in WSL), you can use prepared scripts listed in [Makefile](Makefile).
 
 ```shell
-make install
-```
+# Installs the project
+make install 
 
-#### Running the project
-
-After successful installation can spin-up the docker containers using
-
-```shell
+# Runs docker containers
 make up
 ```
 
 ### Manually
-
-Even if you don't have GNU/Make installed, there's no need to worry. You just have to perform the project set-up
-manually, step-by-step.
 
 #### Setting up the environment
 
@@ -78,19 +48,25 @@ cp .example.env .env
 ```
 
 #### Running docker containers
-
-This project is completely "dockerized", so you only need to run the docker compose command.
-
 ```shell
 docker-compose up -d
 ```
 
-If you dont want to run the project anymore you can use the `down` argument for `docker-copose` command
-
+Turning off docker containers.
 ```shell
-docker-compose down --remove-orphans
+docker-compose down 
 ```
 
 ## Development guidelines
 
 [Here](docs/CONTRIBUTING.md) you can read more about some code guidelines.
+
+## Used technologies
+
+- Python
+- Flask
+- SQLAlchemy
+- Docker
+- PostgreSQL
+- HTML
+- CSS
