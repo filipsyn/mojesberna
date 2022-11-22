@@ -17,7 +17,7 @@ ENV FLASK_DEBUG=1
 
 # Running flask local server
 #
-# --port flag specifies that application will be listening on port :80
+# --port flag specifies that application will be listening on port :8080
 #
 # --host flag specifies that application will be hosted at wildcard address 0.0.0.0
 # 	That means the app will be accessible not only from localhost address but also from address in local network.
