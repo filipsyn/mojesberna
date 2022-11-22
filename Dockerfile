@@ -23,4 +23,4 @@ ENV FLASK_DEBUG=1
 # 	That means the app will be accessible not only from localhost address but also from address in local network.
 #	Accessibility from local network is useful for testing application on mobile devices.
 
-CMD ["flask", "run", "--port", "80", "--host", "0.0.0.0"]
+CMD ["flask", "run", "--port", "8080", "--host", "0.0.0.0"]
