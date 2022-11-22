@@ -6,8 +6,8 @@ FROM python:alpine
 # This file is copied by itself and not with the rest of the source code
 # due to the caching mechanism in Docker (each step is cached, so if there were no changes to requirements.txt, there is
 # no need to copy and install it)
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+COPY src/requirements.txt src/
+RUN pip install --no-cache-dir --upgrade -r src/requirements.txt
 
 # Copying application source files into image
 #
