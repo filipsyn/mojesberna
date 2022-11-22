@@ -12,4 +12,5 @@ env:
 	cp container.example.env container.env
 	cp .example.env .env
 
-
+shell:
+	docker exec -it mojesberna-webapp sh
