@@ -1,6 +1,5 @@
 FROM python:alpine
 
-
 # Stage for copying only requirements.txt file
 #
 # This file is copied by itself and not with the rest of the source code
@@ -9,12 +8,7 @@ FROM python:alpine
 COPY src/requirements.txt src/
 RUN pip install --no-cache-dir --upgrade -r src/requirements.txt
 
-# Copying application source files into image
-#
-# /app has to be copied separately due to the faulty copying
-#
-# COPY directive copies into folder specified by WORKDIR above, and we want to copy files into current directory,
-# so that is why we copy into ./ (alias for current directory)
+# Copying source files into container
 COPY src/ /src/
 
 # Setting envrionmental variables needed to run the application
