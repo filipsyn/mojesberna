@@ -1,8 +1,8 @@
 from flask import Flask
-
+from flask_sqlalchemy import SQLAlchemy
 
 # Creating objects for external applications
-# db = SQLAlchemy()
+db = SQLAlchemy()
 
 
 def create_app() -> Flask:
@@ -19,7 +19,7 @@ def create_app() -> Flask:
     app.config.from_prefixed_env(prefix="MOJESBERNA")
 
     # Initialization of external packages
-    # db.init_app(app)
+    db.init_app(app)
 
     # Importing blueprints
     from .main.views import main as main_blueprint
