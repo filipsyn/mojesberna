@@ -16,6 +16,8 @@ def create_app() -> Flask:
     """
     app = Flask(__name__)
 
+    app.config.from_prefixed_env(prefix="MOJESBERNA")
+
     # Initialization of external packages
     # db.init_app(app)
 
