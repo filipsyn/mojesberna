@@ -20,7 +20,7 @@ def create_app() -> Flask:
     # db.init_app(app)
 
     # Importing blueprints
-    from .blueprints.main import main as main_blueprint
+    from .main.views import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     return app
