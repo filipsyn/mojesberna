@@ -1,5 +1,6 @@
 from app import create_app, db
-from app.models import User, Role
+from app.models.role import Role
+from app.models.user import User
 
 app = create_app('default')
 

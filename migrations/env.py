@@ -5,6 +5,7 @@ from logging.config import fileConfig
 
 # noinspection PyUnresolvedReferences
 import app.models
+
 from flask import current_app
 
 from alembic import context
