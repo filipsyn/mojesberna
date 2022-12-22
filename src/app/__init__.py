@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from .config import config
 
 # Creating objects for external applications
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app(config_name='default') -> Flask:
@@ -22,6 +24,7 @@ def create_app(config_name='default') -> Flask:
 
     # Initialization of external packages
     db.init_app(app)
+    migrate.init_app(app, db)
 
     # Importing blueprints
     from .main.views import main as main_blueprint
