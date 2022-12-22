@@ -4,7 +4,7 @@
 
 Web application for managing recycling center.
 
-## Installation
+## Development setup
 
 Prerequisites
 
@@ -27,38 +27,42 @@ make install
 make up
 ```
 
+Be sure to check out `Makefile` for other useful scripts to use when developing.
+
 ### Manually
 
-#### Setting up the environment
-
-In the project root folder, there will be two files ending with `.env`.
-
-- `container.example.env`
-- `.example.env`
-
-These two files are only example of real environment variables and should be good to go with prefilled values.
-
-| "Real" file     | Example file            | Purpose                                           |
-|-----------------|-------------------------|---------------------------------------------------|
-| `.env`          | `.example.env`          | Provides environmental variables for the webapp   |
-| `container.env` | `container.example.env` | Provides environment variables for database image | 
+Set environmental variables
 
 ```shell
-# Copies example files into "real" files
-cp .container.example.env container.env
+export FLASK_APP='src/app.py'
 cp .example.env .env
 ```
 
-#### Running docker containers
+Create and set-up virtual environment
+
+```shell
+python -m venv venv
+source venv/bin/activate
+pip install -r src/requirements.txt
+```
+
+Spin up docker database image
 
 ```shell
 docker-compose up -d
 ```
 
-Turning off docker containers.
+Perform database migration
 
 ```shell
-docker-compose down 
+flask db migrate
+flask db upgrade
+```
+
+After that, everything is ready to go. You can run application with:
+
+```shell
+flask run --port 8080 --host 0.0.0.0
 ```
 
 ## Development guidelines
