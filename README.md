@@ -23,8 +23,8 @@ UNIX-based systems or in WSL), you can use prepared scripts listed in [Makefile]
 # Installs the project
 make install 
 
-# Runs docker containers
-make up
+# Runs docker container and development server
+make on
 ```
 
 Be sure to check out `Makefile` for other useful scripts to use when developing.
