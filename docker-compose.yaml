@@ -20,7 +20,7 @@ services:
     volumes:
       - ./pgdata/:/var/lib/postgresql/data/
     env_file:
-      - 'container.env'
+      - '.env'
 
 volumes:
   #webapp:
