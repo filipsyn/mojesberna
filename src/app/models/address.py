@@ -2,7 +2,7 @@ from .. import db
 
 
 class Address(db.Model):
-    __tablename__ = 'address'
+    __tablename__ = 'addresses'
     address_id = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String(64), nullable=False)
     street = db.Column(db.String(64))
