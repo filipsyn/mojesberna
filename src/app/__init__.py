@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from .config import config
+
 # Creating objects for external applications
 db = SQLAlchemy()
 
 
-def create_app() -> Flask:
+def create_app(config_name='default') -> Flask:
     """Factory function for creating application instances
 
     This function creates new instance of flask application. Then it initializes external packages,
@@ -16,7 +18,7 @@ def create_app() -> Flask:
     """
     app = Flask(__name__)
 
-    app.config.from_prefixed_env(prefix="MOJESBERNA")
+    app.config.from_object(config[config_name])
 
     # Initialization of external packages
     db.init_app(app)
