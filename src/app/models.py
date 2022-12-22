@@ -1,4 +1,4 @@
-from .. import db
+from . import db
 
 
 class User(db.Model):
@@ -11,3 +11,13 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User: id:{self.user_id} - name:{self.first_name} {self.last_name}"
+
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    role_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(16), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Role {self.name}"
