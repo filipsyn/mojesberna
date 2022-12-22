@@ -1,16 +1,16 @@
 version: '3'
 services:
-  webapp:
-    build: .
-    container_name: mojesberna-webapp
-    ports:
-      - '8080:8080'
-    volumes:
-      - ./src/:/src
-    depends_on:
-      - db
-    env_file:
-      - '.env'
+  #webapp:
+  #  build: .
+  #  container_name: mojesberna-webapp
+  #  ports:
+  #    - '8080:8080'
+  #  volumes:
+  #    - ./src/:/src
+  #  depends_on:
+  #    - db
+  #  env_file:
+  #    - '.env'
 
   db:
     image: postgres:alpine
@@ -23,5 +23,5 @@ services:
       - 'container.env'
 
 volumes:
-  webapp:
+  #webapp:
   db:
