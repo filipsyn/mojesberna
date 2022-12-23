@@ -2,4 +2,33 @@
 
 {% block content %}
     <h1>Registrace</h1>
+    <form action="#">
+        {{ form.hidden_tag() }}
+
+        {{ form.first_name.label }}
+        {{ form.first_name }}
+        <br>
+
+        {{ form.last_name.label }}
+        {{ form.last_name }}
+        <br>
+
+        {{ form.login.label }}
+        {{ form.login }}
+        <br>
+
+        {{ form.telephone_number.label }}
+        {{ form.telephone_number }}
+        <br>
+
+        {{ form.password.label }}
+        {{ form.password }}
+        <br>
+
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password }}
+        <br>
+
+        {{ form.submit() }}
+    </form>
 {% endblock %} {# End of block content #}
