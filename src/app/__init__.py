@@ -29,5 +29,7 @@ def create_app(config_name='default') -> Flask:
     # Importing blueprints
     from .main.views import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    from .auth.views import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix="/auth/")
 
     return app
