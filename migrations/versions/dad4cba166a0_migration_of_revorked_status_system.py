@@ -1,15 +1,15 @@
-"""Added user status
+"""Migration of revorked status system
 
-Revision ID: 9425c8062717
+Revision ID: dad4cba166a0
 Revises: 
-Create Date: 2022-12-25 13:12:00.727131
+Create Date: 2022-12-25 19:58:29.625291
 
 """
 from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision = '9425c8062717'
+revision = 'dad4cba166a0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,7 +34,19 @@ def upgrade():
     op.create_table('roles',
                     sa.Column('role_id', sa.Integer(), nullable=False),
                     sa.Column('name', sa.String(length=16), nullable=False),
+                    sa.Column('permissions', sa.Integer(), nullable=True),
+                    sa.Column('default', sa.Boolean(), nullable=True),
                     sa.PrimaryKeyConstraint('role_id'),
+                    sa.UniqueConstraint('name')
+                    )
+    with op.batch_alter_table('roles', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_roles_default'), ['default'], unique=False)
+
+    op.create_table('statuses',
+                    sa.Column('status_id', sa.Integer(), nullable=False),
+                    sa.Column('name', sa.String(length=64), nullable=False),
+                    sa.Column('default', sa.Boolean(), nullable=True),
+                    sa.PrimaryKeyConstraint('status_id'),
                     sa.UniqueConstraint('name')
                     )
     op.create_table('price_list',
@@ -53,11 +65,12 @@ def upgrade():
                     sa.Column('login', sa.String(length=128), nullable=False),
                     sa.Column('password_hash', sa.String(length=128), nullable=False),
                     sa.Column('role_id', sa.Integer(), nullable=True),
-                    sa.Column('status', sa.Enum('WAITING', 'CONFIRMED', 'BANNED', name='userstatus'), nullable=True),
+                    sa.Column('status_id', sa.Integer(), nullable=True),
                     sa.Column('permanent_residence_id', sa.Integer(), nullable=True),
                     sa.Column('temporary_residence_id', sa.Integer(), nullable=True),
                     sa.ForeignKeyConstraint(['permanent_residence_id'], ['addresses.address_id'], ),
                     sa.ForeignKeyConstraint(['role_id'], ['roles.role_id'], ),
+                    sa.ForeignKeyConstraint(['status_id'], ['statuses.status_id'], ),
                     sa.ForeignKeyConstraint(['temporary_residence_id'], ['addresses.address_id'], ),
                     sa.PrimaryKeyConstraint('user_id'),
                     sa.UniqueConstraint('login')
@@ -83,6 +96,10 @@ def downgrade():
     op.drop_table('purchases')
     op.drop_table('users')
     op.drop_table('price_list')
+    op.drop_table('statuses')
+    with op.batch_alter_table('roles', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_roles_default'))
+
     op.drop_table('roles')
     op.drop_table('materials')
     op.drop_table('addresses')
