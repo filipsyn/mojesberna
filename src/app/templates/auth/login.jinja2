@@ -1,0 +1,21 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.login.label }}
+        {{ form.login }}
+        <br>
+
+        {{ form.password.label }}
+        {{ form.login }}
+        <br>
+
+        {{ form.remember_login.label }}
+        {{ form.remember_login }}
+        <br>
+
+        {{ form.submit }}
+    </form>
+{% endblock %} {# End of block content #}
