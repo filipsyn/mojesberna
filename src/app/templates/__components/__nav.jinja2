@@ -5,7 +5,7 @@
         <li><a href="{{ url_for('auth.view_login_page') }}">Přihlásit se</a></li>
         {% if current_user.is_authenticated %}
             <li><a href="#">{{ current_user.login }}</a></li>
-            <li><a href="#">Odhlásit se</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Odhlásit se</a></li>
         {% endif %}
     </ul>
 </nav>
