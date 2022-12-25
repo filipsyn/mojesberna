@@ -10,8 +10,21 @@
 </head>
 <body>
 {% include '__components/__nav.jinja2' %}
-{% block content %}
-{% endblock %}
+
+<main>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+</main>
 {% include '__components/__footer.jinja2' %}
 </body>
 </html>
