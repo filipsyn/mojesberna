@@ -13,7 +13,7 @@ def load_user(user_id):
 class UserStatus(Enum):
     WAITING = 'Waiting'
     ACTIVE = 'Active'
-    BANNED = 'banned'
+    BANNED = 'Banned'
 
 
 class User(db.Model, UserMixin):
