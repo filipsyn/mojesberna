@@ -3,6 +3,7 @@ from enum import Enum
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from . import Role
 from .. import db, login_manager
 
 
@@ -42,6 +43,9 @@ class User(db.Model, UserMixin):
         self.password_hash = generate_password_hash(password)
         self.status = UserStatus.WAITING
 
+        if self.role is None:
+            self.role = Role.query.filter_by(default=True).first()
+
     def get_id(self):
         return self.user_id
 
@@ -56,6 +60,15 @@ class User(db.Model, UserMixin):
     def unban(self):
         if self.status is UserStatus.BANNED:
             self.status = UserStatus.ACTIVE
+
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_worker(self):
+        return self.role.name == 'Worker'
+
+    def is_administrator(self):
+        return self.role.name == 'Administrator'
 
     @property
     def password(self):
