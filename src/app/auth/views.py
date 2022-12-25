@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import login_user, logout_user
 
-from .forms import RegisterForm
+from .forms import RegisterForm, LoginForm
 from .. import db
 from ..models import User
 
@@ -21,10 +22,26 @@ def view_register_page():
         )
         db.session.add(new_user)
         db.session.commit()
+        return redirect(url_for('auth.view_login_page'))
 
     return render_template('auth/register.jinja2', title='Registrace', form=form)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def view_login_page():
-    pass
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(login=form.login.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user, form.remember_login.data)
+            flash('Uživatel přihlášen')
+            return redirect(url_for('main.view_home_page'))
+        flash('Nesprávné přihlašovací jméno nebo heslo')
+    return render_template('auth/login.jinja2', title='Příhlásit se', form=form)
+
+
+@auth.route('/logout')
+def logout():
+    logout_user()
+    flash('Odhlášení proběhlo úspěšně')
+    return redirect(url_for('main.view_home_page'))
