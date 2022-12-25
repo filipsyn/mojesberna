@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 
 
 class LoginForm(FlaskForm):
-    login = StringField('', validators=[DataRequired()])
-    password = PasswordField('', validators=[DataRequired()])
-    remember_login = BooleanField('')
+    login = StringField('Přihlašovací jméno', validators=[DataRequired()])
+    password = PasswordField('Heslo', validators=[DataRequired()])
+    remember_login = BooleanField('Zůstat přilášený')
