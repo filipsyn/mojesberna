@@ -3,19 +3,13 @@ from enum import Enum
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import Role
+from . import Role, Status
 from .. import db, login_manager
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
-class UserStatus(Enum):
-    WAITING = 'Waiting'
-    ACTIVE = 'Active'
-    BANNED = 'Banned'
 
 
 class User(db.Model, UserMixin):
@@ -27,7 +21,7 @@ class User(db.Model, UserMixin):
     login = db.Column(db.String(128), nullable=False, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.role_id'))
-    status = db.Column(db.Enum(UserStatus), default=UserStatus.WAITING)
+    status_id = db.Column(db.Integer, db.ForeignKey('statuses.status_id'))
 
     permanent_residence_id = db.Column(db.Integer, db.ForeignKey('addresses.address_id'))
     temporary_residence_id = db.Column(db.Integer, db.ForeignKey('addresses.address_id'))
@@ -41,7 +35,9 @@ class User(db.Model, UserMixin):
         self.telephone_number = telephone
         self.login = login
         self.password_hash = generate_password_hash(password)
-        self.status = UserStatus.WAITING
+
+        if self.status is None:
+            self.status = Status.query.filter_by(default=True).first()
 
         if self.role is None:
             self.role = Role.query.filter_by(default=True).first()
