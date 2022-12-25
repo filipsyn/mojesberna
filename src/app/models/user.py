@@ -42,6 +42,9 @@ class User(db.Model, UserMixin):
         self.password_hash = generate_password_hash(password)
         self.status = UserStatus.WAITING
 
+    def get_id(self):
+        return self.user_id
+
     def confirm(self):
         if self.status is UserStatus.WAITING:
             self.status = UserStatus.ACTIVE
