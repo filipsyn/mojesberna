@@ -2,5 +2,10 @@
     <ul>
         <li><a href="{{ url_for('main.view_home_page') }}">Domů</a></li>
         <li><a href="{{ url_for('auth.view_register_page') }}">Registrace</a></li>
+        <li><a href="{{ url_for('auth.view_login_page') }}">Přihlásit se</a></li>
+        {% if current_user.is_authenticated %}
+            <li><a href="#">{{ current_user.login }}</a></li>
+            <li><a href="#">Odhlásit se</a></li>
+        {% endif %}
     </ul>
 </nav>
