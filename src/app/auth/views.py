@@ -23,3 +23,8 @@ def view_register_page():
         db.session.commit()
 
     return render_template('auth/register.jinja2', title='Registrace', form=form)
+
+
+@auth.route('/login', methods=['GET', 'POST'])
+def view_login_page():
+    pass
