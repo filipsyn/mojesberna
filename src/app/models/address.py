@@ -8,7 +8,6 @@ class Address(db.Model):
     street = db.Column(db.String(64))
     house_number = db.Column(db.String(16), nullable=False)
     zip_code = db.Column(db.String(16), nullable=False)
-    users = db.relationship('User', backref='address')
 
     def __repr__(self):
         return f"Address: id {self.address_id} - {self.house_number} {self.street}, {self.city}, {self.zip_code}"
