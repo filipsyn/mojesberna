@@ -33,10 +33,16 @@ def view_login_page():
     if form.validate_on_submit():
         user = User.query.filter_by(login=form.login.data).first()
         if user is not None and user.verify_password(form.password.data):
+            if user.is_banned():
+                flash('Účet byl zablokován.')
+                return redirect(url_for('main.view_home_page'))
+            if user.is_waiting():
+                flash('Potvrďte svou registraci na pobočce')
+                return redirect(url_for('main.view_home_page'))
             login_user(user, form.remember_login.data)
             flash('Uživatel přihlášen')
-            return redirect(url_for('main.view_home_page'))
         flash('Nesprávné přihlašovací jméno nebo heslo')
+        return redirect(url_for('main.view_home_page'))
     return render_template('auth/login.jinja2', title='Příhlásit se', form=form)
 
 
