@@ -1,6 +1,7 @@
 from enum import Enum
 
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from .. import db, login_manager
 
@@ -38,7 +39,7 @@ class User(db.Model, UserMixin):
         self.last_name = last_name
         self.telephone_number = telephone
         self.login = login
-        self.password_hash = password
+        self.password_hash = generate_password_hash(password)
         self.status = UserStatus.WAITING
 
     def confirm(self):
@@ -52,6 +53,17 @@ class User(db.Model, UserMixin):
     def unban(self):
         if self.status is UserStatus.BANNED:
             self.status = UserStatus.ACTIVE
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self, password: str):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password: str):
+        return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return f"<User ID:{self.user_id}; Full name:{self.first_name} {self.last_name}; login: {self.login}, " \
