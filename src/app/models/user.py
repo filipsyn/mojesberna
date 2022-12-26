@@ -44,34 +44,34 @@ class User(db.Model, UserMixin):
         return self.user_id
 
     def is_waiting(self):
-        return self.status == Status.query.filter_by(name='Waiting').first()
+        return self.status.name == 'Waiting'
 
     def confirm(self):
-        if self.status == Status.query.filter_by(name='Waiting').first():
+        if self.status.name == 'Waiting':
             self.status = Status.query.filter_by(name='Active').first()
 
     def is_active(self):
-        return self.status == Status.query.filter_by(name='Active').first()
+        return self.status.name == 'Active'
 
     def ban(self):
-        if self.status == Status.query.filter_by(name='Active').first():
+        if self.status.name == 'Active':
             self.status = Status.query.filter_by(name='Banned').first()
 
     def is_banned(self):
-        return self.status == Status.query.filter_by(name='Banned').first()
+        return self.status.name == 'Banned'
 
     def unban(self):
-        if self.status is Status.query.filter_by(name='Banned').first():
+        if self.status.name == 'Banned':
             self.status = Status.query.filter_by(name='Active').first()
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
 
     def is_worker(self):
-        return self.role.name == Role.query.filter_by(name='Worker').first()
+        return self.role.name == 'Worker'
 
     def is_administrator(self):
-        return self.role.name == Role.query.filter_by(name='Administrator').first()
+        return self.role.name == 'Administrator'
 
     @property
     def password(self):
