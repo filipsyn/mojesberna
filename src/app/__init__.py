@@ -29,7 +29,8 @@ def create_app(config_name='default') -> Flask:
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    from .commands import shell_context
+    from .commands import prepare_database, shell_context
+    app.cli.add_command(prepare_database)
     app.shell_context_processor(shell_context)
 
     # Importing blueprints
