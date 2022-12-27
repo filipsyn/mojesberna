@@ -29,6 +29,9 @@ def create_app(config_name='default') -> Flask:
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
+    from .commands import shell_context
+    app.shell_context_processor(shell_context)
+
     # Importing blueprints
     from .main.views import main as main_blueprint
     app.register_blueprint(main_blueprint)
