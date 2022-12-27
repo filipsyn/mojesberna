@@ -29,7 +29,7 @@ make on
 
 Be sure to check out `Makefile` for other useful scripts to use when developing.
 
-### Manually
+### Manually for Unix-based systems (Linux, MacOS, ...)
 
 Set environmental variables
 
@@ -52,16 +52,50 @@ Spin up docker database image
 docker-compose up -d
 ```
 
-Perform database migration
+Prepare database
 
 ```shell
-flask db migrate
-flask db upgrade
+flask prepare_database
 ```
 
 After that, everything is ready to go. You can run application with:
 
 ```shell
+flask run --port 8080 --host 0.0.0.0
+```
+
+### Manually for Windows (PowerShell)
+
+Set environmental variables
+
+```
+$env:FLASK_APP = 'src/app.py'
+Copy-Item .example.env .env
+```
+
+Create and set-up virtual environment
+
+```
+python -m venv venv
+.\venv\Scripts\activate.ps1
+pip install -r src/requirements.txt
+```
+
+Spin up docker database image
+
+```
+docker-compose up -d
+```
+
+Prepare database
+
+```
+flask prepare_database
+```
+
+After that, everything is ready to go. You can run application with:
+
+```
 flask run --port 8080 --host 0.0.0.0
 ```
 
