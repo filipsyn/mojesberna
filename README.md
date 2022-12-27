@@ -77,7 +77,7 @@ Create and set-up virtual environment
 
 ```
 python -m venv venv
-.\venv\Scripts\activate.ps1
+.\venv\Scripts\Activate.ps1
 pip install -r src/requirements.txt
 ```
 
