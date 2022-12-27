@@ -55,7 +55,7 @@ docker-compose up -d
 Prepare database
 
 ```shell
-flask prepare_database
+flask prepare-database
 ```
 
 After that, everything is ready to go. You can run application with:
@@ -90,7 +90,7 @@ docker-compose up -d
 Prepare database
 
 ```
-flask prepare_database
+flask prepare-database
 ```
 
 After that, everything is ready to go. You can run application with:
