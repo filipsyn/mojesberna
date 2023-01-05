@@ -73,6 +73,10 @@ class User(db.Model, UserMixin):
     def is_administrator(self):
         return self.role.name == 'Administrator'
 
+    @staticmethod
+    def get_query():
+        return User.query
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')

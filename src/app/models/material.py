@@ -26,3 +26,7 @@ class Material(db.Model):
                 material = Material(m)
             db.session.add(material)
         db.session.commit()
+
+    @staticmethod
+    def get_query():
+        return Material.query
