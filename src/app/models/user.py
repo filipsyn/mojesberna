@@ -68,10 +68,10 @@ class User(db.Model, UserMixin):
         return self.role is not None and self.role.has_permission(perm)
 
     def is_worker(self):
-        return self.role.name == 'Worker'
+        return self.role.name == 'Pracovník'
 
     def is_administrator(self):
-        return self.role.name == 'Administrator'
+        return self.role.name == 'Správce'
 
     @staticmethod
     def get_query():
