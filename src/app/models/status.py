@@ -1,4 +1,12 @@
+from enum import Enum
+
 from .. import db
+
+
+class UserStatus(Enum):
+    WAITING = 'Čeká'
+    ACTIVE = 'Aktivní'
+    BANNED = 'Zablokovaný'
 
 
 class Status(db.Model):
@@ -17,12 +25,8 @@ class Status(db.Model):
 
     @staticmethod
     def insert_statuses():
-        statuses = [
-            'Waiting',
-            'Active',
-            'Banned'
-        ]
-        default_status = statuses[0]
+        statuses = [status.value for status in UserStatus]
+        default_status = UserStatus.WAITING.value
 
         for s in statuses:
             status = Status.query.filter_by(name=s).first()
