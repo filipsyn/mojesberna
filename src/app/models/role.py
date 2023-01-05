@@ -24,12 +24,12 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': [Permission.ACCESS, Permission.SELF_MANAGEMENT, Permission.SELLING],
-            'Worker': [Permission.ACCESS, Permission.SELF_MANAGEMENT, Permission.SELLING,
-                       Permission.BUYING, Permission.USER_ADMINISTRATION, Permission.STATUS_CHANGING],
-            'Administrator': [Permission.ACCESS, Permission.SELF_MANAGEMENT, Permission.SELLING,
-                              Permission.BUYING, Permission.USER_ADMINISTRATION, Permission.STATUS_CHANGING,
-                              Permission.ADD_WORKER, Permission.CHANGE_ROLE]
+            'Uživatel': [Permission.ACCESS, Permission.SELF_MANAGEMENT, Permission.SELLING],
+            'Pracovník': [Permission.ACCESS, Permission.SELF_MANAGEMENT, Permission.SELLING,
+                          Permission.BUYING, Permission.USER_ADMINISTRATION, Permission.STATUS_CHANGING],
+            'Správce': [Permission.ACCESS, Permission.SELF_MANAGEMENT, Permission.SELLING,
+                        Permission.BUYING, Permission.USER_ADMINISTRATION, Permission.STATUS_CHANGING,
+                        Permission.ADD_WORKER, Permission.CHANGE_ROLE]
         }
         default_role = 'User'
         for r in roles:
