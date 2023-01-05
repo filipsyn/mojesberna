@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import Role, Status
+from . import Role, Status, UserStatus
 from .. import db, login_manager
 
 
@@ -44,25 +44,25 @@ class User(db.Model, UserMixin):
         return self.user_id
 
     def is_waiting(self):
-        return self.status.name == 'Waiting'
+        return self.status.name == UserStatus.WAITING.value
 
     def confirm(self):
-        if self.status.name == 'Waiting':
-            self.status = Status.query.filter_by(name='Active').first()
+        if self.status.name == UserStatus.WAITING.value:
+            self.status = Status.query.filter_by(name=UserStatus.ACTIVE.value).first()
 
     def is_active(self):
-        return self.status.name == 'Active'
+        return self.status.name == UserStatus.ACTIVE.value
 
     def ban(self):
-        if self.status.name == 'Active':
-            self.status = Status.query.filter_by(name='Banned').first()
+        if self.status.name == UserStatus.ACTIVE.value:
+            self.status = Status.query.filter_by(name=UserStatus.BANNED.value).first()
 
     def is_banned(self):
-        return self.status.name == 'Banned'
+        return self.status.name == UserStatus.BANNED.value
 
     def unban(self):
-        if self.status.name == 'Banned':
-            self.status = Status.query.filter_by(name='Active').first()
+        if self.status.name == UserStatus.BANNED.value:
+            self.status = Status.query.filter_by(name=UserStatus.ACTIVE.value).first()
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
