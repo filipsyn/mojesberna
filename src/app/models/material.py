@@ -11,3 +11,18 @@ class Material(db.Model):
 
     def __repr__(self):
         return f"Material id: {self.material_id} - {self.name}"
+
+    def __init__(self, name):
+        self.name = name
+
+    @staticmethod
+    def seed_materials():
+        materials = ['Letákový papír', 'Železo', 'Měď', 'Mosaz', 'Olovo', 'Hliník', 'Směsný papír', 'Kartón',
+                     'Autobaterie']
+
+        for m in materials:
+            material = Material.query.filter_by(name=m).first()
+            if material is None:
+                material = Material(m)
+            db.session.add(material)
+        db.session.commit()

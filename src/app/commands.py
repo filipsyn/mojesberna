@@ -14,6 +14,11 @@ def prepare_database():
     Status.insert_statuses()
 
 
+@click.command()
+def seed_data():
+    Material.seed_materials()
+
+
 def shell_context():
     return dict(Address=Address, Material=Material, PriceList=PriceList, Purchase=Purchase, Role=Role, Status=Status,
                 User=User)
