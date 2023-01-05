@@ -1,1 +1,1 @@
-from .changePassword import changePasswordform
+from .changePassword import ChangePasswordform
