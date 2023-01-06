@@ -16,5 +16,9 @@ class RegisterForm(FlaskForm):
     ])
     password = PasswordField('Heslo', validators=[DataRequired()])
     confirm_password = PasswordField('Potvrďte heslo', validators=[DataRequired(), EqualTo('password')])
+    street = StringField('Ulice')
+    house_number = StringField('Číslo popisné', validators=[DataRequired()])
+    city = StringField('Město/Obec', validators=[DataRequired()])
+    zip_code = StringField('PSČ', validators=[DataRequired(), Length(min=5, message="PSČ musí mít alespoň 5 čísel")])
 
     submit = SubmitField('Registrovat se')

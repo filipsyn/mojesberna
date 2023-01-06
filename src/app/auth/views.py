@@ -20,6 +20,13 @@ def view_register_page():
             form.login.data,
             form.password.data
         )
+        address = Address(
+            form.street.data,
+            form.house_number.data,
+            form.city.data,
+            form.zip_code.data
+        )
+        new_user.permanent_residence = address
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('auth.view_login_page'))
