@@ -2,14 +2,22 @@
 
 {% block content %}
     <h1>Přehled uživatele {{ current_user.login }}</h1>
-    <div>
-    <h2>Ceník</h2>
-    {% for material in price_list %}
-        <p>{{ material.name }} - {{ material.price}} Kč/Kg</p>
     
-{% endfor %}
+    <div>
+        <h2>Ceník</h2>
+        {% for material in price_list %}
+            <p>{{ material.name }} - <a href="{{ url_for('user.update_price',id=material.price_id) }}">{{ material.price }}</a> Kč/Kg</p>
 
+        {% endfor %}
     </div>
+    <div>
+        <h2>Ceník</h2>
+        {% for material in price_list %}
+            <p>{{ material.name }} - {{ material.price }} Kč/Kg</p>
+
+        {% endfor %}
+    </div>
+
 
 
 {% endblock %} {# End of block content #}
