@@ -18,7 +18,7 @@ def create_app(config_name='default') -> Flask:
     loads in blueprints and returns constructed app instance.
 
     :returns:
-        A instance of flask application
+        An instance of flask application
     """
     app = Flask(__name__)
 
@@ -29,6 +29,7 @@ def create_app(config_name='default') -> Flask:
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
+    # Preparation of subcommands for `flask` command. eg. flask shell, flask seed-data` flask prepare-database
     from .commands import prepare_database, shell_context, seed_data
     app.cli.add_command(prepare_database)
     app.cli.add_command(seed_data)
