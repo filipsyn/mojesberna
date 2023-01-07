@@ -49,25 +49,33 @@ h1, h2, h3 {
 /*
  *  Header component
  */
-header {
+.hero-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.6)),
+    url("../img/hero-image.jpg");
+);
+    background-position: center;
+    background-size: cover;
+    height: 75vh;
 
 }
 
-header .text {
+.hero-header .text {
     margin-left: var(--margin-large);
 
 }
 
-header h1 {
-    color: var(--green-primary);
+.hero-header h1 {
+    color: var(--green-light);
     font-size: 3rem;
     line-height: 1;
 }
 
-header img {
-    max-width: 50%;
-    margin-right: var(--margin-large);
+.hero-header p {
+    margin-top: 0.5rem;
+    color: white;
 }

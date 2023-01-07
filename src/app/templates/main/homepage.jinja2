@@ -1,7 +1,7 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <header>
+    <header class="hero-header">
         <div class="text">
             <h1>Pro jednoho odpad,
                 <br>
@@ -9,7 +9,6 @@
             </h1>
             <p>Zjistěte, proč právě my jsme ti praví partneři pro vaše sběrné suroviny</p>
         </div>
-        <img src="{{ url_for('static', filename='img/hero-image.jpg') }}" alt="Muž pracující s odpadem">
     </header>
 
 {% endblock %} {# End of block content #}
