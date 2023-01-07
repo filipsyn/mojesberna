@@ -11,7 +11,6 @@
 
 
     --margin-large: 2rem;
-
 }
 
 /*
@@ -45,6 +44,18 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
+p {
+    max-width: 75ch;
+}
+
+/*
+ *  GENERAL LAYOUT
+ */
+
+section {
+    margin-top: calc(1.75 * var(--margin-large));
+    padding: 1rem;
+}
 
 /*
  *  Header component
@@ -57,7 +68,6 @@ h1, h2, h3 {
             rgba(0, 0, 0, 0.6),
             rgba(0, 0, 0, 0.6)),
     url("../img/hero-image.jpg");
-);
     background-position: center;
     background-size: cover;
     height: 75vh;
@@ -79,4 +89,36 @@ h1, h2, h3 {
     margin-top: 0.5rem;
     color: white;
     max-width: 75vw;
+}
+
+
+/*
+    ABOUT US SECTION
+ */
+
+#about-us {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+}
+
+#about-us img {
+    width: 33%;
+}
+
+#about-us img, #about-us .text {
+    padding: 1rem;
+}
+
+
+@media screen and (max-width: 768px) {
+    #about-us {
+        flex-direction: column;
+    }
+
+    #about-us img {
+        width: 100%;
+    }
 }
