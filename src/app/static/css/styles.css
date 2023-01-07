@@ -3,10 +3,10 @@
  */
 
 :root {
-    --background: #F0EDE4;
+    --bg-gray: #F0EDE4;
 }
 
 body {
-    background-color: var(--background);
+    background-color: var(--bg-gray);
     font-family: Poppins, sans-serif;
 }
