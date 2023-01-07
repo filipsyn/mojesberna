@@ -6,14 +6,14 @@
     <div>
         <h2>Ceník</h2>
         {% for material in price_list %}
-            <p>{{ material.name }} - {{ material.price }} Kč/Kg <a href="{{ url_for('user.update_price',id=material.price_id) }}">Upravit</a></p>
+            <p>{{ material.name }} - {{ material.price }} Kč/Kg <a href="{{ url_for('admin.update_price',id=material.price_id) }}">Upravit</a></p>
 
         {% endfor %}
     </div>
     <div>
         <h2>Žádosti o registraci</h2>
         {% for zadost in registration_request %}
-            <p>{{ zadost.first_name }}  {{ zadost.last_name }} <a href="{{ url_for('user.change_status',id=zadost.user_id) }}">Změnit status</a></p>
+            <p>{{ zadost.first_name }}  {{ zadost.last_name }} <a href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
 
         {% endfor %}
     </div>

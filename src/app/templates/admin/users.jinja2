@@ -6,7 +6,7 @@
     <div>
         <h2>Žádosti o registraci</h2>
         {% for zadost in user_request %}
-            <p>{{ zadost.first_name }}  {{ zadost.last_name }} <a href="{{ url_for('user.change_status',id=zadost.user_id) }}">Změnit status</a></p>
+            <p>{{ zadost.first_name }}  {{ zadost.last_name }} <a href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
 
         {% endfor %}
     </div>
