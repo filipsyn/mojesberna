@@ -1,0 +1,12 @@
+/*
+ *  VARIABLES DECLARATION
+ */
+
+:root {
+    --background: #F0EDE4;
+}
+
+body {
+    background-color: var(--background);
+    font-family: Poppins, sans-serif;
+}
