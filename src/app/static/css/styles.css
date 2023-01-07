@@ -201,8 +201,8 @@ button.secondary:focus {
 #stats .stat-card-list {
     margin: 2rem;
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
 }
 

@@ -10,7 +10,8 @@ def view_home_page():
             'Noviny': 1200,
             'Železo': 980,
             'Měď': 375,
-            'Hliník': 525
+            'Hliník': 525,
+            'Olovo': 692,
         },
         'prices': {
             'Noviny': 2.70,
