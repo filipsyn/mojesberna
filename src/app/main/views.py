@@ -6,10 +6,19 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def view_home_page():
     data = {
-        'Noviny': 1200,
-        'Železo': 980,
-        'Měď': 375,
-        'Hliník': 525
+        'stats': {
+            'Noviny': 1200,
+            'Železo': 980,
+            'Měď': 375,
+            'Hliník': 525
+        },
+        'prices': {
+            'Noviny': 2.70,
+            'Železo': 4.50,
+            'Měď': 85,
+            'Mosaz': 45,
+            'Olovo': 20
+        }
     }
     return render_template('main/homepage.jinja2', title='Domovská stránka', data=data)
 

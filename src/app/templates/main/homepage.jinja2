@@ -22,20 +22,41 @@
     </section>
 
     <section id="stats">
+
         <h2>Vykoupili jsme</h2>
 
-        <div class="content">
-            <div class="stat-card-list">
-                {% for material, amount in data.items() %}
-                    <div class="stat-card">
-                        <p class="material-name">{{ material }}</p>
-                        <p class="amount">{{ amount }} kg</p>
+        <div class="stat-card-list">
+            {% for material, amount in data.stats.items() %}
+                <div class="stat-card">
+                    <p class="material-name">{{ material }}</p>
+                    <p class="amount">{{ amount }} kg</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button class="secondary">Přehled statistik výkupu</button>
+    </section>
+
+    <div class="two-column">
+        <section id="prices">
+            <h2>Za kolik vykupujeme</h2>
+            <div class="price-list">
+                {% for material, price in data.prices.items() %}
+                    <div class="price-list--item">
+                        <span class="material">{{ material }}</span>
+                        <span class="price">{{ price }} Kč/kg</span>
                     </div>
                 {% endfor %}
             </div>
 
-            <button class="secondary">Přehled statistik výkupu</button>
-        </div>
-    </section>
+            <button class="secondary">Kopmletní ceník</button>
+        </section>
 
+        <section id="register-cta">
+            <h2>Zaujali jsme vás?</h2>
+            <p>Neváhejte vyplnit kontaktní formulář a požádejte o registraci již dnes. Po odeslání žádosti pak stačí
+                potvrdit registraci na naší pobočce. Nezapomeňte si s sebou vzít občanský průkaz.</p>
+            <button class="primary">Registrovat se</button>
+        </section>
+    </div>
 {% endblock %} {# End of block content #}
