@@ -5,6 +5,12 @@
 :root {
     --bg-gray: #F0EDE4;
     --green-primary: #008F66;
+    --text-normal: #111111;
+    --text-gray: #707070;
+
+
+    --margin-large: 2rem;
+
 }
 
 /*
