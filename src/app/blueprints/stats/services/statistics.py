@@ -1,8 +1,9 @@
-from typing import Dict, Any
-
 from ....models import User, Purchase, Material, PriceList
 from .... import db
 from flask_login import current_user
+from flask import Blueprint
+
+stats = Blueprint('stats', __name__)
 
 
 class Statistics:
@@ -12,6 +13,7 @@ class Statistics:
         if current_user.is_authenticated:
             self.m_user = current_user
 
+    @stats.route('/most_redeemed', methods='GET')
     def most_redeemed_material(self):
 
         return db.execute('''
@@ -22,6 +24,7 @@ class Statistics:
         WHERE users.user_id = ? GROUP BY materials.name
          ''', self.m_user.__getattribute__('user_id')).fetchall()
 
+    @stats.route('/months_money', methods='GET')
     def this_months_money(self):
 
         return db.execute('''
@@ -33,6 +36,7 @@ class Statistics:
                 WHERE users.user_id = ? AND purchases.date = GETDATE() 
                  ''', self.m_user.__getattribute__('user_id')).fetchall()
 
+    @stats.route('/lives_money', methods='GET')
     def live_earnings(self):
 
         return db.execute('''
@@ -44,6 +48,7 @@ class Statistics:
                 WHERE users.user_id = ? 
                  ''', self.m_user.__getattribute__('user_id')).fetchall()
 
+    @stats.route('/total_material', methods='GET')
     def total_bought_material(self, mat_name: str):
 
         return db.execute('''
@@ -54,6 +59,7 @@ class Statistics:
                 WHERE users.user_id = ? AND materials.name = ? 
                  ''', [self.m_user.__getattribute__('user_id'), mat_name]).fetchall()
 
+    @stats.route('/total', methods='GET')
     def total_bought(self):
         return db.execute('''
                     SELECT sum(purchases.weight)
