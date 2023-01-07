@@ -78,4 +78,5 @@ h1, h2, h3 {
 .hero-header p {
     margin-top: 0.5rem;
     color: white;
+    max-width: 75vw;
 }
