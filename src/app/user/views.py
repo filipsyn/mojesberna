@@ -75,5 +75,5 @@ def change_status(id):
 @login_required
 def users_page():
     user_request = User.query.all()
-    return render_template("user/users.jinja2", title=f"Přehled uživatelů",
+    return render_template("user/../templates/admin/users.jinja2", title=f"Přehled uživatelů",
                            user_request=user_request)
