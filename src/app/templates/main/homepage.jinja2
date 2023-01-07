@@ -21,5 +21,21 @@
         <img src="{{ url_for('static', filename='img/our-yard.jpg' ) }}" alt="Naše sběrna">
     </section>
 
+    <section id="stats">
+        <h2>Vykoupili jsme</h2>
+
+        <div class="content">
+            <div class="stat-card-list">
+                {% for material, amount in data.items() %}
+                    <div class="stat-card">
+                        <p class="material-name">{{ material }}</p>
+                        <p class="amount">{{ amount }} kg</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button class="secondary">Přehled statistik výkupu</button>
+        </div>
+    </section>
 
 {% endblock %} {# End of block content #}
