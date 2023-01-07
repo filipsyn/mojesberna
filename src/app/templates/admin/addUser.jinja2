@@ -1,0 +1,52 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <h1>Přidat uživatele</h1>
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>Základní informace</p><br>
+        {{ form.first_name.label }}
+        {{ form.first_name }}
+        <br>
+
+        {{ form.last_name.label }}
+        {{ form.last_name }}
+        <br>
+
+        {{ form.login.label }}
+        {{ form.login }}
+        <br>
+
+        {{ form.telephone_number.label }}
+        {{ form.telephone_number }}
+        <br>
+
+        {{ form.password.label }}
+        {{ form.password }}
+        <br>
+
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password }}
+        <br>
+
+        <p>Trvalé bydliště</p> <br>
+        {{ form.street.label }}
+        {{ form.street }}
+        <br>
+
+        {{ form.house_number.label }}
+        {{ form.house_number }}
+        <br>
+
+        {{ form.city.label }}
+        {{ form.city }}
+        <br>
+
+        {{ form.zip_code.label }}
+        {{ form.zip_code }}
+        <br>
+
+        {{ form.submit() }}
+    </form>
+{% endblock %} {# End of block content #}

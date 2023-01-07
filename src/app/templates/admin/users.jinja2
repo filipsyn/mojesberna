@@ -4,7 +4,8 @@
     <h1>Přehled uživatelů</h1>
 
     <div>
-        <h2>Žádosti o registraci</h2>
+
+        <a href="{{ url_for('admin.add_user_page') }}">Přidat uživatele</a>
         {% for zadost in user_request %}
             <p>{{ zadost.first_name }}  {{ zadost.last_name }} ({{ zadost.name }}) <a href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
 

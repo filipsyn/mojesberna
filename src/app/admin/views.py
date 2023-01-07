@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
+
+from .forms import AddUserForm
 from .. import db
-from ..models import User, Material, PriceList, Status
+from ..models import User, Material, PriceList, Status, Address
 from ..user.forms import ChangeStatusForm
 from ..user.forms.updatePriceList import UpdatePriceListForm
 
@@ -15,6 +17,30 @@ def users_page():
     user_request = User.query.join(Status, Status.status_id == User.status_id).add_columns(User.user_id, Status.status_id, Status.name, User.first_name, User.last_name, User.login).all()
     return render_template("admin/users.jinja2", title=f"Přehled uživatelů",
                            user_request=user_request)
+@admin.route('/users/add', methods=['GET', 'POST'])
+def add_user_page():
+    form = AddUserForm()
+
+    if form.validate_on_submit():
+        new_user = User(
+            form.first_name.data,
+            form.last_name.data,
+            form.telephone_number.data,
+            form.login.data,
+            form.password.data,
+        )
+        address = Address(
+            form.street.data,
+            form.house_number.data,
+            form.city.data,
+            form.zip_code.data
+        )
+        new_user.permanent_residence = address
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('auth.view_login_page'))
+
+    return render_template('admin/addUser.jinja2', title='Nový uživatel', form=form)
 
 
 @admin.route('/updatePrice/<int:id>', methods=['GET', 'POST'])
