@@ -238,9 +238,5 @@ button.secondary:focus {
     #stats .stat-card-list {
         flex-direction: column;
     }
-
-    #stats .stat-card {
-        margin: auto;
-    }
 }
 
