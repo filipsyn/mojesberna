@@ -1,0 +1,18 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <h1>Přehled uživatelů</h1>
+
+    <div>
+
+        <a href="{{ url_for('admin.add_user_page') }}">Přidat uživatele</a>
+        {% for zadost in user_request %}
+            <p>{{ zadost.first_name }}  {{ zadost.last_name }} ({{ zadost.name }}) <a href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
+
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %} {# End of block content #}

@@ -1,0 +1,13 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.price.label }}
+        {{ form.price(value=price_to_update.price)}}
+        <br>
+
+        {{ form.submit }}
+    </form>
+{% endblock %} {# End of block content #}

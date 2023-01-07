@@ -6,6 +6,10 @@
         {% if current_user.is_authenticated %}
             <li><a href="#">{{ current_user.login }}</a></li>
             <li><a href="{{ url_for('auth.logout') }}">Odhlásit se</a></li>
+            <li><a href="{{ url_for('user.view_change_password_page') }}">Změnit heslo</a></li>
+            <li><a href="{{ url_for('user.dashboard_page') }}">Přehled</a></li>
+            <li><a href="{{ url_for('admin.users_page') }}">Uživatelé</a></li>
+
         {% endif %}
     </ul>
 </nav>
