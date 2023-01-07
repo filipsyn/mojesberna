@@ -31,3 +31,42 @@ body {
     font-family: Poppins, sans-serif;
     font-size: 16px;
 }
+
+/*
+    GENERAL TYPOGRAPHY
+ */
+
+h1, h2, h3, p {
+    color: var(--text-normal);
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+
+/*
+ *  Header component
+ */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+header .text {
+    margin-left: var(--margin-large);
+
+}
+
+header h1 {
+    color: var(--green-primary);
+    font-size: 3rem;
+    line-height: 1;
+}
+
+header img {
+    max-width: 50%;
+    margin-right: var(--margin-large);
+}
