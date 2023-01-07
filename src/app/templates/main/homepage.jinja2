@@ -56,7 +56,9 @@
             <h2>Zaujali jsme vás?</h2>
             <p>Neváhejte vyplnit kontaktní formulář a požádejte o registraci již dnes. Po odeslání žádosti pak stačí
                 potvrdit registraci na naší pobočce. Nezapomeňte si s sebou vzít občanský průkaz.</p>
-            <button class="primary">Registrovat se</button>
+            <a href="{{ url_for('auth.view_register_page') }}">
+                <button class="primary">Registrovat se</button>
+            </a>
         </section>
     </div>
 
