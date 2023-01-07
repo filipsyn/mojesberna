@@ -309,3 +309,30 @@ button.secondary:focus {
 
 }
 
+/*
+    CONTACT COMPONENT
+ */
+
+#contacts {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+}
+
+#contacts #map {
+    height: 350px;
+}
+
+@media screen and (max-width: 768px) {
+    #contacts {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #contacts #map {
+        width: 100%;
+        height: auto;
+    }
+}
