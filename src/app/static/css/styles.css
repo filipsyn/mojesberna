@@ -74,6 +74,48 @@ section {
 }
 
 /*
+    BASIC COMPONENTS
+ */
+
+button {
+    padding: 0.5rem 1.5rem;
+    text-transform: uppercase;
+    font-size: 1.125rem;
+    border-radius: 0.5rem;
+}
+
+button.primary {
+    background-color: var(--green-primary);
+    color: white;
+    border: 0.125rem solid var(--green-primary);
+}
+
+button.primary:hover {
+    background-color: var(--green-light);
+}
+
+button.primary:focus {
+    background-color: var(--green-dark);
+}
+
+button.secondary {
+    background-color: transparent;
+    color: var(--green-primary);
+    border: 0.125rem solid var(--green-primary);
+}
+
+button.secondary:hover {
+    background-color: var(--green-primary);
+    color: white;
+}
+
+button.secondary:focus {
+    background-color: var(--green-dark);
+    color: white;
+}
+
+
+/*
  *  Header component
  */
 .hero-header {
