@@ -6,6 +6,19 @@
     --bg-gray: #F0EDE4;
 }
 
+/*
+ *  RESETTING DEFAULT VALUES
+ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/*
+ *  GLOBAL DECLARATIONS
+ */
+
 body {
     background-color: var(--bg-gray);
     font-family: Poppins, sans-serif;
