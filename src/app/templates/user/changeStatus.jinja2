@@ -1,0 +1,13 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.status_id.label }}
+        {{ form.status_id(value=status_to_change.status_id)}}
+        <br>
+
+        {{ form.submit }}
+    </form>
+{% endblock %} {# End of block content #}
