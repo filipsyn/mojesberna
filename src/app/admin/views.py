@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
 from .. import db
-from ..models import User, Material, PriceList
+from ..models import User, Material, PriceList, Status
 from ..user.forms import ChangeStatusForm
 from ..user.forms.updatePriceList import UpdatePriceListForm
 
@@ -12,7 +12,7 @@ admin = Blueprint('admin', __name__)
 @admin.route('/users')
 @login_required
 def users_page():
-    user_request = User.query.all()
+    user_request = User.query.join(Status, Status.status_id == User.status_id).add_columns(User.user_id, Status.status_id, Status.name, User.first_name, User.last_name, User.login).all()
     return render_template("admin/users.jinja2", title=f"Přehled uživatelů",
                            user_request=user_request)
 
