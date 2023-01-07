@@ -136,6 +136,50 @@ button.secondary:focus {
     color: white;
 }
 
+ul.flashes {
+    margin: 0;
+    padding: 0;
+}
+
+
+ul.flashes li {
+    margin: 0;
+}
+
+.flash {
+    border: 2px solid var(--border-gray);
+    padding: 0.5rem 2rem;
+    list-style: none;
+    width: 100%;
+
+    /* Flash messages are rendered as warning by default */
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.flash.flash-warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.flash.flash-info {
+    background-color: var(--info-bg);
+    color: var(--info-text);
+}
+
+.flash.flash-success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+}
+
+.flash.flash-error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+}
+
+.flash.flash-info, .flash.flash-warning, .flash.flash-success, .flash.flash-error {
+    border: none;
+}
 
 /*
  *  Header component

@@ -29,6 +29,7 @@ def view_register_page():
         new_user.permanent_residence = address
         db.session.add(new_user)
         db.session.commit()
+        flash('Žádost na registraci úspěšně odeslána. Dostavte se na pobočku pro dokončení', 'info')
         return redirect(url_for('auth.view_login_page'))
 
     return render_template('auth/register.jinja2', title='Registrace', form=form)
@@ -41,20 +42,22 @@ def view_login_page():
         user = User.query.filter_by(login=form.login.data).first()
         if user is not None and user.verify_password(form.password.data):
             if user.is_banned():
-                flash('Účet byl zablokován.')
-                return redirect(url_for('main.view_home_page'))
+                flash('Účet byl zablokován', 'error')
+                return redirect(url_for('auth.view_login_page'))
             if user.is_waiting():
-                flash('Potvrďte svou registraci na pobočce')
-                return redirect(url_for('main.view_home_page'))
+                flash('Potvrďte svou registraci na pobočce', 'warning')
+                return redirect(url_for('auth.view_login_page'))
             login_user(user, form.remember_login.data)
-            flash('Uživatel přihlášen')
-        flash('Nesprávné přihlašovací jméno nebo heslo')
-        return redirect(url_for('main.view_home_page'))
+            flash('Uživatel přihlášen', 'success')
+            # TODO: Redirect to dashboard page
+            return redirect(url_for('main.view_home_page'))
+        flash('Nesprávné přihlašovací jméno nebo heslo', 'error')
+        return redirect(url_for('auth.view_login_page'))
     return render_template('auth/login.jinja2', title='Příhlásit se', form=form)
 
 
 @auth.route('/logout')
 def logout():
     logout_user()
-    flash('Odhlášení proběhlo úspěšně')
+    flash('Odhlášení proběhlo úspěšně', 'info')
     return redirect(url_for('main.view_home_page'))
