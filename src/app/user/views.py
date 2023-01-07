@@ -51,6 +51,8 @@ def update_price(id):
             return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
     else:
         return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
+
+
 @user.route('/changeStatus/<int:id>', methods=['GET', 'POST'])
 @login_required
 def change_status(id):
@@ -67,3 +69,11 @@ def change_status(id):
             return render_template("user/changeStatus.jinja2", form=form, status_to_change=status_to_change)
     else:
         return render_template("user/changeStatus.jinja2", form=form, status_to_change=status_to_change)
+
+
+@user.route('/users')
+@login_required
+def users_page():
+    user_request = User.query.all()
+    return render_template("user/users.jinja2", title=f"Přehled uživatelů",
+                           user_request=user_request)
