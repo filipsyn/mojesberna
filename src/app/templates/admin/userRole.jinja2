@@ -1,0 +1,17 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <h1>Role uživatelů</h1>
+
+    <div>
+
+        {% for zadost in user_role_request %}
+            <p>{{ zadost.first_name }}  {{ zadost.last_name }} ({{ zadost.name }}) <a href="{{ url_for('admin.change_role',id=zadost.user_id) }}">Změnit roli</a></p>
+
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %} {# End of block content #}
