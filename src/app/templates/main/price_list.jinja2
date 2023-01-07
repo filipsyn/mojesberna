@@ -2,7 +2,9 @@
 
 {% block content %}
 <h1>Ceník</h1>
+<a href="{{ url_for('main.edit_material_price') }}">Edit</a>
 <div>
+
     {% for item in price_request %}
             <p>{{ item.name }}  {{ item.price }} </p>
 
