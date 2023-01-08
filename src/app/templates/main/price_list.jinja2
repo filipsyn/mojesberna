@@ -10,9 +10,9 @@
 
         {% endfor %}
 </div>
-{% if user.is_administrator%}
+{% if user.is_administrator %}
 <div>
 <a href="{{ url_for('main.edit_material_price') }}">Edit</a>
 </div>
-{% endif %}
+{% endif%}
 {% endblock %} {# End of content block #}

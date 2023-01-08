@@ -9,9 +9,8 @@ stats = Blueprint('stats', __name__)
 class Statistics:
     m_user: User
 
-    def __init__(self):
-        if current_user.is_authenticated:
-            self.m_user = current_user
+    def __init__(self, user=None):
+        self.m_user = user
 
     @stats.route('/most_redeemed', methods='GET')
     def most_redeemed_material(self):
@@ -22,7 +21,7 @@ class Statistics:
         JOIN purchases ON (materials.material_id=purchases.material_id) 
         JOIN users ON (users.user_id=selling_customer_id)
         WHERE users.user_id = ? GROUP BY materials.name
-         ''', self.m_user.__getattribute__('user_id')).fetchall()
+         ''', self.m_user.user_id).fetchall()
 
     @stats.route('/months_money', methods='GET')
     def this_months_money(self):
@@ -34,7 +33,7 @@ class Statistics:
                 OIN purchases ON (materials.material_id=purchases.material_id)  
                 JOIN users ON (users.user_id=selling_customer_id)
                 WHERE users.user_id = ? AND purchases.date = GETDATE() 
-                 ''', self.m_user.__getattribute__('user_id')).fetchall()
+                 ''', self.m_user.user_id).fetchall()
 
     @stats.route('/lives_money', methods='GET')
     def live_earnings(self):
@@ -46,7 +45,7 @@ class Statistics:
                 OIN purchases ON (materials.material_id=purchases.material_id)  
                 JOIN users ON (users.user_id=selling_customer_id)
                 WHERE users.user_id = ? 
-                 ''', self.m_user.__getattribute__('user_id')).fetchall()
+                 ''', self.m_user.user_id).fetchall()
 
     @stats.route('/total_material', methods='GET')
     def total_bought_material(self, mat_name: str):
@@ -57,7 +56,7 @@ class Statistics:
                 JOIN purchases ON (materials.material_id=purchases.material_id) 
                 JOIN users ON (users.user_id=selling_customer_id)
                 WHERE users.user_id = ? AND materials.name = ? 
-                 ''', [self.m_user.__getattribute__('user_id'), mat_name]).fetchall()
+                 ''', [self.m_user.user_id, mat_name]).fetchall()
 
     @stats.route('/total', methods='GET')
     def total_bought(self):
@@ -67,7 +66,7 @@ class Statistics:
                     JOIN purchases ON (materials.material_id=purchases.material_id) 
                     JOIN users ON (users.user_id=selling_customer_id)
                     WHERE users.user_id = ? AND materials.name = ?
-                     ''', self.m_user.__getattribute__('user_id')).fetchall()
+                     ''', self.m_user.user_id).fetchall()
 
     @staticmethod
     def most_redeemed_material_for_all_users():

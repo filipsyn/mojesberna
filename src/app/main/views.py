@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, flash
-from forms import EditPriceForm
+from flask import Blueprint, render_template, flash, request, url_for
+from .forms.EditPriceForm import EditPriceForm
 from .. import db
 from flask_login import current_user
 from ..models import Material, PriceList, User
+
 main = Blueprint('main', __name__)
 
 
@@ -30,15 +31,6 @@ def add_material_prices():
 def edit_material_price():
 
     form = EditPriceForm()
-    price_to_update = PriceList.query.get_or_404(id)
-    if request.method == "POST":
-        price_to_update.price = request.form['price']
-        try:
-            db.session.commit()
-            flash('Změna ceny proběhla úspěšně')
-            return render_template("main/EditPriceList.jinja2", form=form, price_to_update=price_to_update)
-        except:
-            flash('Error')
-            return render_template("main/EditPriceList.jinja2", form=form, price_to_update=price_to_update)
-    else:
-        return render_template("main/EditPriceList.jinja2", form=form, price_to_update=price_to_update)
+    if form.validate_on_submit():
+        flash(form.opts.data.material_id)
+    return render_template("main/EditPriceList.jinja2", form=form)

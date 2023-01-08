@@ -9,5 +9,5 @@ __pycache__/
 # Environment files
 .env
 container.env
-
+.DS_Store
 pgdata/
