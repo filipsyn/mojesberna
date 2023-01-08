@@ -30,6 +30,8 @@
     --error-text: #67074B;
 
     --margin-large: 2rem;
+
+    --standard-border: 2px solid var(--border-gray);
 }
 
 /*
