@@ -5,7 +5,7 @@ from . import get_user_attributes
 from .forms import ChangePasswordform
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Material, PriceList, Permission
+from ..models import User, Material, PriceList, Permission, Purchase, UserStatus, Status
 
 user = Blueprint('user', __name__)
 
@@ -27,11 +27,42 @@ def view_change_password_page():
 @user.route('/dashboard')
 @login_required
 @permission_required(Permission.ACCESS)
-def dashboard_page():
+def view_dashboard_page():
     user_attributes = get_user_attributes(current_user)
-    price_list = Material.query.join(PriceList, Material.material_id == PriceList.material_id).add_columns(
-        Material.material_id, PriceList.price_id, Material.name, PriceList.price).all()
-    registration_request = User.query.filter_by(status_id=1).all()
-    return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}",
-                           user_attributes=user_attributes, price_list=price_list,
-                           registration_request=registration_request)
+    price_list = Material.query. \
+        join(PriceList, Material.material_id == PriceList.material_id) \
+        .add_columns(Material.material_id, PriceList.price_id, Material.name, PriceList.price) \
+        .all()
+
+    waiting_status = Status.query.filter_by(name=UserStatus.WAITING.value).first()
+
+    registration_requests = User.query \
+        .filter_by(status_id=waiting_status.status_id) \
+        .order_by(User.user_id) \
+        .limit(5) \
+        .all()
+
+    price_list = {
+        'Noviny': 2.70,
+        'Železo': 4.50,
+        'Měď': 85,
+        'Mosaz': 45,
+        'Olovo': 20
+    }
+
+    if current_user.is_administrator() or current_user.is_worker():
+        purchases = Purchase.query. \
+            filter_by(buying_employee_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+    else:
+        purchases = Purchase.query. \
+            filter_by(selling_customer_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+
+    data = dict(user_attributes=user_attributes, registration_requests=registration_requests, price_list=price_list,
+                purchases=purchases)
+    return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}", data=data)

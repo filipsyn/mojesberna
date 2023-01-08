@@ -110,7 +110,7 @@ def update_price(id):
         price_to_update.price = request.form['price']
         try:
             db.session.commit()
-            return redirect(url_for('user.dashboard_page'))
+            return redirect(url_for('user.view_dashboard_page'))
             return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
         except:
             flash('Error')

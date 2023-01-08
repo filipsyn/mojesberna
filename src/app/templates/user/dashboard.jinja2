@@ -1,30 +1,95 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <h1>Přehled uživatele {{ current_user.login }}</h1>
+    <main>
+        {% if current_user.is_administrator() or current_user.is_worker() %}
+            {# Dashboard for workers and admins #}
+            <h1>Přehled {% if current_user.is_administrator() %}správce{% else %}
+                pracovníka{% endif %} {{ current_user.login }}</h1>
 
-    <div>
-        <h2>Ceník</h2>
-        {% for material in price_list %}
-            <p>{{ material.name }} - {{ material.price }} Kč/Kg <a href="{{ url_for('admin.update_price',id=material.price_id) }}">Upravit</a></p>
+            <section id="dashboard">
+            <div id="registration-requests">
+                <h2>Žádosti o registraci</h2>
+                <div class="list">
+                    {% for req in data.registration_requests %}
+                        <div class="list--item">
+                            <div class="list--item--text">
+                                <p>{{ req.first_name }} {{ req.last_name }} </p>
+                            </div>
+                            <a class="list--item--right" href="#">
+                                <span class="material-symbols-outlined">done</span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
 
-        {% endfor %}
-    </div>
-    <div>
-        <h2>Žádosti o registraci</h2>
-        {% for zadost in registration_request %}
-            <p>{{ zadost.first_name }}  {{ zadost.last_name }} <a href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
+                <button class="secondary">Přehled žádostí</button>
+            </div>
+        {% else %}
+            {# Dashboard for "normal" users #}
+            <h1>Přehled uživatele {{ current_user.login }}</h1>
+            <section id="dashboard">
 
-        {% endfor %}
-    </div>
-    <div>
-        <h2>Ceník</h2>
-        {% for material in price_list %}
-            <p>{{ material.name }} - {{ material.price }} Kč/Kg</p>
+            <div>
+                <h2>Uživatelské statistiky</h2>
+                <div class="tile-list">
+                    <div class="tile">
+                        <p class="tile--title">K vyplacení</p>
+                        <p class="tile--value">{{ 380 }} Kč</p>
+                    </div>
+                </div>
+            </div>
 
-        {% endfor %}
-    </div>
+        {% endif %}
+
+        <div id="last-purchases">
+            <h2>Moje poslední výkupy</h2>
+            <div class="list">
+                {% for purchase in data.purchases %}
+                    <div class="list--item">
+                        {% if current_user.is_administrator() or current_user.is_worker() %}
+                            <div class="list--item--text">
+                                <p>{{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}</p>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                {{ purchase.material.name }} ({{ purchase.weight }} Kg)
+                            </div>
+                        {% else %}
+                            <div class="list--item--text">
+                                <p>{{ purchase.material.name }}</p>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                ({{ purchase.weight }} Kg)
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+            </div>
+            <button class="secondary">Přehled výkupů</button>
+            {% if current_user.is_administrator() or current_user.is_worker() %}
+                <button class="primary">Přidat výkup</button>
+            {% endif %}
+        </div>
 
 
-
+        <div id="price-list">
+            <h2>Ceník</h2>
+            <div class="list">
+                {% for material, price in data.price_list.items() %}
+                    <div class="list--item">
+                        <div class="list--item--text"><span>{{ material }}</span></div>
+                        <div class="list--item--right"><span>{{ price }}&nbsp;Kč/Kg</span></div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if current_user.is_administrator() or current_user.is_worker() %}
+                <button class="secondary">Upravit</button>
+            {% endif %}
+            <button class="secondary">Více</button>
+        </div>
+        </section>
+    </main>
 {% endblock %} {# End of block content #}

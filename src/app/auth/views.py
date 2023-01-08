@@ -50,7 +50,7 @@ def view_login_page():
             login_user(user, form.remember_login.data)
             flash('Uživatel přihlášen', 'success')
             # TODO: Redirect to dashboard page
-            return redirect(url_for('main.view_home_page'))
+            return redirect(url_for('user.view_dashboard_page'))
         flash('Nesprávné přihlašovací jméno nebo heslo', 'error')
         return redirect(url_for('auth.view_login_page'))
     return render_template('auth/login.jinja2', title='Příhlásit se', form=form)

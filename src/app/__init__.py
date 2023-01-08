@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 
 from .config import config
@@ -9,6 +10,7 @@ from .config import config
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
+moment = Moment()
 
 
 def create_app(config_name='default') -> Flask:
@@ -28,6 +30,7 @@ def create_app(config_name='default') -> Flask:
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+    moment.init_app(app)
 
     # Preparation of subcommands for `flask` command. eg. flask shell, flask seed-data` flask prepare-database
     from .commands import prepare_database, shell_context, seed_data

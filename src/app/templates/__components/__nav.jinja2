@@ -14,7 +14,7 @@
 
         <li><a href="{{ url_for('main.view_home_page') }}">Domů</a></li>
         {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('user.dashboard_page') }}">Přehled</a></li>
+            <li><a href="{{ url_for('user.view_dashboard_page') }}">Přehled</a></li>
         {% endif %}
         <li><a href="{{ url_for('main.view_home_page') }}#about-us">O nás</a></li>
         <li><a href="{{ url_for('main.view_home_page') }}#prices">Ceník</a></li>
