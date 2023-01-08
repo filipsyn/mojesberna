@@ -27,7 +27,7 @@ def view_change_password_page():
 @user.route('/dashboard')
 @login_required
 @permission_required(Permission.ACCESS)
-def dashboard_page():
+def view_dashboard_page():
     user_attributes = get_user_attributes(current_user)
     price_list = Material.query. \
         join(PriceList, Material.material_id == PriceList.material_id) \
