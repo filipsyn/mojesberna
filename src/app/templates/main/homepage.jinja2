@@ -30,8 +30,8 @@
             <div class="tile-list">
                 {% for material, amount in data.stats.items() %}
                     <div class="tile">
-                        <p class="stat-card--title">{{ material }}</p>
-                        <p class="stat-card--value">{{ amount }} kg</p>
+                        <p class="tile--title">{{ material }}</p>
+                        <p class="tile--value">{{ amount }} kg</p>
                     </div>
                 {% endfor %}
             </div>
