@@ -521,24 +521,34 @@ section#error-info img {
 
 /* DASHBOARD styling */
 section#dashboard {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    section#dashboard {
+        grid-template-columns: 1fr;
+    }
+
 }
 
 #registration-requests {
 
 }
 
-#registration-requests .list {
+#registration-requests button {
+    margin-left: auto;
+}
+
+.list {
     margin: 1rem 0;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 
-#registration-requests .list--item {
+.list--item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -549,13 +559,13 @@ section#dashboard {
 }
 
 
-#registration-requests .list--item--expand {
+#registration-requests .list--item--right {
     margin-left: 2rem;
 }
 
 
-.list--item--expand {
+.list--item--right {
     display: flex;
     text-decoration: none;
-
+    align-items: center;
 }
