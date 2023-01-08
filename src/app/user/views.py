@@ -50,10 +50,18 @@ def dashboard_page():
         'Olovo': 20
     }
 
-    purchases = Purchase.query. \
-        filter_by(buying_employee_id=current_user.user_id) \
-        .limit(5) \
-        .all()
+    if current_user.is_administrator() or current_user.is_worker():
+        purchases = Purchase.query. \
+            filter_by(buying_employee_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+    else:
+        purchases = Purchase.query. \
+            filter_by(selling_customer_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
 
     data = dict(user_attributes=user_attributes,
                 registration_requests=registration_requests,
