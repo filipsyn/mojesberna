@@ -11,72 +11,75 @@
         </div>
     </header>
 
-    <section id="about-us">
-        <div class="text">
-            <h2>O nás</h2>
-            <p>Jsme společnost, která má již přes 30 let zkušeností v odpadovém hospodářství. Naši hlavní zásadou je
-                šetrnost k životnímu prostředí. Proto od Vás vykupujeme širokou škálu materiálů od těch nejběžnějších po
-                ty nejnebezpěčnější.</p>
-        </div>
-        <img src="{{ url_for('static', filename='img/our-yard.jpg' ) }}" alt="Naše sběrna">
-    </section>
+    <main>
+        <section id="about-us">
+            <div class="text">
+                <h2>O nás</h2>
+                <p>Jsme společnost, která má již přes 30 let zkušeností v odpadovém hospodářství. Naši hlavní zásadou je
+                    šetrnost k životnímu prostředí. Proto od Vás vykupujeme širokou škálu materiálů od těch
+                    nejběžnějších po
+                    ty nejnebezpěčnější.</p>
+            </div>
+            <img src="{{ url_for('static', filename='img/our-yard.jpg' ) }}" alt="Naše sběrna">
+        </section>
 
-    <section id="stats">
+        <section id="stats">
 
-        <h2>Vykoupili jsme</h2>
+            <h2>Vykoupili jsme</h2>
 
-        <div class="stat-card-list">
-            {% for material, amount in data.stats.items() %}
-                <div class="stat-card">
-                    <p class="material-name">{{ material }}</p>
-                    <p class="amount">{{ amount }} kg</p>
-                </div>
-            {% endfor %}
-        </div>
-
-        <button class="secondary">Přehled statistik výkupu</button>
-    </section>
-
-    <div class="two-column">
-        <section id="prices">
-            <h2>Za kolik vykupujeme</h2>
-            <div class="price-list">
-                {% for material, price in data.prices.items() %}
-                    <div class="price-list--item">
-                        <span class="material">{{ material }}</span>
-                        <span class="price">{{ price }} Kč/kg</span>
+            <div class="stat-card-list">
+                {% for material, amount in data.stats.items() %}
+                    <div class="stat-card">
+                        <p class="material-name">{{ material }}</p>
+                        <p class="amount">{{ amount }} kg</p>
                     </div>
                 {% endfor %}
             </div>
 
-            <button class="secondary">Kopmletní ceník</button>
+            <button class="secondary">Přehled statistik výkupu</button>
         </section>
 
-        <section id="register-cta">
-            <h2>Zaujali jsme vás?</h2>
-            <p>Neváhejte vyplnit kontaktní formulář a požádejte o registraci již dnes. Po odeslání žádosti pak stačí
-                potvrdit registraci na naší pobočce. Nezapomeňte si s sebou vzít občanský průkaz.</p>
-            <a href="{{ url_for('auth.view_register_page') }}">
-                <button class="primary">Registrovat se</button>
+        <div class="two-column">
+            <section id="prices">
+                <h2>Za kolik vykupujeme</h2>
+                <div class="price-list">
+                    {% for material, price in data.prices.items() %}
+                        <div class="price-list--item">
+                            <span class="material">{{ material }}</span>
+                            <span class="price">{{ price }} Kč/kg</span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button class="secondary">Kopmletní ceník</button>
+            </section>
+
+            <section id="register-cta">
+                <h2>Zaujali jsme vás?</h2>
+                <p>Neváhejte vyplnit kontaktní formulář a požádejte o registraci již dnes. Po odeslání žádosti pak stačí
+                    potvrdit registraci na naší pobočce. Nezapomeňte si s sebou vzít občanský průkaz.</p>
+                <a href="{{ url_for('auth.view_register_page') }}">
+                    <button class="primary">Registrovat se</button>
+                </a>
+            </section>
+        </div>
+
+        <section id="contacts">
+            <div class="text">
+                <h2>Kontakt</h2>
+                <p>
+                    <a href="mailto:info@mojesberna.cz">info@mojesberna.cz</a> <br>
+                    <a href="tel:+420777111222">+420 777 111 222</a> <br>
+                    <br>
+                    Kohoutova 5 <br>
+                    Brno-Sever <br>
+                    613 00
+                </p>
+            </div>
+            <a href="https://www.openstreetmap.org/node/296514305#map=17/49.21544/16.63223"
+               target="_blank">
+                <img id="map" src="{{ url_for('static', filename='img/map.png') }}" alt="Mapa pobočky">
             </a>
         </section>
-    </div>
-
-    <section id="contacts">
-        <div class="text">
-            <h2>Kontakt</h2>
-            <p>
-                <a href="mailto:info@mojesberna.cz">info@mojesberna.cz</a> <br>
-                <a href="tel:+420777111222">+420 777 111 222</a> <br>
-                <br>
-                Kohoutova 5 <br>
-                Brno-Sever <br>
-                613 00
-            </p>
-        </div>
-        <a href="https://www.openstreetmap.org/node/296514305#map=17/49.21544/16.63223"
-           target="_blank">
-            <img id="map" src="{{ url_for('static', filename='img/map.png') }}" alt="Mapa pobočky">
-        </a>
-    </section>
+    </main>
 {% endblock %} {# End of block content #}

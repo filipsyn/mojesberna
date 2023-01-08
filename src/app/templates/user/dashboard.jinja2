@@ -1,44 +1,44 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    {% if current_user.is_administrator() or current_user.is_worker() %}
-        <h1>Přehled {% if current_user.is_administrator() %}správce{% else %}
-            pracovníka{% endif %} {{ current_user.login }}</h1>
+    <main>
+        {% if current_user.is_administrator() or current_user.is_worker() %}
+            <h1>Přehled {% if current_user.is_administrator() %}správce{% else %}
+                pracovníka{% endif %} {{ current_user.login }}</h1>
 
-        <section id="dashboard">
-            <div id="registration-requests">
-                <h2>Žádosti o registraci</h2>
-                <div class="list">
-                    {% for req in registration_request %}
-                        <div class="list--item">
-                            <div class="list--item--text">
-                                <p>{{ req.first_name }} {{ req.last_name }} </p>
+            <section id="dashboard">
+                <div id="registration-requests">
+                    <h2>Žádosti o registraci</h2>
+                    <div class="list">
+                        {% for req in registration_request %}
+                            <div class="list--item">
+                                <div class="list--item--text">
+                                    <p>{{ req.first_name }} {{ req.last_name }} </p>
+                                </div>
+                                <a class="list--item--expand" href="#">
+                                    <span class="material-symbols-outlined">more_vert</span>
+                                </a>
                             </div>
-                            <a class="list--item--expand" href="#">
-                                <span class="material-symbols-outlined">more_vert</span>
-                            </a>
-                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div id="last-purchases">
+                    <h2>Poslední výkupy</h2>
+                </div>
+
+                <div class="price-list">
+                    <h2>Ceník</h2>
+                    {% for material, price in price_list.items() %}
+                        <p>{{ material }} {{ price }} Kč/Kg</p>
                     {% endfor %}
                 </div>
-            </div>
+            </section>
+        {% else %}
+            <section id="dashboard">
 
-            <div id="last-purchases">
-                <h2>Poslední výkupy</h2>
-            </div>
+            </section>
 
-            <div class="price-list">
-                <h2>Ceník</h2>
-                {% for material, price in price_list.items() %}
-                    <p>{{ material }} {{ price }} Kč/Kg</p>
-                {% endfor %}
-            </div>
-        </section>
-    {% else %}
-        <section id="dashboard">
-
-        </section>
-
-    {% endif %}
-
-
+        {% endif %}
+    </main>
 {% endblock %} {# End of block content #}

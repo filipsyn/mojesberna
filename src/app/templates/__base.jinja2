@@ -26,12 +26,9 @@
 {% endwith %}
 {% include '__components/__nav.jinja2' %}
 
-<main>
+{% block content %}
+{% endblock %}
 
-
-    {% block content %}
-    {% endblock %}
-</main>
 {% include '__components/__footer.jinja2' %}
 </body>
 </html>
