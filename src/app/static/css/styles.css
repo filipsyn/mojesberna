@@ -514,5 +514,45 @@ section#error-info img {
         width: 80%;
         height: auto;
     }
+}
+
+/* DASHBOARD styling */
+section#dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#registration-requests {
+
+}
+
+#registration-requests .list {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+#registration-requests .list--item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: var(--standard-border);
+    border-radius: 0.5rem;
+}
+
+
+#registration-requests .list--item--expand {
+    margin-left: 2rem;
+}
+
+
+.list--item--expand {
+    display: flex;
+    text-decoration: none;
 
 }
