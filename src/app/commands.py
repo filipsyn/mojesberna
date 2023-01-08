@@ -1,7 +1,7 @@
 import click
 from flask_migrate import upgrade
 
-from .models import Role, Status, User, Address, Material, PriceList, Purchase
+from .models import Role, Status, User, Address, Material, PriceList, Purchase, Permission
 
 
 @click.command()
@@ -21,4 +21,4 @@ def seed_data():
 
 def shell_context():
     return dict(Address=Address, Material=Material, PriceList=PriceList, Purchase=Purchase, Role=Role, Status=Status,
-                User=User)
+                User=User, Permission=Permission)
