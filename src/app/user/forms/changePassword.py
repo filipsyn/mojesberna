@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, Regexp, EqualTo, Length
+from wtforms import SubmitField, PasswordField
+from wtforms.validators import DataRequired, EqualTo
+
 
 class ChangePasswordform(FlaskForm):
     password = PasswordField('Heslo', validators=[DataRequired()])

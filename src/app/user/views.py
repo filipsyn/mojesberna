@@ -1,9 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 
 from . import get_user_attributes
-from .forms import ChangePasswordform, ChangeStatusForm
-from .forms.updatePriceList import UpdatePriceListForm
+from .forms import ChangePasswordform
 from .. import db
 from ..models import User, Material, PriceList
 
@@ -33,6 +32,3 @@ def dashboard_page():
     return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}",
                            user_attributes=user_attributes, price_list=price_list,
                            registration_request=registration_request)
-
-
-

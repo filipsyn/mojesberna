@@ -1,7 +1,7 @@
-from ....models import User, Purchase, Material, PriceList
-from .... import db
-from flask_login import current_user
 from flask import Blueprint
+
+from .... import db
+from ....models import User
 
 stats = Blueprint('stats', __name__)
 
@@ -14,7 +14,6 @@ class Statistics:
 
     @stats.route('/most_redeemed', methods='GET')
     def most_redeemed_material(self):
-
         return db.execute('''
         SELECT materials.name, max(count(materials.material_id))
         FROM materials 
@@ -25,7 +24,6 @@ class Statistics:
 
     @stats.route('/months_money', methods='GET')
     def this_months_money(self):
-
         return db.execute('''
                 SELECT sum(price)
                 FROM price_list 
@@ -37,7 +35,6 @@ class Statistics:
 
     @stats.route('/lives_money', methods='GET')
     def live_earnings(self):
-
         return db.execute('''
                 SELECT sum(price)
                 FROM price_list 
@@ -49,7 +46,6 @@ class Statistics:
 
     @stats.route('/total_material', methods='GET')
     def total_bought_material(self, mat_name: str):
-
         return db.execute('''
                 SELECT materials.name, sum(purchases.weight)
                 FROM materials 

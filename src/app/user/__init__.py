@@ -1,5 +1,4 @@
-from .. import db
-from ..models import User, PriceList,  Material
+from ..models import Material
 
 
 def get_user_attributes(user):
@@ -7,6 +6,7 @@ def get_user_attributes(user):
 
     }
     return user_attributes
+
 
 def get_price_list():
     material = Material.query.all()

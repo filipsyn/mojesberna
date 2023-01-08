@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, RadioField
+from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Regexp, EqualTo, Length
 
 
@@ -15,8 +15,8 @@ class AddUserForm(FlaskForm):
         Regexp(r'^(\+[0-9]{1,3})?( |-)?[0-9]{3}( |-)?[0-9]{3,4}( |-)?[0-9]{0,4}$')
     ])
 
-    #status_id = RadioField('Status', choices=[('1', 'čekající'), ('2', 'aktivní'), ('3', 'ban')])
-    #role_id = RadioField('Role', choices=[('1', 'uživatel'), ('2', 'pracovník'), ('3', 'admin')])
+    # status_id = RadioField('Status', choices=[('1', 'čekající'), ('2', 'aktivní'), ('3', 'ban')])
+    # role_id = RadioField('Role', choices=[('1', 'uživatel'), ('2', 'pracovník'), ('3', 'admin')])
     password = PasswordField('Heslo', validators=[DataRequired()])
     confirm_password = PasswordField('Potvrďte heslo', validators=[DataRequired(), EqualTo('password')])
     street = StringField('Ulice')
