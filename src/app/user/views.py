@@ -5,7 +5,7 @@ from . import get_user_attributes
 from .forms import ChangePasswordform
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Material, PriceList, Permission
+from ..models import User, Material, PriceList, Permission, Purchase, UserStatus, Status
 
 user = Blueprint('user', __name__)
 
@@ -34,10 +34,12 @@ def dashboard_page():
         .add_columns(Material.material_id, PriceList.price_id, Material.name, PriceList.price) \
         .all()
 
-    registration_request = User.query \
-        .filter_by(status_id=1) \
+    waiting_status = Status.query.filter_by(name=UserStatus.WAITING.value).first()
+
+    registration_requests = User.query \
+        .filter_by(status_id=waiting_status.status_id) \
         .order_by(User.user_id) \
-        .limit(3) \
+        .limit(5) \
         .all()
 
     price_list = {
