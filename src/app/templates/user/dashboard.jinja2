@@ -25,27 +25,6 @@
 
                 <button class="secondary">Přehled žádostí</button>
             </div>
-
-            <div id="last-purchases">
-                <h2>Moje poslední výkupy</h2>
-                <div class="list">
-                    {% for purchase in data.purchases %}
-                        <div class="list--item">
-                            <div class="list--item--text">
-                                <p>{{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}</p>
-                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
-                            </div>
-                            <div class="list--item--right">
-                                {{ purchase.material.name }} ({{ purchase.weight }} Kg)
-                            </div>
-
-                        </div>
-                    {% endfor %}
-                </div>
-                <button class="secondary">Přehled výkupů</button>
-                <button class="primary">Přidat výkup</button>
-            </div>
-
         {% else %}
             {# Dashboard for "normal" users #}
             <h1>Přehled uživatele {{ current_user.login }}</h1>
@@ -61,11 +40,22 @@
                 </div>
             </div>
 
-            <div>
-                <h2>Moje poslední výkupy</h2>
-                <div class="list">
-                    {% for purchase in data.purchases %}
-                        <div class="list--item">
+        {% endif %}
+
+        <div id="last-purchases">
+            <h2>Moje poslední výkupy</h2>
+            <div class="list">
+                {% for purchase in data.purchases %}
+                    <div class="list--item">
+                        {% if current_user.is_administrator() or current_user.is_worker() %}
+                            <div class="list--item--text">
+                                <p>{{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}</p>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                {{ purchase.material.name }} ({{ purchase.weight }} Kg)
+                            </div>
+                        {% else %}
                             <div class="list--item--text">
                                 <p>{{ purchase.material.name }}</p>
                                 <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
@@ -73,14 +63,18 @@
                             <div class="list--item--right">
                                 ({{ purchase.weight }} Kg)
                             </div>
+                        {% endif %}
+                    </div>
 
-                        </div>
-                    {% endfor %}
-                </div>
-                <button class="secondary">Přehled výkupů</button>
+                {% endfor %}
             </div>
+            <button class="secondary">Přehled výkupů</button>
+            {% if current_user.is_administrator() or current_user.is_worker() %}
+                <button class="primary">Přidat výkup</button>
+            {% endif %}
+        </div>
 
-        {% endif %}
+
         <div id="price-list">
             <h2>Ceník</h2>
             <div class="list">
