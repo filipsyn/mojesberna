@@ -181,6 +181,70 @@ ul.flashes li {
     border: none;
 }
 
+
+/* NAVIGATION */
+
+nav {
+    background-color: white;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--border-gray);
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+nav ul li a {
+    text-decoration: none;
+    display: block;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+}
+
+nav ul li a:hover {
+    color: var(--text-normal);
+}
+
+.dropdown {
+    opacity: 0;
+    position: absolute;
+    top: 48px;
+    transform: translateX(-45%);
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dropdown ul {
+    padding: 0;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dropdown--item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    height: 50px;
+}
+
+.has-dropdown:focus-within .dropdown {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
 /*
  *  Header component
  */
