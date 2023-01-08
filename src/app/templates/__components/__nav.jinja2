@@ -2,7 +2,15 @@
     <a href="{{ url_for('main.view_home_page') }}">
         <img class="logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="logo">
     </a>
-    <ul class="menu-items">
+    <div class="hamburger">
+        <span
+                class="material-symbols-outlined"
+                onclick="document.getElementById('menu-items').classList.toggle('visible')"
+        >
+            menu
+        </span>
+    </div>
+    <ul id="menu-items" class="menu-items">
 
         <li><a href="{{ url_for('main.view_home_page') }}">Domů</a></li>
         {% if current_user.is_authenticated %}
@@ -16,18 +24,22 @@
             <li><a href="{{ url_for('auth.view_register_page') }}">Registrace</a></li>
             <li><a href="{{ url_for('auth.view_login_page') }}">Přihlásit se</a></li>
         {% else %}
-            <li class="has-dropdown"><a href="#">{{ current_user.login }}</a>
+            {% if current_user.is_administrator() %}
+                <li class="has-dropdown"><a href="#">Administrace <span
+                        class="material-symbols-outlined">expand_more</span></a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('admin.users_page') }}">Přehled uživatelů</a></li>
+                        <li><a href="{{ url_for('admin.users_role_page') }}">Role uživatelů</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+            <li class="has-dropdown"><a href="#">{{ current_user.login }} <span class="material-symbols-outlined">expand_more</span></a>
                 <ul class="dropdown">
                     <li><a href="{{ url_for('user.view_change_password_page') }}">Změnit heslo</a></li>
                     <li><a href="{{ url_for('auth.logout') }}">Odhlásit se</a></li>
                 </ul>
             </li>
-            <li class="has-dropdown"><a href="#">Uživatelé</a>
-                <ul class="dropdown">
-                    <li><a href="{{ url_for('admin.users_page') }}">Přehled uživatelů</a></li>
-                    <li><a href="{{ url_for('admin.users_role_page') }}">Role uživatelů</a></li>
-                </ul>
-            </li>
+
         {% endif %}
     </ul>
 </nav>

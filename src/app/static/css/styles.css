@@ -216,7 +216,7 @@ nav ul li a:hover {
 .dropdown {
     opacity: 0;
     position: absolute;
-    top: 48px;
+    top: 60px;
     transform: translateX(-45%);
     background-color: white;
     border-radius: 0.5rem;
@@ -239,9 +239,42 @@ nav ul li a:hover {
     height: 50px;
 }
 
+.has-dropdown a {
+    display: flex;
+}
+
 .has-dropdown:focus-within .dropdown {
     opacity: 1;
     pointer-events: auto;
+}
+
+.hamburger {
+    display: none
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .menu-items {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .visible {
+        display: flex;
+    }
+
+    .visible .dropdown {
+        opacity: 1;
+        position: relative;
+        top: 0;
+        transform: none;
+    }
+
 }
 
 
