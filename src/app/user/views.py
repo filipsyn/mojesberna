@@ -4,13 +4,15 @@ from flask_login import current_user, login_required
 from . import get_user_attributes
 from .forms import ChangePasswordform
 from .. import db
-from ..models import User, Material, PriceList
+from ..decorators import permission_required
+from ..models import User, Material, PriceList, Permission
 
 user = Blueprint('user', __name__)
 
 
 @user.route('/changePassword', methods=['GET', 'POST'])
 @login_required
+@permission_required(Permission.SELF_MANAGEMENT)
 def view_change_password_page():
     form = ChangePasswordform()
     if form.validate_on_submit():
@@ -24,6 +26,7 @@ def view_change_password_page():
 
 @user.route('/dashboard')
 @login_required
+@permission_required(Permission.ACCESS)
 def dashboard_page():
     user_attributes = get_user_attributes(current_user)
     price_list = Material.query.join(PriceList, Material.material_id == PriceList.material_id).add_columns(
