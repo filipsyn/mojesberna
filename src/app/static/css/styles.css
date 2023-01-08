@@ -566,3 +566,7 @@ section#dashboard {
     text-decoration: none;
     align-items: center;
 }
+
+.text-subtle {
+    color: var(--text-subtle);
+}
