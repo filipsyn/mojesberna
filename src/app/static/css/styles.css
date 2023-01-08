@@ -57,6 +57,10 @@ html {
     scroll-behavior: smooth;
 }
 
+main {
+    margin: 2rem;
+}
+
 ::selection {
     background-color: var(--green-light);
     color: white;
