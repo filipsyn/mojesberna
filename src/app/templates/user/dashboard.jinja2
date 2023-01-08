@@ -5,28 +5,40 @@
         <h1>Přehled {% if current_user.is_administrator() %}správce{% else %}
             pracovníka{% endif %} {{ current_user.login }}</h1>
 
-    <div>
-        <h2>Ceník</h2>
-        {% for material in price_list %}
-            <p>{{ material.name }} - {{ material.price }} Kč/Kg <a href="{{ url_for('admin.update_price',id=material.price_id) }}">Upravit</a></p>
+        <section id="dashboard">
+            <div id="registration-requests">
+                <h2>Žádosti o registraci</h2>
+                <div class="list">
+                    {% for req in registration_request %}
+                        <div class="list--item">
+                            <div class="list--item--text">
+                                <p>{{ req.first_name }} {{ req.last_name }} </p>
+                            </div>
+                            <a class="list--item--expand" href="#">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-        {% endfor %}
-    </div>
-    <div>
-        <h2>Žádosti o registraci</h2>
-        {% for zadost in registration_request %}
-            <p>{{ zadost.first_name }}  {{ zadost.last_name }} <a href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
+            <div id="last-purchases">
+                <h2>Poslední výkupy</h2>
+            </div>
 
-        {% endfor %}
-    </div>
-    <div>
-        <h2>Ceník</h2>
-        {% for material in price_list %}
-            <p>{{ material.name }} - {{ material.price }} Kč/Kg</p>
+            <div class="price-list">
+                <h2>Ceník</h2>
+                {% for material, price in price_list.items() %}
+                    <p>{{ material }} {{ price }} Kč/Kg</p>
+                {% endfor %}
+            </div>
+        </section>
+    {% else %}
+        <section id="dashboard">
 
-        {% endfor %}
-    </div>
+        </section>
 
+    {% endif %}
 
 
 {% endblock %} {# End of block content #}
