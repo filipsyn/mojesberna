@@ -195,6 +195,28 @@ ul.flashes li {
 }
 
 
+.pill {
+    display: flex;
+    padding: 0.5rem 1rem;
+    border-radius: 32px;
+}
+
+.pill-success {
+    color: var(--success-text);
+    background-color: var(--success-bg);
+}
+
+.pill-error {
+    color: var(--error-text);
+    background-color: var(--error-bg);
+}
+
+.pill-warning {
+    color: var(--warning-text);
+    background-color: var(--warning-bg);
+}
+
+
 /* NAVIGATION */
 
 nav {
