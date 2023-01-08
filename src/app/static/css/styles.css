@@ -144,7 +144,7 @@ button.secondary {
 }
 
 button.secondary:hover {
-    background-color: var(--green-primary);
+    background-color: var(--green-light);
     color: white;
 }
 
