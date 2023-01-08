@@ -421,6 +421,7 @@ nav ul li a:hover {
     flex-direction: row;
     justify-content: space-evenly;
     padding: 1rem;
+    gap: 3rem;
 }
 
 @media screen and (max-width: 768px) {
