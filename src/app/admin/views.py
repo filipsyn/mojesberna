@@ -15,12 +15,12 @@ admin = Blueprint('admin', __name__)
 @login_required
 @permission_required(Permission.USER_ADMINISTRATION)
 def view_users_page():
-    user_request = User.query \
+    users = User.query \
         .join(Status, Status.status_id == User.status_id) \
         .add_columns(User.user_id, Status.status_id, Status.name, User.first_name, User.last_name, User.login) \
         .all()
 
-    return render_template("admin/users.jinja2", title="Přehled uživatelů", user_request=user_request)
+    return render_template("admin/users.jinja2", title="Přehled uživatelů", users=users)
 
 
 @admin.route('/usersRole')
