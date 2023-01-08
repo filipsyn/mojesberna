@@ -5,13 +5,24 @@
         <h1>Přehled uživatelů</h1>
 
         <div>
-
-            <a href="{{ url_for('admin.add_user_page') }}">Přidat uživatele</a>
-            {% for zadost in user_request %}
-                <p>{{ zadost.first_name }} {{ zadost.last_name }} ({{ zadost.name }}) <a
-                        href="{{ url_for('admin.change_status',id=zadost.user_id) }}">Změnit status</a></p>
-
-            {% endfor %}
+            <a href="{{ url_for('admin.add_user_page') }}">
+                <button class="primary">Přidat uživatele</button>
+            </a>
+            <div class="list">
+                {% for user in users %}
+                    <div class="list--item">
+                        <div class="list--item--text">
+                            <p> {{ user.first_name }} {{ user.last_name }}</p>
+                            <p class="text-subtle">{{ user.status.name }}, {{ user.role.name }}</p>
+                        </div>
+                        <div class="list--item--right">
+                            <a href="{{ url_for('admin.change_status',id=user.user_id) }}">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </main>
 {% endblock %} {# End of block content #}
