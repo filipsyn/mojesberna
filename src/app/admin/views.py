@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from .forms import AddUserForm, ChangeRoleForm, AddPurchaseForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Material, PriceList, Status, Address, Role, Permission, Purchase
+from ..models import User, Material, PriceList, Address, Role, Permission, Purchase
 from ..user.forms import ChangeStatusForm
 from ..user.forms.updatePriceList import UpdatePriceListForm
 
@@ -15,10 +15,7 @@ admin = Blueprint('admin', __name__)
 @login_required
 @permission_required(Permission.USER_ADMINISTRATION)
 def view_users_page():
-    users = User.query \
-        .join(Status, Status.status_id == User.status_id) \
-        .add_columns(User.user_id, Status.status_id, Status.name, User.first_name, User.last_name, User.login) \
-        .all()
+    users = User.query.order_by(User.last_name).all()
 
     return render_template("admin/users.jinja2", title="Přehled uživatelů", users=users)
 
