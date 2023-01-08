@@ -439,7 +439,7 @@ nav ul li a:hover {
     width: 35%;
 }
 
-#prices .price-list {
+.price-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -447,12 +447,12 @@ nav ul li a:hover {
     width: 100%;
 }
 
-#prices .price-list--item {
+.price-list--item {
     display: flex;
     justify-content: space-between;
 }
 
-#prices .material {
+.material {
     font-weight: bold;
 }
 
