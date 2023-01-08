@@ -5,10 +5,10 @@
 
 <div>
 
-    {% for item in price_request %}
-            <p>{{ item.name }}  {{ item.price }} </p>
+    {% for item in prices_request %}
+            <p>{{ item.name }} {{ item.price }}</p>
 
-        {% endfor %}
+    {% endfor %}
 </div>
 {% if user.is_administrator %}
 <div>
