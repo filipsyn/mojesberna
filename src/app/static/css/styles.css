@@ -369,7 +369,7 @@ nav ul li a:hover {
     text-align: center;
 }
 
-#stats .stat-card-list {
+.tile-list {
     margin: 2rem;
     display: flex;
     flex-wrap: wrap;
@@ -377,7 +377,7 @@ nav ul li a:hover {
     gap: 2rem;
 }
 
-#stats .stat-card {
+.tile {
     display: flex;
     background-color: #fff;
     flex-direction: column;
@@ -387,11 +387,11 @@ nav ul li a:hover {
     border-radius: 0.5rem;
 }
 
-#stats .material-name {
+.stat-card--title {
     text-transform: uppercase;
 }
 
-#stats .amount {
+.stat-card--value {
     font-size: 2.25rem;
 }
 
@@ -401,13 +401,13 @@ nav ul li a:hover {
 
 
 @media screen and (max-width: 1180px) {
-    #stats .stat-card {
+    #stats .tile {
         padding: 2rem;
     }
 }
 
 @media screen and (max-width: 768px) {
-    #stats .stat-card-list {
+    #stats .tile-list {
         flex-direction: column;
     }
 }
