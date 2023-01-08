@@ -18,5 +18,12 @@ class Purchase(db.Model):
     buying_employee = db.relationship("User", foreign_keys=[buying_employee_id])
     selling_customer = db.relationship("User", foreign_keys=[selling_customer_id])
 
+    def __init__(self, weight, description, material_id, buying_employee_id, selling_customer_id):
+        self.weight = weight
+        self.description = description
+        self.material_id = material_id
+        self.buying_employee_id = buying_employee_id
+        self.selling_customer_id = selling_customer_id
+
     def __repr__(self):
         return f"Purchase id: {self.purchase_id} - {self.weight} kg on {self.date}"

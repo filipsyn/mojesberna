@@ -48,11 +48,24 @@ def purchases_page():
     return render_template("admin/purchases.jinja2", title=f"Přehled výkupů",
                            purchase_request=purchase_request)
 
-@admin.route('/purchases/new')
+@admin.route('/purchases/new', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.BUYING)
 def purchases_add():
     form = AddPurchaseForm()
+
+    if form.validate_on_submit():
+        new_purchase = Purchase(
+            form.weight.data,
+            form.description.data,
+            form.material_id.data.material_id,
+            current_user.user_id,
+            form.selling_customer_id.data.user_id
+        )
+        db.session.add(new_purchase)
+        db.session.commit()
+
+        return redirect(url_for('admin.purchases_page'))
 
     return render_template("admin/addPurchase.jinja2", title=f"Přehled výkupů",
                            form=form)
