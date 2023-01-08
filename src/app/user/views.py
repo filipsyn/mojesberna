@@ -50,6 +50,14 @@ def dashboard_page():
         'Olovo': 20
     }
 
-    return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}",
-                           user_attributes=user_attributes, price_list=price_list,
-                           registration_request=registration_request)
+    purchases = Purchase.query. \
+        filter_by(buying_employee_id=current_user.user_id) \
+        .limit(5) \
+        .all()
+
+    data = dict(user_attributes=user_attributes,
+                registration_requests=registration_requests,
+                price_list=price_list,
+                purchases=purchases
+                )
+    return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}", data=data)
