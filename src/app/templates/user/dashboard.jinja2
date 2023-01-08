@@ -1,7 +1,9 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <h1>Přehled uživatele {{ current_user.login }}</h1>
+    {% if current_user.is_administrator() or current_user.is_worker() %}
+        <h1>Přehled {% if current_user.is_administrator() %}správce{% else %}
+            pracovníka{% endif %} {{ current_user.login }}</h1>
 
     <div>
         <h2>Ceník</h2>
