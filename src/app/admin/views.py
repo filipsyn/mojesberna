@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
-from .forms import AddUserForm, ChangeRoleForm
+from .forms import AddUserForm, ChangeRoleForm, AddPurchaseForm
 from .. import db
 from ..decorators import permission_required
 
@@ -47,6 +47,16 @@ def purchases_page():
         User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name, Material.name, Purchase.weight, PriceList.price).all()
     return render_template("admin/purchases.jinja2", title=f"Přehled výkupů",
                            purchase_request=purchase_request)
+
+@admin.route('/purchases/new')
+@login_required
+@permission_required(Permission.BUYING)
+def purchases_add():
+    form = AddPurchaseForm()
+
+    return render_template("admin/addPurchase.jinja2", title=f"Přehled výkupů",
+                           form=form)
+
 
 
 @admin.route('/users/add', methods=['GET', 'POST'])
