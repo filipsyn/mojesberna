@@ -567,6 +567,11 @@ section#dashboard {
     align-items: center;
 }
 
+.list--item--right a {
+    display: flex;
+    text-decoration: none
+}
+
 .text-subtle {
     color: var(--text-subtle);
 }
