@@ -3,42 +3,67 @@
 {% block content %}
     <main>
         {% if current_user.is_administrator() or current_user.is_worker() %}
+            {# Dashboard for workers and admins #}
             <h1>Přehled {% if current_user.is_administrator() %}správce{% else %}
                 pracovníka{% endif %} {{ current_user.login }}</h1>
 
             <section id="dashboard">
-                <div id="registration-requests">
-                    <h2>Žádosti o registraci</h2>
-                    <div class="list">
-                        {% for req in registration_request %}
-                            <div class="list--item">
-                                <div class="list--item--text">
-                                    <p>{{ req.first_name }} {{ req.last_name }} </p>
-                                </div>
-                                <a class="list--item--expand" href="#">
-                                    <span class="material-symbols-outlined">more_vert</span>
-                                </a>
+            <div id="registration-requests">
+                <h2>Žádosti o registraci</h2>
+                <div class="list">
+                    {% for req in data.registration_requests %}
+                        <div class="list--item">
+                            <div class="list--item--text">
+                                <p>{{ req.first_name }} {{ req.last_name }} </p>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div id="last-purchases">
-                    <h2>Poslední výkupy</h2>
-                </div>
-
-                <div class="price-list">
-                    <h2>Ceník</h2>
-                    {% for material, price in price_list.items() %}
-                        <p>{{ material }} {{ price }} Kč/Kg</p>
+                            <a class="list--item--right" href="#">
+                                <span class="material-symbols-outlined">done</span>
+                            </a>
+                        </div>
                     {% endfor %}
                 </div>
-            </section>
-        {% else %}
-            <section id="dashboard">
 
-            </section>
+                <button class="secondary">Přehled žádostí</button>
+            </div>
+
+            <div id="last-purchases">
+                <h2>Moje poslední výkupy</h2>
+                <div class="list">
+                    {% for purchase in data.purchases %}
+                        <div class="list--item">
+                            <div class="list--item--text">
+                                <p>{{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}</p>
+                                <p>{{ purchase.date }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                {{ purchase.material.name }} ({{ purchase.weight }} Kg)
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="secondary">Přehled výkupů</button>
+            </div>
+
+        {% else %}
+            {# Dashboard for "normal" users #}
 
         {% endif %}
+        <div id="price-list">
+            <h2>Ceník</h2>
+            <div class="list">
+                {% for material, price in data.price_list.items() %}
+                    <div class="list--item">
+                        <div class="list--item--text"><span>{{ material }}</span></div>
+                        <div class="list--item--right"><span>{{ price }}&nbsp;Kč/Kg</span></div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if current_user.is_administrator() or current_user.is_worker() %}
+                <button class="secondary">Upravit</button>
+            {% endif %}
+            <button class="secondary">Více</button>
+        </div>
+        </section>
     </main>
 {% endblock %} {# End of block content #}
