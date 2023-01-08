@@ -5,7 +5,7 @@ from .forms import AddUserForm, ChangeRoleForm
 from .. import db
 from ..decorators import permission_required
 
-from ..models import User, Material, PriceList, Status, Address, Role, Permission
+from ..models import User, Material, PriceList, Status, Address, Role, Permission, Purchase
 from ..user.forms import ChangeStatusForm
 from ..user.forms.updatePriceList import UpdatePriceListForm
 
@@ -24,20 +24,29 @@ def users_page():
     return render_template("admin/users.jinja2", title=f"Přehled uživatelů",
                            user_request=user_request)
 
+
 @admin.route('/usersRole')
 @login_required
 @permission_required(Permission.CHANGE_ROLE)
-
 def users_role_page():
     user_role_request = User.query.join(Role, Role.role_id == User.role_id).add_columns(User.user_id,
-                                                                                           Role.role_id,
-                                                                                           Role.name, User.first_name,
-                                                                                           User.last_name,
-                                                                                           User.login).all()
+                                                                                        Role.role_id,
+                                                                                        Role.name, User.first_name,
+                                                                                        User.last_name,
+                                                                                        User.login).all()
     return render_template("admin/userRole.jinja2", title=f"Přehled práv uživatelů",
                            user_role_request=user_role_request)
 
 
+@admin.route('/purchases')
+@login_required
+@permission_required(Permission.BUYING)
+def purchases_page():
+    purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
+                                                                                                          Purchase.material_id == Material.material_id).join(
+        User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name, Material.name, Purchase.weight, PriceList.price).all()
+    return render_template("admin/purchases.jinja2", title=f"Přehled výkupů",
+                           purchase_request=purchase_request)
 
 
 @admin.route('/users/add', methods=['GET', 'POST'])

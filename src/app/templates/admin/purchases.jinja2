@@ -1,0 +1,18 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <h1>Přehled Výkupů</h1>
+
+    <div>
+
+
+        {% for zadost in purchase_request %}
+            <p>{{ zadost.first_name }}  {{ zadost.last_name }} - {{ zadost.name }} {{ zadost.weight }} kg {{ zadost.price * zadost.weight }} Kč </p>
+
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %} {# End of block content #}
