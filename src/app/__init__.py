@@ -45,5 +45,4 @@ def create_app(config_name='default') -> Flask:
     from .admin.views import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix="/admin/")
 
-
     return app
