@@ -35,6 +35,13 @@ def create_app(config_name='default') -> Flask:
     app.cli.add_command(seed_data)
     app.shell_context_processor(shell_context)
 
+    # Import and register error handlers
+    from .error_handlers import error_forbidden, error_unauthorized, error_page_not_found, error_internal_server_error
+    app.register_error_handler(401, error_unauthorized)
+    app.register_error_handler(403, error_forbidden)
+    app.register_error_handler(404, error_page_not_found)
+    app.register_error_handler(500, error_internal_server_error)
+
     # Importing blueprints
     from .main.views import main as main_blueprint
     app.register_blueprint(main_blueprint)
