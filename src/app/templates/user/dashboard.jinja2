@@ -47,6 +47,37 @@
 
         {% else %}
             {# Dashboard for "normal" users #}
+            <h1>Přehled uživatele {{ current_user.login }}</h1>
+            <section id="dashboard">
+
+            <div>
+                <h2>Uživatelské statistiky</h2>
+                <div class="tile-list">
+                    <div class="tile">
+                        <p class="tile--title">K vyplacení</p>
+                        <p class="tile--value">{{ 380 }} Kč</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Moje poslední výkupy</h2>
+                <div class="list">
+                    {% for purchase in data.purchases %}
+                        <div class="list--item">
+                            <div class="list--item--text">
+                                <p>{{ purchase.material.name }}</p>
+                                <p>{{ purchase.date }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                ({{ purchase.weight }} Kg)
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="secondary">Přehled výkupů</button>
+            </div>
 
         {% endif %}
         <div id="price-list">
