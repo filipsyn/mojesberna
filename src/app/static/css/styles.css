@@ -486,3 +486,31 @@ nav ul li a:hover {
         height: auto;
     }
 }
+
+
+/* Error info styling */
+section#error-info {
+    margin: 1rem auto;
+    padding: 2rem;
+    border: 2px solid var(--border-gray);
+    max-width: fit-content;
+    display: flex;
+    background-color: white;
+}
+
+section#error-info img {
+    height: 50vh;
+    margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+    section#error-info {
+        margin: 1rem 1rem;
+    }
+
+    section#error-info img {
+        width: 80%;
+        height: auto;
+    }
+
+}
