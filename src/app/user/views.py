@@ -63,9 +63,6 @@ def dashboard_page():
             .limit(5) \
             .all()
 
-    data = dict(user_attributes=user_attributes,
-                registration_requests=registration_requests,
-                price_list=price_list,
-                purchases=purchases
-                )
+    data = dict(user_attributes=user_attributes, registration_requests=registration_requests, price_list=price_list,
+                purchases=purchases)
     return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}", data=data)
