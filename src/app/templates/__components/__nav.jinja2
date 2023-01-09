@@ -37,6 +37,7 @@
             <li class="has-dropdown"><a href="#">{{ current_user.login }} <span class="material-symbols-outlined">expand_more</span></a>
                 <ul class="dropdown">
                     <li><a href="{{ url_for('user.view_change_password_page') }}">Změnit heslo</a></li>
+                    <li><a href="{{ url_for('user.view_change_personal_page') }}">Změnit osobní údaje</a></li>
                     <li><a href="{{ url_for('auth.logout') }}">Odhlásit se</a></li>
                 </ul>
             </li>

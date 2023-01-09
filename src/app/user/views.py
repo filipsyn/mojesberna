@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 
 from . import get_user_attributes
-from .forms import ChangePasswordform
+from .forms import ChangePasswordform, ChangePersonalForm
 from .. import db
 from ..decorators import permission_required
 from ..models import User, Material, PriceList, Permission, Purchase, UserStatus, Status
@@ -22,6 +22,22 @@ def view_change_password_page():
         flash('Změna hesla proběhla úspěšně')
         return redirect(url_for('auth.logout'))
     return render_template('user/changePassword.jinja2', title='zmena', form=form)
+
+@user.route('/changePersonal', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.SELF_MANAGEMENT)
+def view_change_personal_page():
+    form = ChangePersonalForm()
+    if form.validate_on_submit():
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.telephone_number = form.telephone_number.data
+
+        db.session.commit()
+        flash('Změna údajů proběhla úspěšně')
+        return redirect(url_for('auth.logout'))
+    return render_template('user/changePersonal.jinja2', title='zmena', form=form)
+
 
 
 @user.route('/dashboard')

@@ -1,0 +1,25 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <main>
+    <h1>Registrace</h1>
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>Základní informace</p><br>
+        {{ form.first_name.label }}
+        {{ form.first_name }}
+        <br>
+
+        {{ form.last_name.label }}
+        {{ form.last_name }}
+        <br>
+
+        {{ form.telephone_number.label }}
+        {{ form.telephone_number }}
+        <br>
+
+        {{ form.submit() }}
+    </form>
+    </main>
+{% endblock %} {# End of block content #}

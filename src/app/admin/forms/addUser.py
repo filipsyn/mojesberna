@@ -24,4 +24,4 @@ class AddUserForm(FlaskForm):
     city = StringField('Město/Obec', validators=[DataRequired()])
     zip_code = StringField('PSČ', validators=[DataRequired(), Length(min=5, message="PSČ musí mít alespoň 5 čísel")])
 
-    submit = SubmitField('Registrovat se')
+    submit = SubmitField('Přidat uživatele')
