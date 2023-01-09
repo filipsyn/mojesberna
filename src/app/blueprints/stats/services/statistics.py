@@ -50,7 +50,7 @@ class Statistics:
 
 
 
-    @main.route('/lives_money', methods='GET')
+
     def live_earnings(self):
         return db.session.execute('''
                 SELECT sum(price)
@@ -61,7 +61,7 @@ class Statistics:
                 WHERE users.user_id = ? 
                  ''', self.m_user.user_id).fetchall()
 
-    @main.route('/total_material', methods='GET')
+
     def total_bought_material(self, mat_name: str):
         return db.session.execute('''
                 SELECT materials.name, sum(purchases.weight)
