@@ -653,26 +653,54 @@ footer span {
     list-style-type: none;
 }
 
-section#profile-header {
+header#profile-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-section#profile-header .profile-controls {
+header#profile-header .profile-controls {
     display: flex;
     gap: 1rem;
+    align-items: center;
 }
 
 @media screen and (max-width: 768px) {
-    section#profile-header {
+    header#profile-header {
         flex-direction: column;
     }
 
-    section#profile-header .profile-controls {
+    header#profile-header .profile-controls {
         flex-direction: column;
         width: 100%;
         align-items: center;
+    }
+
+}
+
+section#profile-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /*grid-template-columns: 1fr 1fr 2fr;*/
+    gap: 2rem
+}
+
+section#profile-info section {
+    width: 100%;
+}
+
+section#profile-info .list--item {
+    width: 100%;
+}
+
+#user-info p {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    section#profile-info {
+        grid-template-columns: 1fr;
     }
 
 }
