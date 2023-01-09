@@ -52,7 +52,7 @@
                 {% endif %}
             {% endif %}
             <section id="last-purchases">
-                {% if data.purchase %}
+                {% if data.purchases %}
                     {% if data.user.is_administrator() or data.user.is_worker() %}
                         <h2>Odkupy provedené tímto pracovníkem</h2>
                     {% else %}
