@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, flash
 from flask_login import current_user
 from .. import db
-
+from sqlalchemy.sql import select
 from .forms.EditPriceForm import EditPriceForm
 from ..models import Material, PriceList
+from datetime import datetime, timedelta
 
 main = Blueprint('main', __name__)
 
@@ -39,11 +40,22 @@ def add_material_prices():
     test_request = PriceList.query.with_entities(Material.name, db.func.max(PriceList.price_id)).join(Material, Material.material_id == PriceList.material_id).add_columns(
                                                                                         Material.name,
                                                                                         PriceList.price).group_by(
-                                                                                        Material.name, PriceList.price).all()
+                                                                                        Material.name, PriceList.price ,PriceList.date).all()
+
+    price_query = db.session.execute(''' WITH recent_prices AS (SELECT p.price_id, p.material_id
+                       FROM price_list p
+                                JOIN (SELECT material_id, MAX(date) AS max_date
+                                      FROM price_list
+                                      GROUP BY material_id) m ON p.material_id = m.material_id AND p.date = m.max_date)
+    SELECT price, name
+    FROM recent_prices
+         JOIN price_list ON recent_prices.price_id = price_list.price_id
+         JOIN materials ON recent_prices.material_id = materials.material_id;''').fetchall()
+
 
     user = current_user
 
-    return render_template('main/price_list.jinja2', title='Ceník', prices_request=test_request, user=user)
+    return render_template('main/price_list.jinja2', title='Ceník', prices_request=price_query, user=user)
 
 
 @main.route('/prices/edit', methods=['GET', 'POST'])
