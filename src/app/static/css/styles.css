@@ -257,7 +257,7 @@ nav ul li a:hover {
 }
 
 .dropdown {
-    opacity: 0;
+    display: none;
     position: absolute;
     top: 60px;
     transform: translateX(-45%);
@@ -287,7 +287,7 @@ nav ul li a:hover {
 }
 
 .has-dropdown:focus-within .dropdown {
-    opacity: 1;
+    display: flex;
     pointer-events: auto;
 }
 
@@ -316,6 +316,10 @@ nav ul li a:hover {
         position: relative;
         top: 0;
         transform: none;
+    }
+
+    .dropdown {
+        display: flex;
     }
 
 }
