@@ -1,13 +1,15 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <form action="#" method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.opts }}
-        <br>
-        {{ form.price.label }}
-        {{ form.price }}
-        <br>
-        {{ form.submit }}
-    </form>
+    <main>
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.opts }}
+            <br>
+            {{ form.price.label }}
+            {{ form.price }}
+            <br>
+            {{ form.submit }}
+        </form>
+    </main>
 {% endblock %} {# End of block content #}
