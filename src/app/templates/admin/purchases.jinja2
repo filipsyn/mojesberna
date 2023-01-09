@@ -1,18 +1,27 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <h1>Přehled Výkupů</h1>
+    <main>
+        <h1>Přehled Výkupů</h1>
 
-    <div>
+        <div>
 
-        <a href="{{ url_for('admin.purchases_add') }}">Přidat Výkup</a>
-        {% for zadost in purchase_request %}
-            <p>{{ zadost.first_name }}  {{ zadost.last_name }} - {{ zadost.name }} {{ zadost.weight }} kg {{ zadost.price * zadost.weight }} Kč </p>
+            <a href="{{ url_for('admin.purchases_add') }}">
+                <button class="primary">Přidat Výkup</button>
+            </a>
+            <div class="list">
+                {% for zadost in purchase_request %}
+                    <div class="list--item">
+                        <div class="list--item--text">
+                            <p>{{ zadost.first_name }} {{ zadost.last_name }} - {{ zadost.name }} {{ zadost.weight }}
+                                kg {{ zadost.price * zadost.weight }} Kč </p>
+                        </div>
+                    </div>
 
-        {% endfor %}
-    </div>
+                {% endfor %}
+            </div>
+        </div>
 
 
-
-
+    </main>
 {% endblock %} {# End of block content #}
