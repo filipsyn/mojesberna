@@ -601,6 +601,7 @@ section#dashboard {
 .text-subtle {
     color: var(--text-subtle);
 }
+
 /* Footer styling */
 footer {
     background: white;
@@ -618,12 +619,14 @@ footer h3 {
 footer ul {
     color: black;
 }
+
 footer div {
     margin-right: 2em;
     margin-bottom: 2em;
     width: 30%;
 }
-footer span{
+
+footer span {
     color: black;
     margin-bottom: 2em;
     width: 30%;
@@ -635,4 +638,13 @@ footer span{
     footer div {
         width: 100%;
     }
+}
+
+.form-errors {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    padding: 1rem 2rem;
+    margin: 2rem;
+    display: flex;
+    list-style-type: none;
 }
