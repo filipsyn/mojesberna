@@ -205,6 +205,10 @@ ul.flashes li {
     border-radius: 32px;
 }
 
+a.pill {
+    text-decoration: none;
+}
+
 .pill-success {
     color: var(--success-text);
     background-color: var(--success-bg);
@@ -647,4 +651,28 @@ footer span {
     margin: 2rem;
     display: flex;
     list-style-type: none;
+}
+
+section#profile-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+section#profile-header .profile-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    section#profile-header {
+        flex-direction: column;
+    }
+
+    section#profile-header .profile-controls {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
 }
