@@ -1,13 +1,15 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <form action="#" method="POST">
-        {{ form.hidden_tag() }}
+    <main>
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
 
-        {{ form.role_id.label }}
-        {{ form.role_id(value=role_to_change.role_id)}}
-        <br>
+            {{ form.role_id.label }}
+            {{ form.role_id(value=role_to_change.role_id) }}
+            <br>
 
-        {{ form.submit }}
-    </form>
+            {{ form.submit }}
+        </form>
+    </main>
 {% endblock %} {# End of block content #}
