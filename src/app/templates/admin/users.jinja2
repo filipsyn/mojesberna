@@ -22,7 +22,8 @@
                                     <span
                                             class="material-symbols-outlined">done</span></a>
                             {% elif user.is_active() %}
-                                <a class="pill pill-error" href="#"><span class="button-description">Ban</span><span
+                                <a class="pill pill-error" href="{{ url_for('user.ban_user', id=user.user_id) }}"><span
+                                        class="button-description">Ban</span><span
                                         class="material-symbols-outlined">cancel</span></a>
                             {% elif user.is_banned() %}
                                 <a class="pill pill-warning" href="#"><span class="button-description">Unban</span><span

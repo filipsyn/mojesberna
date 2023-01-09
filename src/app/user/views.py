@@ -141,3 +141,13 @@ def confirm_user(id):
         db.session.commit()
         flash(f"Registrace uživatele {searched_user.login} potvrzena", 'success')
     return redirect(url_for('admin.view_users_page'))
+
+
+@user.route('<id>/ban')
+def ban_user(id):
+    searched_user = User.query.get_or_404(id)
+    if searched_user.status.name == UserStatus.ACTIVE.value:
+        searched_user.ban()
+        db.session.commit()
+        flash(f"Uživatel {searched_user.login} byl zablokován", 'warning')
+    return redirect(url_for('admin.view_users_page'))
