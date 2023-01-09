@@ -17,7 +17,7 @@ def view_register_page():
             form.first_name.data,
             form.last_name.data,
             form.telephone_number.data,
-            form.login.data,
+            form.username.data,
             form.password.data
         )
         address = Address(
