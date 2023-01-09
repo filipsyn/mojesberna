@@ -10,7 +10,7 @@ from ..models import User, Material, PriceList, Permission, Purchase, UserStatus
 user = Blueprint('user', __name__)
 
 
-@user.route('/changePassword', methods=['GET', 'POST'])
+@user.route('/change/password', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
 def view_change_password_page():
@@ -26,7 +26,7 @@ def view_change_password_page():
     return render_template('user/changePassword.jinja2', title='zmena', form=form)
 
 
-@user.route('/changePersonal', methods=['GET', 'POST'])
+@user.route('/change/personal-info', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
 def view_change_personal_page():
@@ -45,7 +45,7 @@ def view_change_personal_page():
     return render_template('user/changePersonal.jinja2', title='zmena', form=form)
 
 
-@user.route('/changeAddress', methods=['GET', 'POST'])
+@user.route('/change/address', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
 def view_change_address_page():
