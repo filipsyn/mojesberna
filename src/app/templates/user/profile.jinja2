@@ -9,7 +9,6 @@
                 <p>{{ data.user.status.name }}, {{ data.user.role.name }}</p>
             </div>
             <div class="profile-controls">
-                <button class="secondary">Změnit údaje</button>
                 {% if current_user.is_administrator() or current_user.is_worker() %}
                     {% if data.user.is_waiting() %}
                         <a class="pill pill-success"
@@ -28,6 +27,7 @@
                                 class="material-symbols-outlined">restart_alt</span></a>
                     {% endif %}
                 {% endif %}
+                <button class="secondary">Změnit údaje</button>
             </div>
         </section>
     </main>
