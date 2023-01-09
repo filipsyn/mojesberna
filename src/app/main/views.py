@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, flash
 
 from .forms.EditPriceForm import EditPriceForm
 from .. import db
+from ..blueprints.stats.services.statistics import Statistics
 from ..models import PriceList
 
 main = Blueprint('main', __name__)
@@ -9,17 +10,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def view_home_page():
-    price_query = db.session.execute('''
-    WITH recent_prices AS (SELECT p.price_id, p.material_id
-                       FROM price_list p
-                                JOIN (SELECT material_id, MAX(date) AS max_date
-                                      FROM price_list
-                                      GROUP BY material_id) m ON p.material_id = m.material_id AND p.date = m.max_date)
-    SELECT price, name
-    FROM recent_prices
-         JOIN price_list ON recent_prices.price_id = price_list.price_id
-         JOIN materials ON recent_prices.material_id = materials.material_id;
-         ''').fetchall()
+    price_query = Statistics.get_price_list()
     data = {
         'stats': {
             'Noviny': 1200,
@@ -40,17 +31,7 @@ def view_greeting_page():
 
 @main.route('/prices')
 def add_material_prices():
-    price_query = db.session.execute('''
-    WITH recent_prices AS (SELECT p.price_id, p.material_id
-                       FROM price_list p
-                                JOIN (SELECT material_id, MAX(date) AS max_date
-                                      FROM price_list
-                                      GROUP BY material_id) m ON p.material_id = m.material_id AND p.date = m.max_date)
-    SELECT price, name
-    FROM recent_prices
-         JOIN price_list ON recent_prices.price_id = price_list.price_id
-         JOIN materials ON recent_prices.material_id = materials.material_id;
-         ''').fetchall()
+    price_query = Statistics.get_price_list()
 
     return render_template('main/price_list.jinja2', title='Ceník', prices_request=price_query)
 

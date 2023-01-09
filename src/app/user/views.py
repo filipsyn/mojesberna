@@ -5,8 +5,9 @@ from sqlalchemy import desc
 from . import get_user_attributes
 from .forms import ChangePasswordform, ChangePersonalForm, ChangeAddressForm
 from .. import db
+from ..blueprints.stats.services.statistics import Statistics
 from ..decorators import permission_required
-from ..models import User, Permission, Purchase, UserStatus, Status, Address, PriceList, Material
+from ..models import User, Permission, Purchase, UserStatus, Status, Address
 
 user = Blueprint('user', __name__)
 
@@ -111,10 +112,7 @@ def view_change_secondary_address_page(id):
 @permission_required(Permission.ACCESS)
 def view_dashboard_page():
     user_attributes = get_user_attributes(current_user)
-    price_list = Material.query. \
-        join(PriceList, Material.material_id == PriceList.material_id) \
-        .add_columns(Material.material_id, PriceList.price_id, Material.name, PriceList.price) \
-        .all()
+    price_list = Statistics.get_price_list()
 
     waiting_status = Status.query.filter_by(name=UserStatus.WAITING.value).first()
 
