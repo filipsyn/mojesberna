@@ -17,7 +17,8 @@
                         </div>
                         <div class="list--item--right">
                             {% if user.is_waiting() %}
-                                <a class="pill pill-success" href="#"><span class="button-description">Potvrdit</span>
+                                <a class="pill pill-success" href="{{ url_for('user.confirm_user', id=user.user_id) }}"><span
+                                        class="button-description">Potvrdit</span>
                                     <span
                                             class="material-symbols-outlined">done</span></a>
                             {% elif user.is_active() %}

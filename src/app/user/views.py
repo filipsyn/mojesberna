@@ -129,3 +129,13 @@ def view_dashboard_page():
     data = dict(user_attributes=user_attributes, registration_requests=registration_requests, price_list=price_list,
                 purchases=purchases)
     return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}", data=data)
+
+
+@user.route('/<id>/confirm')
+def confirm_user(id):
+    searched_user = User.query.get_or_404(id)
+    if searched_user.status.name == UserStatus.WAITING.value:
+        searched_user.confirm()
+        db.session.commit()
+        flash(f"Registrace uživatele {searched_user.login} potvrzena", 'success')
+    return redirect(url_for('admin.view_users_page'))
