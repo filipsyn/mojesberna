@@ -28,29 +28,41 @@ def view_change_password_page():
     return render_template('user/changePassword.jinja2', title='zmena', form=form)
 
 
-@user.route('/change/personal-info', methods=['GET', 'POST'])
+@user.route('<id>/settings', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
-def view_change_personal_page():
+def view_change_personal_page(id):
+    # Page is only accessible by workers and user it belongs to
+    if not ((current_user.user_id == int(id)) or current_user.is_administrator() or current_user.is_worker()):
+        abort(403)
+
+    edited_user = User.query.get_or_404(id)
+
     form = ChangePersonalForm()
 
     if form.validate_on_submit():
-        current_user.first_name = form.first_name.data
-        current_user.last_name = form.last_name.data
-        current_user.telephone_number = form.telephone_number.data
+        edited_user.first_name = form.first_name.data
+        edited_user.last_name = form.last_name.data
+        edited_user.telephone_number = form.telephone_number.data
 
         db.session.commit()
 
         flash('Změna údajů proběhla úspěšně')
         return redirect(url_for('user.view_dashboard_page'))
 
-    return render_template('user/changePersonal.jinja2', title='zmena', form=form)
+    return render_template('user/changePersonal.jinja2', title='zmena', form=form, user=edited_user)
 
 
-@user.route('/change/address/primary', methods=['GET', 'POST'])
+@user.route('<id>/change/address/primary', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
-def view_change_address_page():
+def view_change_address_page(id):
+    # Page is only accessible by workers and user it belongs to
+    if not ((current_user.user_id == int(id)) or current_user.is_administrator() or current_user.is_worker()):
+        abort(403)
+
+    edited_user = User.query.get_or_404(id)
+
     form = ChangeAddressForm()
     if form.validate_on_submit():
         address = Address(
@@ -59,19 +71,25 @@ def view_change_address_page():
             form.city.data,
             form.zip_code.data
         )
-        current_user.permanent_residence = address
+        edited_user.permanent_residence = address
         db.session.add(address)
         db.session.commit()
 
         flash('Změna údajů proběhla úspěšně')
         return redirect(url_for('user.view_dashboard_page'))
-    return render_template('user/changeAddress.jinja2', title='zmena', form=form)
+    return render_template('user/changeAddress.jinja2', title='Změna adresy', form=form)
 
 
-@user.route('/change/address/secondary', methods=['GET', 'POST'])
+@user.route('<id>/change/address/secondary', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
-def view_change_secondary_address_page():
+def view_change_secondary_address_page(id):
+    # Page is only accessible by workers and user it belongs to
+    if not ((current_user.user_id == int(id)) or current_user.is_administrator() or current_user.is_worker()):
+        abort(403)
+
+    edited_user = User.query.get_or_404(id)
+
     form = ChangeAddressForm()
     if form.validate_on_submit():
         address = Address(
@@ -80,13 +98,13 @@ def view_change_secondary_address_page():
             form.city.data,
             form.zip_code.data
         )
-        current_user.temporary_residence = address
+        edited_user.temporary_residence = address
         db.session.add(address)
         db.session.commit()
 
         flash('Změna údajů proběhla úspěšně')
         return redirect(url_for('user.view_dashboard_page'))
-    return render_template('user/changeSecondAddress.jinja2', title='zmena', form=form)
+    return render_template('user/changeSecondAddress.jinja2', title='Změna sekundární adresy', form=form)
 
 
 @user.route('/dashboard')

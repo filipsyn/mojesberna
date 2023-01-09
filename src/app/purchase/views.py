@@ -47,3 +47,11 @@ def view_add_purchase_page():
 
     return render_template("admin/addPurchase.jinja2", title=f"Přehled výkupů",
                            form=form)
+
+
+@purchase.route('<int:id>')
+@login_required
+def view_purchase_detail_page(id: int):
+    found_purchase = Purchase.query.get_or_404(id)
+    data = dict(purchase=found_purchase)
+    return render_template('purchase/detail.jinja2', title='Detail výkupu', data=data)

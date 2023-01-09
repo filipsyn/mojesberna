@@ -94,7 +94,9 @@
                 {% endfor %}
             </div>
             {% if current_user.is_administrator() or current_user.is_worker() %}
-                <button class="secondary">Upravit</button>
+                <a href="{{ url_for('main.edit_material_price') }}">
+                    <button class="secondary">Upravit</button>
+                </a>
             {% endif %}
             <button class="secondary">Více</button>
         </div>

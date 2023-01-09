@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from flask_login import current_user, login_required
+from flask_login import login_required
 
-from .forms import AddUserForm, ChangeRoleForm, AddPurchaseForm
+from .forms import AddUserForm, ChangeRoleForm
 from .services import UserListService
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Material, PriceList, Address, Role, Permission, Purchase
+from ..models import User, PriceList, Address, Role, Permission
 from ..user.forms import ChangeStatusForm
 from ..user.forms.updatePriceList import UpdatePriceListForm
 
@@ -33,9 +33,6 @@ def users_role_page():
                                                                                         User.login).all()
     return render_template("admin/userRole.jinja2", title=f"Přehled práv uživatelů",
                            user_role_request=user_role_request)
-
-
-
 
 
 @admin.route('/users/add', methods=['GET', 'POST'])
@@ -77,12 +74,10 @@ def update_price(id):
         try:
             db.session.commit()
             return redirect(url_for('user.view_dashboard_page'))
-            return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
         except:
             flash('Error')
             return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
-    else:
-        return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
+    return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
 
 
 @admin.route('/changeStatus/<int:id>', methods=['GET', 'POST'])
@@ -100,8 +95,7 @@ def change_status(id):
         except:
             flash('Error')
             return render_template("user/changeStatus.jinja2", form=form, status_to_change=status_to_change)
-    else:
-        return render_template("user/changeStatus.jinja2", form=form, status_to_change=status_to_change)
+    return render_template("user/changeStatus.jinja2", form=form, status_to_change=status_to_change)
 
 
 @admin.route('/changeRole/<int:id>', methods=['GET', 'POST'])
@@ -114,10 +108,8 @@ def change_role(id):
         role_to_change.role_id = request.form['role_id']
         try:
             db.session.commit()
-            return redirect(url_for('admin.users_role_page'))
-            return render_template("admin/changeRole.jinja2", form=form, role_to_change=role_to_change)
+            return redirect(url_for('admin.view_users_page'))
         except:
             flash('Error')
             return render_template("admin/changeRole.jinja2", form=form, role_to_change=role_to_change)
-    else:
-        return render_template("admin/changeRole.jinja2", form=form, role_to_change=role_to_change)
+    return render_template("admin/changeRole.jinja2", form=form, role_to_change=role_to_change)
