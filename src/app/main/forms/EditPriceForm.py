@@ -7,6 +7,6 @@ from ...models.material import Material
 
 
 class EditPriceForm(FlaskForm):
-    opts = QuerySelectField(query_factory=Material.get_query, allow_blank=False, get_label=lambda x: x.name)
+    opts = QuerySelectField('Materiál', query_factory=Material.get_query, allow_blank=False, get_label=lambda x: x.name)
     price = StringField('Cena (Kč)', validators=[DataRequired()])
     submit = SubmitField('Potvrdit')
