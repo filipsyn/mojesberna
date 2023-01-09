@@ -162,7 +162,7 @@ def unban_user(id):
 @user.route('<id>')
 @login_required
 def view_profile_page(id):
-    user = User.query.get_or_404(id)
+    found_user = User.query.get_or_404(id)
 
-    data = dict(user=user)
+    data = dict(user=found_user)
     return render_template('user/profile.jinja2', data=data, title="")
