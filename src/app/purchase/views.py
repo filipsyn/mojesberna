@@ -47,3 +47,9 @@ def view_add_purchase_page():
 
     return render_template("admin/addPurchase.jinja2", title=f"Přehled výkupů",
                            form=form)
+
+
+@purchase.route('<id>')
+@login_required
+def view_purchase_detail_page():
+    raise NotImplementedError
