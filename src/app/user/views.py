@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from flask_login import current_user, login_required
+from sqlalchemy import desc
 
 from . import get_user_attributes
 from .forms import ChangePasswordform, ChangePersonalForm, ChangeAddressForm
@@ -108,13 +109,13 @@ def view_dashboard_page():
     if current_user.is_administrator() or current_user.is_worker():
         purchases = Purchase.query. \
             filter_by(buying_employee_id=current_user.user_id) \
-            .order_by(Purchase.purchase_id) \
+            .order_by(desc(Purchase.date)) \
             .limit(5) \
             .all()
     else:
         purchases = Purchase.query. \
             filter_by(selling_customer_id=current_user.user_id) \
-            .order_by(Purchase.purchase_id) \
+            .order_by(desc(Purchase.date)) \
             .limit(5) \
             .all()
 
