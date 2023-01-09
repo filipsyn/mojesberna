@@ -14,7 +14,8 @@
 
         <li><a href="{{ url_for('main.view_home_page') }}">Domů</a></li>
         {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('user.dashboard_page') }}">Přehled</a></li>
+            <li><a href="{{ url_for('user.view_dashboard_page') }}">Přehled</a></li>
+            <li><a href="{{ url_for('purchase.purchases_page') }}">Výkupy</a></li>
         {% endif %}
         <li><a href="{{ url_for('main.view_home_page') }}#about-us">O nás</a></li>
         <li><a href="{{ url_for('main.view_home_page') }}#prices">Ceník</a></li>
@@ -28,15 +29,16 @@
                 <li class="has-dropdown"><a href="#">Administrace <span
                         class="material-symbols-outlined">expand_more</span></a>
                     <ul class="dropdown">
-                        <li><a href="{{ url_for('admin.purchases_page') }}">Výkupy</a></li>
-                        <li><a href="{{ url_for('admin.users_page') }}">Přehled uživatelů</a></li>
+                        <li><a href="{{ url_for('admin.view_users_page') }}">Přehled uživatelů</a></li>
                         <li><a href="{{ url_for('admin.users_role_page') }}">Role uživatelů</a></li>
                     </ul>
                 </li>
             {% endif %}
             <li class="has-dropdown"><a href="#">{{ current_user.login }} <span class="material-symbols-outlined">expand_more</span></a>
                 <ul class="dropdown">
-                    <li><a href="{{ url_for('user.view_change_password_page') }}">Změnit heslo</a></li>
+                    <li class="dropdown--item"><a
+                            href="{{ url_for('user.view_profile_page', id=current_user.user_id) }}">Profil</a></li>
+                    <li><a href="{{ url_for('user.view_change_personal_page') }}">Nastavení</a></li>
                     <li><a href="{{ url_for('auth.logout') }}">Odhlásit se</a></li>
                 </ul>
             </li>

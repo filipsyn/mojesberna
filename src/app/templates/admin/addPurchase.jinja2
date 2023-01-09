@@ -1,0 +1,25 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <main>
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+
+        {{ form.weight.label }}
+        {{ form.weight }}
+        <br>
+        {{ form.description.label }}
+        {{ form.description }}
+        <br>
+        {{ form.material_id.label }}
+        {{ form.material_id }}
+        <br>
+        {{ form.selling_customer_id.label }}
+        {{ form.selling_customer_id }}
+        <br>
+
+        {{ form.submit }}
+    </form>
+    </main>
+{% endblock %} {# End of block content #}

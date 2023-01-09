@@ -1,52 +1,64 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <h1>Registrace</h1>
-    <form action="#" method="POST">
-        {{ form.hidden_tag() }}
+    <main>
+        <h1>Registrace</h1>
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
 
-        <p>Základní informace</p><br>
-        {{ form.first_name.label }}
-        {{ form.first_name }}
-        <br>
+            {% if form.errors %}
+                <ul class="form-errors">
+                    {% for field, errors in form.errors.items() %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        {{ form.last_name.label }}
-        {{ form.last_name }}
-        <br>
+            <h2>Základní informace</h2><br>
+            {{ form.first_name.label }}
+            {{ form.first_name }}
+            <br>
 
-        {{ form.login.label }}
-        {{ form.login }}
-        <br>
+            {{ form.last_name.label }}
+            {{ form.last_name }}
+            <br>
 
-        {{ form.telephone_number.label }}
-        {{ form.telephone_number }}
-        <br>
+            {{ form.username.label }}
+            {{ form.username }}
+            <br>
 
-        {{ form.password.label }}
-        {{ form.password }}
-        <br>
+            {{ form.telephone_number.label }}
+            {{ form.telephone_number }}
+            <br>
 
-        {{ form.confirm_password.label }}
-        {{ form.confirm_password }}
-        <br>
+            {{ form.password.label }}
+            {{ form.password }}
+            <br>
 
-        <p>Trvalé bydliště</p> <br>
-        {{ form.street.label }}
-        {{ form.street }}
-        <br>
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password }}
+            <br>
 
-        {{ form.house_number.label }}
-        {{ form.house_number }}
-        <br>
+            <h2>Trvalé bydliště</h2> <br>
+            {{ form.street.label }}
+            {{ form.street }}
+            <br>
 
-        {{ form.city.label }}
-        {{ form.city }}
-        <br>
+            {{ form.house_number.label }}
+            {{ form.house_number }}
+            <br>
 
-        {{ form.zip_code.label }}
-        {{ form.zip_code }}
-        <br>
+            {{ form.city.label }}
+            {{ form.city }}
+            <br>
 
-        {{ form.submit() }}
-    </form>
+            {{ form.zip_code.label }}
+            {{ form.zip_code }}
+            <br>
+
+            {{ form.submit() }}
+        </form>
+    </main>
 {% endblock %} {# End of block content #}

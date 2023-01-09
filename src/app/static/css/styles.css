@@ -30,6 +30,8 @@
     --error-text: #67074B;
 
     --margin-large: 2rem;
+
+    --standard-border: 2px solid var(--border-gray);
 }
 
 /*
@@ -53,6 +55,10 @@ body {
 
 html {
     scroll-behavior: smooth;
+}
+
+main {
+    margin: 2rem;
 }
 
 ::selection {
@@ -89,6 +95,10 @@ p {
     font-size: 1rem;
 }
 
+a {
+    color: var(--green-primary);
+}
+
 
 /*
  *  GENERAL LAYOUT
@@ -96,8 +106,6 @@ p {
 
 section {
     margin: 3rem auto;
-    padding: 1rem;
-
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -136,7 +144,7 @@ button.secondary {
 }
 
 button.secondary:hover {
-    background-color: var(--green-primary);
+    background-color: var(--green-light);
     color: white;
 }
 
@@ -191,6 +199,32 @@ ul.flashes li {
 }
 
 
+.pill {
+    display: flex;
+    padding: 0.5rem 1rem;
+    border-radius: 32px;
+}
+
+a.pill {
+    text-decoration: none;
+}
+
+.pill-success {
+    color: var(--success-text);
+    background-color: var(--success-bg);
+}
+
+.pill-error {
+    color: var(--error-text);
+    background-color: var(--error-bg);
+}
+
+.pill-warning {
+    color: var(--warning-text);
+    background-color: var(--warning-bg);
+}
+
+
 /* NAVIGATION */
 
 nav {
@@ -223,7 +257,7 @@ nav ul li a:hover {
 }
 
 .dropdown {
-    opacity: 0;
+    display: none;
     position: absolute;
     top: 60px;
     transform: translateX(-45%);
@@ -253,7 +287,7 @@ nav ul li a:hover {
 }
 
 .has-dropdown:focus-within .dropdown {
-    opacity: 1;
+    display: flex;
     pointer-events: auto;
 }
 
@@ -282,6 +316,10 @@ nav ul li a:hover {
         position: relative;
         top: 0;
         transform: none;
+    }
+
+    .dropdown {
+        display: flex;
     }
 
 }
@@ -365,7 +403,7 @@ nav ul li a:hover {
     text-align: center;
 }
 
-#stats .stat-card-list {
+.tile-list {
     margin: 2rem;
     display: flex;
     flex-wrap: wrap;
@@ -373,7 +411,7 @@ nav ul li a:hover {
     gap: 2rem;
 }
 
-#stats .stat-card {
+.tile {
     display: flex;
     background-color: #fff;
     flex-direction: column;
@@ -383,11 +421,11 @@ nav ul li a:hover {
     border-radius: 0.5rem;
 }
 
-#stats .material-name {
+.tile--title {
     text-transform: uppercase;
 }
 
-#stats .amount {
+.tile--value {
     font-size: 2.25rem;
 }
 
@@ -397,13 +435,13 @@ nav ul li a:hover {
 
 
 @media screen and (max-width: 1180px) {
-    #stats .stat-card {
+    #stats .tile {
         padding: 2rem;
     }
 }
 
 @media screen and (max-width: 768px) {
-    #stats .stat-card-list {
+    #stats .tile-list {
         flex-direction: column;
     }
 }
@@ -417,6 +455,7 @@ nav ul li a:hover {
     flex-direction: row;
     justify-content: space-evenly;
     padding: 1rem;
+    gap: 3rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -434,7 +473,7 @@ nav ul li a:hover {
     width: 35%;
 }
 
-#prices .price-list {
+.price-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -442,12 +481,12 @@ nav ul li a:hover {
     width: 100%;
 }
 
-#prices .price-list--item {
+.price-list--item {
     display: flex;
     justify-content: space-between;
 }
 
-#prices .material {
+.material {
     font-weight: bold;
 }
 
@@ -485,4 +524,225 @@ nav ul li a:hover {
         width: 100%;
         height: auto;
     }
+}
+
+
+/* Error info styling */
+section#error-info {
+    margin: 1rem auto;
+    padding: 2rem;
+    border: 2px solid var(--border-gray);
+    max-width: fit-content;
+    display: flex;
+    background-color: white;
+}
+
+section#error-info img {
+    height: 50vh;
+    margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+    section#error-info {
+        margin: 1rem 1rem;
+    }
+
+    section#error-info img {
+        width: 80%;
+        height: auto;
+    }
+}
+
+/* DASHBOARD styling */
+section#dashboard {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+@media screen and (max-width: 960px) {
+    section#dashboard {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+#registration-requests button {
+    margin-left: auto;
+}
+
+.list {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.list--item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: var(--standard-border);
+    border-radius: 0.5rem;
+}
+
+
+#registration-requests .list--item--right {
+    margin-left: 2rem;
+}
+
+
+.list--item--right {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+}
+
+.list--item--right a {
+    display: flex;
+    text-decoration: none
+}
+
+.text-subtle {
+    color: var(--text-subtle);
+}
+
+/* Footer styling */
+footer {
+    background: white;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.5em 1.5em 0 1.5em;
+}
+
+footer h3 {
+    margin-bottom: 0.5em;
+
+}
+
+footer ul {
+    color: black;
+}
+
+footer div {
+    margin-right: 2em;
+    margin-bottom: 2em;
+    width: 30%;
+}
+
+footer span {
+    color: black;
+    margin-bottom: 2em;
+    width: 30%;
+
+}
+
+
+@media screen and (max-width: 576px) {
+    footer div {
+        width: 100%;
+    }
+}
+
+.form-errors {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    padding: 1rem 2rem;
+    margin: 2rem;
+    display: flex;
+    list-style-type: none;
+}
+
+header#profile-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header#profile-header .profile-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    header#profile-header {
+        flex-direction: column;
+    }
+
+    header#profile-header .profile-controls {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+}
+
+section#profile-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /*grid-template-columns: 1fr 1fr 2fr;*/
+    gap: 2rem
+}
+
+section#profile-info section {
+    width: 100%;
+}
+
+section#profile-info .list--item {
+    width: 100%;
+}
+
+#user-info p {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    section#profile-info {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.controls {
+    display: flex;
+    text-decoration: none;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+
+.controls .list-controls {
+    display: flex;
+    gap: 4rem;
+}
+
+@media screen and (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .controls .list-controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+
+.list-controls--options {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.options--list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }

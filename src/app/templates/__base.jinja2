@@ -12,6 +12,8 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg">
+    {{ moment.include_moment() }}
+    {{ moment.locale(auto_detect=True) }}
     <title>{{ title }} | MojeSběrna</title>
 </head>
 <body>
@@ -26,12 +28,9 @@
 {% endwith %}
 {% include '__components/__nav.jinja2' %}
 
-<main>
+{% block content %}
+{% endblock %}
 
-
-    {% block content %}
-    {% endblock %}
-</main>
 {% include '__components/__footer.jinja2' %}
 </body>
 </html>

@@ -1,11 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
-from .forms import AddUserForm, ChangeRoleForm
+from .forms import AddUserForm, ChangeRoleForm, AddPurchaseForm
+from .services import UserListService
 from .. import db
 from ..decorators import permission_required
-
-from ..models import User, Material, PriceList, Status, Address, Role, Permission, Purchase
+from ..models import User, Material, PriceList, Address, Role, Permission, Purchase
 from ..user.forms import ChangeStatusForm
 from ..user.forms.updatePriceList import UpdatePriceListForm
 
@@ -15,14 +15,11 @@ admin = Blueprint('admin', __name__)
 @admin.route('/users')
 @login_required
 @permission_required(Permission.USER_ADMINISTRATION)
-def users_page():
-    user_request = User.query.join(Status, Status.status_id == User.status_id).add_columns(User.user_id,
-                                                                                           Status.status_id,
-                                                                                           Status.name, User.first_name,
-                                                                                           User.last_name,
-                                                                                           User.login).all()
-    return render_template("admin/users.jinja2", title=f"Přehled uživatelů",
-                           user_request=user_request)
+def view_users_page():
+    filter_option = request.args.get('filter', None, str)
+    users = UserListService.get(filter_option)
+
+    return render_template("admin/users.jinja2", title="Přehled uživatelů", users=users)
 
 
 @admin.route('/usersRole')
@@ -38,15 +35,7 @@ def users_role_page():
                            user_role_request=user_role_request)
 
 
-@admin.route('/purchases')
-@login_required
-@permission_required(Permission.BUYING)
-def purchases_page():
-    purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
-                                                                                                          Purchase.material_id == Material.material_id).join(
-        User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name, Material.name, Purchase.weight, PriceList.price).all()
-    return render_template("admin/purchases.jinja2", title=f"Přehled výkupů",
-                           purchase_request=purchase_request)
+
 
 
 @admin.route('/users/add', methods=['GET', 'POST'])
@@ -87,7 +76,7 @@ def update_price(id):
         price_to_update.price = request.form['price']
         try:
             db.session.commit()
-            return redirect(url_for('user.dashboard_page'))
+            return redirect(url_for('user.view_dashboard_page'))
             return render_template("user/updatePriceList.jinja2", form=form, price_to_update=price_to_update)
         except:
             flash('Error')

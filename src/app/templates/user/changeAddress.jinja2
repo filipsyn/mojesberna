@@ -1,0 +1,29 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <main>
+    <h1>Změnit primární adresu</h1>
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>Trvalé bydliště</p> <br>
+        {{ form.street.label }}
+        {{ form.street }}
+        <br>
+
+        {{ form.house_number.label }}
+        {{ form.house_number }}
+        <br>
+
+        {{ form.city.label }}
+        {{ form.city }}
+        <br>
+
+        {{ form.zip_code.label }}
+        {{ form.zip_code }}
+        <br>
+
+        {{ form.submit() }}
+    </form>
+    </main>
+{% endblock %} {# End of block content #}
