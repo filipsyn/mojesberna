@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from flask_login import current_user, login_required
 
 from . import get_user_attributes
@@ -161,7 +161,11 @@ def unban_user(id):
 
 @user.route('<id>')
 @login_required
-def view_profile_page(id):
+def view_profile_page(id: int):
+    # Page is only accessible by workers and user it belongs to
+    if not ((current_user.user_id == int(id)) or current_user.is_administrator() or current_user.is_worker()):
+        abort(403)
+
     found_user = User.query.get_or_404(id)
 
     if current_user.is_administrator() or current_user.is_worker():
