@@ -16,7 +16,7 @@
                             <div class="list--item--text">
                                 <p>{{ req.first_name }} {{ req.last_name }} </p>
                             </div>
-                            <a class="list--item--right" href="#">
+                            <a class="list--item--right" href="{{ url_for('user.confirm_user', id=req.user_id) }}">
                                 Potvrdit <span class="material-symbols-outlined">done</span>
                             </a>
                         </div>
