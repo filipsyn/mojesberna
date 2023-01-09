@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required
 
 from .forms import AddUserForm, ChangeRoleForm, AddPurchaseForm
+from .services import UserListService
 from .. import db
 from ..decorators import permission_required
 from ..models import User, Material, PriceList, Address, Role, Permission, Purchase
@@ -15,7 +16,8 @@ admin = Blueprint('admin', __name__)
 @login_required
 @permission_required(Permission.USER_ADMINISTRATION)
 def view_users_page():
-    users = User.query.order_by(User.last_name).all()
+    filter_option = request.args.get('filter', None, str)
+    users = UserListService.get(filter_option)
 
     return render_template("admin/users.jinja2", title="Přehled uživatelů", users=users)
 
