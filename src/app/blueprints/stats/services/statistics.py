@@ -14,7 +14,7 @@ class Statistics:
 
     @stats.route('/most_redeemed', methods='GET')
     def most_redeemed_material(self):
-        return db.execute('''
+        return db.session.execute('''
         SELECT materials.name, max(count(materials.material_id))
         FROM materials 
         JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -24,7 +24,7 @@ class Statistics:
 
     @stats.route('/months_money', methods='GET')
     def this_months_money(self):
-        return db.execute('''
+        return db.session.execute('''
                 SELECT sum(price)
                 FROM price_list 
                 JOIN materials ON (materials.material_id=price_list.material_id)
@@ -35,7 +35,7 @@ class Statistics:
 
     @stats.route('/lives_money', methods='GET')
     def live_earnings(self):
-        return db.execute('''
+        return db.session.execute('''
                 SELECT sum(price)
                 FROM price_list 
                 JOIN materials ON (materials.material_id=price_list.material_id)
@@ -46,7 +46,7 @@ class Statistics:
 
     @stats.route('/total_material', methods='GET')
     def total_bought_material(self, mat_name: str):
-        return db.execute('''
+        return db.session.execute('''
                 SELECT materials.name, sum(purchases.weight)
                 FROM materials 
                 JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -56,7 +56,7 @@ class Statistics:
 
     @stats.route('/total', methods='GET')
     def total_bought(self):
-        return db.execute('''
+        return db.session.execute('''
                     SELECT sum(purchases.weight)
                     FROM materials 
                     JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -66,7 +66,7 @@ class Statistics:
 
     @staticmethod
     def most_redeemed_material_for_all_users():
-        return db.execute('''
+        return db.session.execute('''
             SELECT materials.name, max(count(materials.material_id))
             FROM materials 
             JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -75,7 +75,7 @@ class Statistics:
 
     @staticmethod
     def this_months_money_for_all_users():
-        return db.execute('''
+        return db.session.execute('''
                     SELECT sum(price)
                     FROM price_list 
                     JOIN materials ON (materials.material_id=price_list.material_id)
@@ -86,7 +86,7 @@ class Statistics:
 
     @staticmethod
     def live_earnings_for_all_users():
-        return db.execute('''
+        return db.session.execute('''
                     SELECT sum(price)
                     FROM price_list 
                     JOIN materials ON (materials.material_id=price_list.material_id)
@@ -96,7 +96,7 @@ class Statistics:
 
     @staticmethod
     def total_bought_material_for_all_users(mat_name: str):
-        return db.execute('''
+        return db.session.execute('''
                     SELECT materials.name, sum(purchases.weight)
                     FROM materials 
                     JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -106,7 +106,7 @@ class Statistics:
 
     @staticmethod
     def total_bought_for_all_users_for_all_users():
-        return db.execute('''
+        return db.session.execute('''
                         SELECT sum(purchases.weight)
                         FROM materials 
                         JOIN purchases ON (materials.material_id=purchases.material_id) 
