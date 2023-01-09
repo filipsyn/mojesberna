@@ -6,9 +6,11 @@
 
         <div>
 
+            {% if current_user.is_administrator() %}
             <a href="{{ url_for('purchase.purchases_add') }}">
                 <button class="primary">Přidat Výkup</button>
             </a>
+            {% endif %}
             <div class="list">
                 {% for zadost in purchase_request %}
                     <div class="list--item">
