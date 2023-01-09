@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, redirect, url_for
 
 from .forms.EditPriceForm import EditPriceForm
 from .. import db
@@ -45,4 +45,5 @@ def edit_material_price():
         db.session.add(new_price)
         db.session.commit()
         flash("Cena materiálu byla úspešně aktualizována", 'success')
+        return redirect(url_for('main.add_material_prices'))
     return render_template("main/EditPriceList.jinja2", form=form)
