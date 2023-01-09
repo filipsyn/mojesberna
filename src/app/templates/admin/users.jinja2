@@ -12,7 +12,7 @@
                 {% for user in users %}
                     <div class="list--item">
                         <div class="list--item--text">
-                            <p> {{ user.first_name }} {{ user.last_name }}</p>
+                            <a href="{{ url_for('user.view_profile_page', id=user.user_id) }}"> {{ user.first_name }} {{ user.last_name }}</a>
                             <p class="text-subtle">{{ user.status.name }}, {{ user.role.name }}</p>
                         </div>
                         <div class="list--item--right">
