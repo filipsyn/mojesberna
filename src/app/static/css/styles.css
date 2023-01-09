@@ -714,6 +714,7 @@ section#profile-info .list--item {
     text-decoration: none;
     gap: 1rem;
     align-items: center;
+    margin-top: 1rem;
 }
 
 
@@ -725,6 +726,7 @@ section#profile-info .list--item {
 @media screen and (max-width: 768px) {
     .controls {
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .controls .list-controls {
@@ -742,4 +744,5 @@ section#profile-info .list--item {
 .options--list {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
