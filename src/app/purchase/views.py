@@ -30,10 +30,12 @@ def purchases_page():
 def purchases_add():
     form = AddPurchaseForm()
 
+    # TODO: Change price
     if form.validate_on_submit():
         new_purchase = Purchase(
             form.weight.data,
             form.description.data,
+            10,
             form.material_id.data.material_id,
             current_user.user_id,
             form.selling_customer_id.data.user_id
