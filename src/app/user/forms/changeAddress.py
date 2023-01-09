@@ -9,4 +9,4 @@ class ChangeAddressForm(FlaskForm):
     city = StringField('Město/Obec', validators=[DataRequired()])
     zip_code = StringField('PSČ', validators=[DataRequired(), Length(min=5, message="PSČ musí mít alespoň 5 čísel")])
 
-    submit = SubmitField('Přidat uživatele')
+    submit = SubmitField('Změnit Adresu')
