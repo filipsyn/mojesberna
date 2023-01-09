@@ -96,7 +96,9 @@
                     <button class="secondary">Upravit</button>
                 </a>
             {% endif %}
-            <button class="secondary">Více</button>
+            <a href="{{ url_for('main.add_material_prices') }}">
+                <button class="secondary">Více</button>
+            </a>
         </div>
         </section>
     </main>
