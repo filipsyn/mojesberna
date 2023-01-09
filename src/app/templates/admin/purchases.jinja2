@@ -16,9 +16,11 @@
                     <div class="list--item">
                         <div class="list--item--text">
                             <p>{{ zadost.first_name }} {{ zadost.last_name }} - {{ zadost.name }} {{ zadost.weight }}
-                                kg {{ zadost.price * zadost.weight }} Kč </p>
+                                kg  </p>
+                            <p>Popis: {{ zadost.description }}</p>
                         </div>
-                    <button class="secondary">Více</button>
+                        {{ zadost.price * zadost.weight }}  Kč
+
                     </div>
 
                 {% endfor %}

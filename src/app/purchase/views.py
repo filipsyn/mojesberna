@@ -18,14 +18,14 @@ def purchases_page():
         purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
                                                                                                           Purchase.material_id == Material.material_id).join(
         User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name, Material.name,
-                                                                        Purchase.weight, PriceList.price).all()
+                                                                        Purchase.weight, PriceList.price, Purchase.description).all()
     else:
         purchase_request = PriceList.query \
             .join(Material, PriceList.material_id == Material.material_id) \
             .join(Purchase, Purchase.material_id == Material.material_id) \
             .join(User, Purchase.selling_customer_id == User.user_id) \
             .filter(Purchase.selling_customer_id == current_user.user_id) \
-            .add_columns(User.first_name, User.last_name, Material.name, Purchase.weight, PriceList.price,
+            .add_columns(User.first_name, User.last_name, Material.name, Purchase.weight, PriceList.price, Purchase.description,
                          Purchase.selling_customer_id) \
             .all()
 
