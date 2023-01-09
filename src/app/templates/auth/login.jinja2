@@ -1,8 +1,9 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-    <form action="#" method="POST">
-        {{ form.hidden_tag() }}
+    <main>
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
 
         {{ form.login.label }}
         {{ form.login }}
@@ -17,5 +18,6 @@
         <br>
 
         {{ form.submit }}
-    </form>
+        </form>
+    </main>
 {% endblock %} {# End of block content #}
