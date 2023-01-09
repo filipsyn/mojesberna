@@ -1,0 +1,9 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <main>
+        <h1>{{ data.user.first_name }} {{ data.user.last_name }} <span
+                class="text-subtle">({{ data.user.login }})</span></h1>
+        <p>{{ data.user.status.name }}, {{ data.user.role.name }}</p>
+    </main>
+{% endblock %}
