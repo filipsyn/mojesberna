@@ -54,5 +54,7 @@ def create_app(config_name='default') -> Flask:
     app.register_blueprint(user_blueprint, url_prefix="/user/")
     from .admin.views import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix="/admin/")
+    from .purchase.views import purchase as purchase_blueprint
+    app.register_blueprint(purchase_blueprint, url_prefix="/purchase/")
 
     return app

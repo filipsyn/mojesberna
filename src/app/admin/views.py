@@ -33,39 +33,7 @@ def users_role_page():
                            user_role_request=user_role_request)
 
 
-@admin.route('/purchases')
-@login_required
-@permission_required(Permission.BUYING)
-def purchases_page():
-    purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
-                                                                                                          Purchase.material_id == Material.material_id).join(
-        User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name, Material.name,
-                                                                        Purchase.weight, PriceList.price).all()
-    return render_template("admin/purchases.jinja2", title=f"Přehled výkupů",
-                           purchase_request=purchase_request)
 
-
-@admin.route('/purchases/new', methods=['GET', 'POST'])
-@login_required
-@permission_required(Permission.BUYING)
-def purchases_add():
-    form = AddPurchaseForm()
-
-    if form.validate_on_submit():
-        new_purchase = Purchase(
-            form.weight.data,
-            form.description.data,
-            form.material_id.data.material_id,
-            current_user.user_id,
-            form.selling_customer_id.data.user_id
-        )
-        db.session.add(new_purchase)
-        db.session.commit()
-
-        return redirect(url_for('admin.purchases_page'))
-
-    return render_template("admin/addPurchase.jinja2", title=f"Přehled výkupů",
-                           form=form)
 
 
 @admin.route('/users/add', methods=['GET', 'POST'])
