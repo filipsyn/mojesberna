@@ -1,12 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, Regexp, EqualTo, Length
+from wtforms.validators import DataRequired, Regexp, EqualTo, Length, ValidationError
+
+from ...models import User
 
 
 class RegisterForm(FlaskForm):
     first_name = StringField('Jméno', validators=[DataRequired()])
     last_name = StringField('Příjmení')
-    login = StringField('Přihlašovací jméno', validators=[
+    username = StringField('Přihlašovací jméno', validators=[
         DataRequired(),
         Length(min=3, max=128, message='Uživatelské jméno může mít délku 3-128 znaků')
     ])
@@ -22,3 +24,8 @@ class RegisterForm(FlaskForm):
     zip_code = StringField('PSČ', validators=[DataRequired(), Length(min=5, message="PSČ musí mít alespoň 5 čísel")])
 
     submit = SubmitField('Registrovat se')
+
+    def validate_username(self, form):
+        user = User.query.filter_by(login=form.data).first()
+        if user:
+            raise ValidationError("Uživatelské jméno je zabrané")
