@@ -28,9 +28,9 @@ class Statistics:
     ORDER BY name ASC;
          ''').fetchall()
 
-    @stats.route('/most_redeemed', methods='GET')
+    @staticmethod
     def most_redeemed_material(self):
-        request = db.session.execute('''
+        return db.session.execute('''
         SELECT materials.name, max(count(materials.material_id))
         FROM materials 
         JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -38,18 +38,16 @@ class Statistics:
         WHERE users.user_id = ? GROUP BY materials.name;
          ''', self.m_user.user_id).fetchall()
 
-
-    @main.route('/months_money', methods='GET')
     def this_months_money(self):
-        data = db.session.execute('''
-                SELECT sum(price_list.price) AS price
-                FROM price_list 
-                JOIN materials ON (materials.material_id=price_list.material_id)
-                JOIN purchases ON (materials.material_id=purchases.material_id)  
-                JOIN users ON (users.user_id=purchases.selling_customer_id)
-                WHERE users.user_id = ?;
-                 ''', self.m_user.user_id).fetchone()
-        return render_template('user/dashboard.jinja2', data=data)
+        return db.session.execute(f'''
+                    SELECT user_id, sum(price) 
+                    FROM purchases 
+                    JOIN users u on u.user_id = purchases.selling_customer_id 
+                    WHERE EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM current_date) 
+                    AND EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM current_date)
+                    AND user_id = {self.m_user.user_id} 
+                    GROUP BY user_id;''').fetchone()
+
 
 
     @main.route('/lives_money', methods='GET')
@@ -58,7 +56,7 @@ class Statistics:
                 SELECT sum(price)
                 FROM price_list 
                 JOIN materials ON (materials.material_id=price_list.material_id)
-                OIN purchases ON (materials.material_id=purchases.material_id)  
+                JOIN purchases ON (materials.material_id=purchases.material_id)  
                 JOIN users ON (users.user_id=selling_customer_id)
                 WHERE users.user_id = ? 
                  ''', self.m_user.user_id).fetchall()
@@ -98,7 +96,7 @@ class Statistics:
                     SELECT sum(price)
                     FROM price_list 
                     JOIN materials ON (materials.material_id=price_list.material_id)
-                    OIN purchases ON (materials.material_id=purchases.material_id)  
+                    JOIN purchases ON (materials.material_id=purchases.material_id)  
                     JOIN users ON (users.user_id=selling_customer_id)
                     WHERE purchases.date = GETDATE() 
                      ''').fetchall()
@@ -109,7 +107,7 @@ class Statistics:
                     SELECT sum(price)
                     FROM price_list 
                     JOIN materials ON (materials.material_id=price_list.material_id)
-                    OIN purchases ON (materials.material_id=purchases.material_id)  
+                    JOIN purchases ON (materials.material_id=purchases.material_id)  
                     JOIN users ON (users.user_id=selling_customer_id)
                      ''').fetchall()
 

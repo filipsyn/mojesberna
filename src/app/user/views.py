@@ -135,8 +135,8 @@ def view_dashboard_page():
             .order_by(desc(Purchase.date)) \
             .limit(5) \
             .all()
-
-    total = this_months_money()
+    stats = Statistics(current_user)
+    total = stats.this_months_money()
 
     data = dict(user_attributes=user_attributes, registration_requests=registration_requests, price_list=price_list,
                 purchases=purchases, total=total)
