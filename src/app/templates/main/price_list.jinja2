@@ -1,18 +1,22 @@
 {% extends '__base.jinja2' %}
 
 {% block content %}
-<h1>Ceník</h1>
-
-<div>
-
-    {% for item in prices_request %}
-            <p>{{ item.name }} {{ item.price }}</p>
-
-    {% endfor %}
-</div>
-{% if user.is_administrator %}
-<div>
-<a href="{{ url_for('main.edit_material_price') }}">Edit</a>
-</div>
-{% endif%}
+    <main>
+        <h1>Ceník</h1>
+        <div class="price-list">
+            {% for item in prices_request %}
+                <div class="price-list--item">
+                    <span class="material">{{ item.name }}</span>
+                    <span class="price">{{ item.price }} Kč</span>
+                </div>
+            {% endfor %}
+        </div>
+        {% if current_user.is_administrator %}
+            <div>
+                <a href="{{ url_for('main.edit_material_price') }}">
+                    <button class="primary">Upravit ceny</button>
+                </a>
+            </div>
+        {% endif %}
+    </main>
 {% endblock %} {# End of content block #}
