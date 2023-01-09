@@ -13,7 +13,8 @@
                 {% for purchase in purchases %}
                     <div class="list--item">
                         <div class="list--item--text">
-                            <p>{{ purchase.material.name }} ({{ purchase.weight }} Kg)</p>
+                            <a href="{{ url_for('purchase.view_purchase_detail_page', id=purchase.purchase_id) }}">{{ purchase.material.name }}
+                                ({{ purchase.weight }} Kg)</a>
                             <p class="text-subtle">
                                 {% if current_user.is_administrator() or current_user.is_worker() %}
                                     {{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}
