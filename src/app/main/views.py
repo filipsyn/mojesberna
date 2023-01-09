@@ -11,6 +11,17 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def view_home_page():
+    price_query = db.session.execute('''
+    WITH recent_prices AS (SELECT p.price_id, p.material_id
+                       FROM price_list p
+                                JOIN (SELECT material_id, MAX(date) AS max_date
+                                      FROM price_list
+                                      GROUP BY material_id) m ON p.material_id = m.material_id AND p.date = m.max_date)
+    SELECT price, name
+    FROM recent_prices
+         JOIN price_list ON recent_prices.price_id = price_list.price_id
+         JOIN materials ON recent_prices.material_id = materials.material_id;
+         ''').fetchall()
     data = {
         'stats': {
             'Noviny': 1200,
@@ -19,13 +30,7 @@ def view_home_page():
             'Hliník': 525,
             'Olovo': 692,
         },
-        'prices': {
-            'Noviny': 2.70,
-            'Železo': 4.50,
-            'Měď': 85,
-            'Mosaz': 45,
-            'Olovo': 20
-        }
+        'prices': price_query
     }
     return render_template('main/homepage.jinja2', title='Domovská stránka', data=data)
 
