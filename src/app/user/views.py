@@ -45,7 +45,7 @@ def view_change_personal_page():
     return render_template('user/changePersonal.jinja2', title='zmena', form=form)
 
 
-@user.route('/change/address', methods=['GET', 'POST'])
+@user.route('/change/address/primary', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
 def view_change_address_page():
@@ -66,7 +66,7 @@ def view_change_address_page():
     return render_template('user/changeAddress.jinja2', title='zmena', form=form)
 
 
-@user.route('/changeSecondaryAddress', methods=['GET', 'POST'])
+@user.route('/change/address/secondary', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.SELF_MANAGEMENT)
 def view_change_secondary_address_page():
