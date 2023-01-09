@@ -157,3 +157,12 @@ def unban_user(id):
         db.session.commit()
         flash(f"Uživatel {searched_user.login} byl odblokován", 'warning')
     return redirect(url_for('admin.view_users_page'))
+
+
+@user.route('<id>')
+@login_required
+def view_profile_page(id):
+    user = User.query.get_or_404(id)
+
+    data = dict(user=user)
+    return render_template('user/profile.jinja2', data=data, title="")
