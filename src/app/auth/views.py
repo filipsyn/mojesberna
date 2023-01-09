@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 from .forms import RegisterForm, LoginForm
 from .. import db
@@ -11,7 +11,6 @@ auth = Blueprint('auth', __name__)
 @auth.route('/register', methods=['GET', 'POST'])
 def view_register_page():
     form = RegisterForm()
-
     if form.validate_on_submit():
         new_user = User(
             form.first_name.data,
@@ -37,6 +36,9 @@ def view_register_page():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def view_login_page():
+    if current_user.is_authenticated():
+        return redirect(url_for('user.view_dashboard_page'))
+
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(login=form.login.data).first()
