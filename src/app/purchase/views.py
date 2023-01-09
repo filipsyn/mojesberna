@@ -43,7 +43,7 @@ def view_add_purchase_page():
         new_purchase = Purchase(
             form.weight.data,
             form.description.data,
-            price*form.weight.data,
+            price*float(form.weight.data),
             form.material_id.data.material_id,
             current_user.user_id,
             form.selling_customer_id.data.user_id
