@@ -6,8 +6,10 @@
 <div>
 
     {% for item in prices_request %}
-            <p>{{ item.name }} {{ item.price }}</p>
-
+    <div class="price-list--item">
+    <span class="material">{{ item.name }}</span>
+    <span class="price">{{ item.price }} Kč/kg</span>
+    </div>
     {% endfor %}
 </div>
 {% if user.is_administrator %}

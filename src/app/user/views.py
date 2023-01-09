@@ -8,6 +8,7 @@ from .. import db
 from ..decorators import permission_required
 from ..models import User, Permission, Purchase, UserStatus, Status, Address, PriceList, Material
 
+
 user = Blueprint('user', __name__)
 
 
@@ -93,10 +94,15 @@ def view_change_secondary_address_page():
 @permission_required(Permission.ACCESS)
 def view_dashboard_page():
     user_attributes = get_user_attributes(current_user)
-    price_list = Material.query. \
-        join(PriceList, Material.material_id == PriceList.material_id) \
-        .add_columns(Material.material_id, PriceList.price_id, Material.name, PriceList.price) \
-        .all()
+    price_list = db.session.execute(''' WITH recent_prices AS (SELECT p.price_id, p.material_id
+                       FROM price_list p
+                                JOIN (SELECT material_id, MAX(date) AS max_date
+                                      FROM price_list
+                                      GROUP BY material_id) m ON p.material_id = m.material_id AND p.date = m.max_date)
+    SELECT price, name
+    FROM recent_prices
+         JOIN price_list ON recent_prices.price_id = price_list.price_id
+         JOIN materials ON recent_prices.material_id = materials.material_id;''').fetchall()
 
     waiting_status = Status.query.filter_by(name=UserStatus.WAITING.value).first()
 
@@ -119,8 +125,10 @@ def view_dashboard_page():
             .limit(5) \
             .all()
 
+    total = this_months_money()
+
     data = dict(user_attributes=user_attributes, registration_requests=registration_requests, price_list=price_list,
-                purchases=purchases)
+                purchases=purchases, total=total)
     return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}", data=data)
 
 
@@ -187,3 +195,110 @@ def view_profile_page(id: int):
     data = dict(user=found_user, purchases=purchases, stats=stats)
     return render_template('user/profile.jinja2', data=data,
                            title=f"Profil {found_user.first_name} {found_user.last_name}")
+
+@user.route('/most_redeemed', methods=['GET'])
+def most_redeemed_material():
+        request = db.session.execute('''
+        SELECT materials.name, max(count(materials.material_id))
+        FROM materials 
+        JOIN purchases ON (materials.material_id=purchases.material_id) 
+        JOIN users ON (users.user_id=selling_customer_id)
+        WHERE users.user_id = ? GROUP BY materials.name;
+         ''', current_user.user_id).fetchall()
+
+
+@user.route('/months_money', methods=['GET'])
+def this_months_money():
+    return db.session.execute('''
+                SELECT sum(price_list.price) AS price
+                FROM price_list 
+                JOIN materials ON (materials.material_id=price_list.material_id)
+                JOIN purchases ON (materials.material_id=purchases.material_id)  
+                JOIN users ON (users.user_id=purchases.selling_customer_id)
+                WHERE users.user_id = 1;
+                 ''').fetchone()
+
+
+
+
+
+@user.route('/lives_money', methods=['GET'])
+def live_earnings():
+    return db.session.execute('''
+                SELECT sum(price)
+                FROM price_list 
+                JOIN materials ON (materials.material_id=price_list.material_id)
+                OIN purchases ON (materials.material_id=purchases.material_id)  
+                JOIN users ON (users.user_id=selling_customer_id)
+                WHERE users.user_id = ? 
+                 ''', current_user.user_id).fetchall()
+
+@user.route('/total_material', methods=['GET'])
+def total_bought_material(mat_name: str):
+    return db.session.execute('''
+                SELECT materials.name, sum(purchases.weight)
+                FROM materials 
+                JOIN purchases ON (materials.material_id=purchases.material_id) 
+                JOIN users ON (users.user_id=selling_customer_id)
+                WHERE users.user_id = ? AND materials.name = ? 
+                 ''', [current_user.user_id, mat_name]).fetchall()
+
+@user.route('/total', methods=['GET'])
+def total_bought():
+    return db.session.execute('''
+                    SELECT sum(purchases.weight)
+                    FROM materials 
+                    JOIN purchases ON (materials.material_id=purchases.material_id) 
+                    JOIN users ON (users.user_id=selling_customer_id)
+                    WHERE users.user_id = ? AND materials.name = ?
+                     ''', current_user.user_id).fetchall()
+
+@staticmethod
+def most_redeemed_material_for_all_users():
+    return db.session.execute('''
+            SELECT materials.name, max(count(materials.material_id))
+            FROM materials 
+            JOIN purchases ON (materials.material_id=purchases.material_id) 
+            JOIN users ON (users.user_id=selling_customer_id)
+             ''').fetchall()
+
+@staticmethod
+def this_months_money_for_all_users():
+    return db.session.execute('''
+                    SELECT sum(price)
+                    FROM price_list 
+                    JOIN materials ON (materials.material_id=price_list.material_id)
+                    OIN purchases ON (materials.material_id=purchases.material_id)  
+                    JOIN users ON (users.user_id=selling_customer_id)
+                    WHERE purchases.date = GETDATE() 
+                     ''').fetchall()
+
+@staticmethod
+def live_earnings_for_all_users():
+    return db.session.execute('''
+                    SELECT sum(price)
+                    FROM price_list 
+                    JOIN materials ON (materials.material_id=price_list.material_id)
+                    OIN purchases ON (materials.material_id=purchases.material_id)  
+                    JOIN users ON (users.user_id=selling_customer_id)
+                     ''').fetchall()
+
+@staticmethod
+def total_bought_material_for_all_users(mat_name: str):
+    return db.session.execute('''
+                    SELECT materials.name, sum(purchases.weight)
+                    FROM materials 
+                    JOIN purchases ON (materials.material_id=purchases.material_id) 
+                    JOIN users ON (users.user_id=selling_customer_id)
+                    WHERE materials.name = ? 
+                     ''', mat_name).fetchall()
+
+@staticmethod
+def total_bought_for_all_users_for_all_users():
+    return db.session.execute('''
+                        SELECT sum(purchases.weight)
+                        FROM materials 
+                        JOIN purchases ON (materials.material_id=purchases.material_id) 
+                        JOIN users ON (users.user_id=selling_customer_id)
+                        WHERE materials.name = ?
+                         ''').fetchall()

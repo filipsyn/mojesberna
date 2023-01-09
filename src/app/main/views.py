@@ -37,10 +37,6 @@ def view_greeting_page():
 
 @main.route('/prices')
 def add_material_prices():
-    test_request = PriceList.query.with_entities(Material.name, db.func.max(PriceList.price_id)).join(Material, Material.material_id == PriceList.material_id).add_columns(
-                                                                                        Material.name,
-                                                                                        PriceList.price).group_by(
-                                                                                        Material.name, PriceList.price ,PriceList.date).all()
 
     price_query = db.session.execute(''' WITH recent_prices AS (SELECT p.price_id, p.material_id
                        FROM price_list p
@@ -69,3 +65,6 @@ def edit_material_price():
         db.session.commit()
         flash("Cena materiálu byla úspešně aktualizována", 'success')
     return render_template("main/EditPriceList.jinja2", form=form)
+
+
+
