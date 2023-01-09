@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, flash
 from flask_login import current_user
+from .. import db
 
 from .forms.EditPriceForm import EditPriceForm
 from ..models import Material, PriceList
@@ -35,17 +36,24 @@ def view_greeting_page():
 
 @main.route('/prices')
 def add_material_prices():
-    prices_request = Material.query.join(PriceList, PriceList.material_id == Material.material_id).add_columns(
-        Material.name,
-        PriceList.price).all()
+    test_request = PriceList.query.with_entities(Material.name, db.func.max(PriceList.price_id)).join(Material, Material.material_id == PriceList.material_id).add_columns(
+                                                                                        Material.name,
+                                                                                        PriceList.price).group_by(
+                                                                                        Material.name, PriceList.price).all()
+
     user = current_user
 
-    return render_template('main/price_list.jinja2', title='Ceník', prices_request=prices_request, user=user)
+    return render_template('main/price_list.jinja2', title='Ceník', prices_request=test_request, user=user)
 
 
 @main.route('/prices/edit', methods=['GET', 'POST'])
 def edit_material_price():
     form = EditPriceForm()
+
     if form.validate_on_submit():
-        flash(form.opts.data.material_id)
+
+        new_price = PriceList(form.opts.data.material_id, form.price.data)
+        db.session.add(new_price)
+        db.session.commit()
+        flash("Cena materiálu byla úspešně aktualizována", 'success')
     return render_template("main/EditPriceList.jinja2", form=form)
