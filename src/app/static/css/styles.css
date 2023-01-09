@@ -601,3 +601,38 @@ section#dashboard {
 .text-subtle {
     color: var(--text-subtle);
 }
+/* Footer styling */
+footer {
+    background: white;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.5em 1.5em 0em 1.5em;
+}
+
+footer h3 {
+    margin-bottom: 0.5em;
+
+}
+
+footer ul {
+    color: black;
+}
+footer div {
+    margin-right: 2em;
+    margin-bottom: 2em;
+    width: 30%;
+}
+footer span{
+    color: black;
+    margin-bottom: 2em;
+    width: 30%;
+
+}
+
+
+@media screen and (max-width: 576px) {
+    footer div {
+        width: 100%;
+    }
+}
