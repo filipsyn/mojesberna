@@ -2,7 +2,7 @@
 
 {% block content %}
     <main>
-        <section id="profile-header">
+        <header id="profile-header">
             <div class="basic-info">
                 <h1>{{ data.user.first_name }} {{ data.user.last_name }} <span
                         class="text-subtle">({{ data.user.login }})</span></h1>
@@ -29,6 +29,55 @@
                 {% endif %}
                 <button class="secondary">Změnit údaje</button>
             </div>
+        </header>
+        <section id="profile-info">
+            <section id="user-info">
+                <h2>Kontakt</h2>
+                <p><span class="material-symbols-outlined">call</span> {{ data.user.telephone_number }}</p>
+                <p><span
+                        class="material-symbols-outlined">home</span> {{ data.user.permanent_residence.street }} {{ data.user.permanent_residence.house_number }}<br> {{ data.user.permanent_residence.city }}<br>{{ data.user.permanent_residence.zip_code }}
+                </p>
+                {% if data.user.temporary_residence %}
+                    <p><span
+                            class="material-symbols-outlined">other_houses</span> {{ data.user.temporary_residence.street }} {{ data.user.temporary_residence.house_number }}<br> {{ data.user.temporary_residence.city }}<br>{{ data.user.temporary_residence.zip_code }}
+                    </p>
+                {% endif %}
+
+            </section>
+            {% if not (data.user.is_administrator() or data.user.is_worker()) %}
+                <section id="stats">
+                    <h2>Statistiky</h2>
+                </section>
+            {% endif %}
+            <section id="last-purchases">
+                {% if data.user.is_administrator() or data.user.is_worker() %}
+                    <h2>Odkupy provedené tímto pracovníkem</h2>
+                {% else %}
+                    <h2>Poslední sběry uživatele</h2>
+                {% endif %}
+                {% for purchase in data.purchases %}
+                    <div class="list--item">
+                        {% if data.user.is_administrator() or data.user.is_worker() %}
+                            <div class="list--item--text">
+                                <a href="{{ url_for('user.view_profile_page', id=purchase.selling_customer.user_id) }}">{{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}</a>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                {{ purchase.material.name }} ({{ purchase.weight }} Kg)
+                            </div>
+                        {% else %}
+                            <div class="list--item--text">
+                                <p>{{ purchase.material.name }}</p>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                ({{ purchase.weight }} Kg)
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+            </section>
         </section>
     </main>
 {% endblock %}
