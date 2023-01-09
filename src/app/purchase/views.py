@@ -49,7 +49,9 @@ def view_add_purchase_page():
                            form=form)
 
 
-@purchase.route('<id>')
+@purchase.route('<int:id>')
 @login_required
-def view_purchase_detail_page():
-    raise NotImplementedError
+def view_purchase_detail_page(id: int):
+    found_purchase = Purchase.query.get_or_404(id)
+    data = dict(purchase=found_purchase)
+    return render_template('purchase/detail.jinja2', title='Detail výkupu', data=data)
