@@ -1,0 +1,16 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <main>
+        <h1>Detail výkupu</h1>
+        <p>Prodal: <a
+                href="{{ url_for('user.view_profile_page', id=data.purchase.selling_customer.user_id) }}"> {{ data.purchase.selling_customer.first_name }} {{ data.purchase.selling_customer.last_name }} </a>
+        </p>
+        <p>Odkoupil: {{ data.purchase.buying_employee.first_name }} {{ data.purchase.buying_employee.last_name }}</p>
+        <p>Hmotnost: {{ data.purchase.weight }} Kg</p>
+        <p>Celková cena: {{ data.purchase.price }} Kč</p>
+        <p>Datum a čas výkupu: {{ moment(data.purchase.date).format('DD. MM. YYYY, HH:mm') }}</p>
+        <p>Popis: {{ data.purchase.description }}</p>
+
+    </main>
+{% endblock %}
