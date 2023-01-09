@@ -7,10 +7,10 @@
             <a href="{{ url_for('user.view_change_password_page') }}">
                 <button class="secondary">Změnit heslo</button>
             </a>
-            <a href="{{ url_for('user.view_change_address_page') }}">
+            <a href="{{ url_for('user.view_change_address_page',id=user.user_id) }}">
                 <button class="secondary">Změnit primární adresu</button>
             </a>
-            <a href="{{ url_for('user.view_change_secondary_address_page') }}">
+            <a href="{{ url_for('user.view_change_secondary_address_page', id=user.user_id) }}">
                 <button class="secondary">Změnit sekundární adresu</button>
             </a>
             {% if current_user.is_administrator() %}
