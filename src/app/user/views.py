@@ -132,6 +132,8 @@ def view_dashboard_page():
 
 
 @user.route('/<id>/confirm')
+@login_required
+@permission_required(Permission.USER_ADMINISTRATION)
 def confirm_user(id):
     searched_user = User.query.get_or_404(id)
     if searched_user.status.name == UserStatus.WAITING.value:
