@@ -23,7 +23,8 @@ class Statistics:
     SELECT price, name
     FROM recent_prices
          JOIN price_list ON recent_prices.price_id = price_list.price_id
-         JOIN materials ON recent_prices.material_id = materials.material_id;
+         JOIN materials ON recent_prices.material_id = materials.material_id
+    ORDER BY name ASC;
          ''').fetchall()
 
     @stats.route('/most_redeemed', methods='GET')
