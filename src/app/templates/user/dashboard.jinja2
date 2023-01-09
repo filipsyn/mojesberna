@@ -16,7 +16,7 @@
                             <div class="list--item--text">
                                 <p>{{ req.first_name }} {{ req.last_name }} </p>
                             </div>
-                            <a class="list--item--right" href="#">
+                            <a class="list--item--right" href="{{ url_for('user.confirm_user', id=req.user_id) }}">
                                 Potvrdit <span class="material-symbols-outlined">done</span>
                             </a>
                         </div>
@@ -78,10 +78,10 @@
         <div id="price-list">
             <h2>Ceník</h2>
             <div class="list">
-                {% for material, price in data.price_list.items() %}
+                {% for price in data.price_list %}
                     <div class="list--item">
-                        <div class="list--item--text"><span>{{ material }}</span></div>
-                        <div class="list--item--right"><span>{{ price }}&nbsp;Kč/Kg</span></div>
+                        <div class="list--item--text"><span>{{ price.name }}</span></div>
+                        <div class="list--item--right"><span>{{ price.price }}&nbsp;Kč/Kg</span></div>
                     </div>
                 {% endfor %}
             </div>
