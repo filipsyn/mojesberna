@@ -51,7 +51,9 @@
                     {% endfor %}
                 </div>
 
-                <button class="secondary">Kopmletní ceník</button>
+                <a href="{{ url_for('main.add_material_prices') }}">
+                    <button class="secondary">Kopmletní ceník</button>
+                </a>
             </section>
 
             <section id="register-cta">
