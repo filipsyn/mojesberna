@@ -43,7 +43,7 @@
             <section id="prices">
                 <h2>Za kolik vykupujeme</h2>
                 <div class="price-list">
-                    {% for material, price in data.prices.items() %}
+                    {% for price, material in data.prices %}
                         <div class="price-list--item">
                             <span class="material">{{ material }}</span>
                             <span class="price">{{ price }} Kč/kg</span>
