@@ -2,8 +2,33 @@
 
 {% block content %}
     <main>
-        <h1>{{ data.user.first_name }} {{ data.user.last_name }} <span
-                class="text-subtle">({{ data.user.login }})</span></h1>
-        <p>{{ data.user.status.name }}, {{ data.user.role.name }}</p>
+        <section id="profile-header">
+            <div class="basic-info">
+                <h1>{{ data.user.first_name }} {{ data.user.last_name }} <span
+                        class="text-subtle">({{ data.user.login }})</span></h1>
+                <p>{{ data.user.status.name }}, {{ data.user.role.name }}</p>
+            </div>
+            <div class="profile-controls">
+                <button class="secondary">Změnit údaje</button>
+                {% if current_user.is_administrator() or current_user.is_worker() %}
+                    {% if data.user.is_waiting() %}
+                        <a class="pill pill-success"
+                           href="{{ url_for('user.confirm_user', id=data.user.user_id) }}"><span
+                                class="button-description">Potvrdit</span>
+                            <span
+                                    class="material-symbols-outlined">done</span></a>
+                    {% elif data.user.is_active() %}
+                        <a class="pill pill-error" href="{{ url_for('user.ban_user', id=data.user.user_id) }}"><span
+                                class="button-description">Ban</span><span
+                                class="material-symbols-outlined">cancel</span></a>
+                    {% elif data.user.is_banned() %}
+                        <a class="pill pill-warning"
+                           href="{{ url_for('user.unban_user', id=data.user.user_id) }}"><span
+                                class="button-description">Unban</span><span
+                                class="material-symbols-outlined">restart_alt</span></a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </section>
     </main>
 {% endblock %}
