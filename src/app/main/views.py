@@ -1,10 +1,8 @@
 from flask import Blueprint, render_template, flash
-from flask_login import current_user
-from .. import db
-from sqlalchemy.sql import select
+
 from .forms.EditPriceForm import EditPriceForm
-from ..models import Material, PriceList
-from datetime import datetime, timedelta
+from .. import db
+from ..models import PriceList
 
 main = Blueprint('main', __name__)
 
@@ -62,7 +60,6 @@ def edit_material_price():
     form = EditPriceForm()
 
     if form.validate_on_submit():
-
         new_price = PriceList(form.opts.data.material_id, form.price.data)
         db.session.add(new_price)
         db.session.commit()
