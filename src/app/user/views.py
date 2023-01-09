@@ -144,6 +144,8 @@ def confirm_user(id):
 
 
 @user.route('<id>/ban')
+@login_required
+@permission_required(Permission.USER_ADMINISTRATION)
 def ban_user(id):
     searched_user = User.query.get_or_404(id)
     if searched_user.status.name == UserStatus.ACTIVE.value:
@@ -154,6 +156,8 @@ def ban_user(id):
 
 
 @user.route('<id>/unban')
+@login_required
+@permission_required(Permission.USER_ADMINISTRATION)
 def unban_user(id):
     searched_user = User.query.get_or_404(id)
     if searched_user.status.name == UserStatus.BANNED.value:
