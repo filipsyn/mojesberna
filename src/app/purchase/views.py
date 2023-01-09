@@ -12,12 +12,20 @@ purchase = Blueprint('purchase', __name__)
 
 @purchase.route('/')
 @login_required
-@permission_required(Permission.BUYING)
+
 def purchases_page():
-    purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
+    if current_user.is_administrator() or current_user.is_worker():
+        purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
                                                                                                           Purchase.material_id == Material.material_id).join(
         User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name, Material.name,
                                                                         Purchase.weight, PriceList.price).all()
+    else:
+        purchase_request = PriceList.query.join(Material, PriceList.material_id == Material.material_id).join(Purchase,
+                                                                                                              Purchase.material_id == Material.material_id).join(
+            User, Purchase.selling_customer_id == User.user_id).add_columns(User.first_name, User.last_name,
+                                                                            Material.name,
+                                                                            Purchase.weight, PriceList.price, Purchase.selling_customer_id).filter_by(selling_customer_id = current_user.user_id).all()
+
     return render_template("admin/purchases.jinja2", title=f"Přehled výkupů",
                            purchase_request=purchase_request)
 
