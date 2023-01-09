@@ -27,7 +27,10 @@
                                 class="material-symbols-outlined">restart_alt</span></a>
                     {% endif %}
                 {% endif %}
-                <button class="secondary">Změnit údaje</button>
+                <a href="{{ url_for('user.view_change_personal_page', id=data.user.user_id) }}">
+                    <button class="secondary">Změnit údaje</button>
+                </a>
+
             </div>
         </header>
         <section id="profile-info">
