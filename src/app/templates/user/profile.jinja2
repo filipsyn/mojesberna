@@ -70,11 +70,12 @@
                                 </div>
                             {% else %}
                                 <div class="list--item--text">
-                                    <p>{{ purchase.material.name }}</p>
+                                    <a href="{{ url_for('purchase.view_purchase_detail_page', id=purchase.purchase_id) }}">
+                                        {{ purchase.material.name }} {{ purchase.weight }} Kg</a>
                                     <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
                                 </div>
                                 <div class="list--item--right">
-                                    ({{ purchase.weight }} Kg)
+                                    {{ purchase.price }} Kč
                                 </div>
                             {% endif %}
                         </div>
