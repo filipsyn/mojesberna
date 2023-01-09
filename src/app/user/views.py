@@ -151,3 +151,13 @@ def ban_user(id):
         db.session.commit()
         flash(f"Uživatel {searched_user.login} byl zablokován", 'warning')
     return redirect(url_for('admin.view_users_page'))
+
+
+@user.route('<id>/unban')
+def unban_user(id):
+    searched_user = User.query.get_or_404(id)
+    if searched_user.status.name == UserStatus.BANNED.value:
+        searched_user.unban()
+        db.session.commit()
+        flash(f"Uživatel {searched_user.login} byl odblokován", 'warning')
+    return redirect(url_for('admin.view_users_page'))

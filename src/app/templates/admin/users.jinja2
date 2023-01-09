@@ -26,7 +26,9 @@
                                         class="button-description">Ban</span><span
                                         class="material-symbols-outlined">cancel</span></a>
                             {% elif user.is_banned() %}
-                                <a class="pill pill-warning" href="#"><span class="button-description">Unban</span><span
+                                <a class="pill pill-warning"
+                                   href="{{ url_for('user.unban_user', id=user.user_id) }}"><span
+                                        class="button-description">Unban</span><span
                                         class="material-symbols-outlined">restart_alt</span></a>
                             {% endif %}
                         </div>
