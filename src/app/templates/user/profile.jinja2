@@ -1,0 +1,83 @@
+{% extends '__base.jinja2' %}
+
+{% block content %}
+    <main>
+        <header id="profile-header">
+            <div class="basic-info">
+                <h1>{{ data.user.first_name }} {{ data.user.last_name }} <span
+                        class="text-subtle">({{ data.user.login }})</span></h1>
+                <p>{{ data.user.status.name }}, {{ data.user.role.name }}</p>
+            </div>
+            <div class="profile-controls">
+                {% if current_user.is_administrator() or current_user.is_worker() %}
+                    {% if data.user.is_waiting() %}
+                        <a class="pill pill-success"
+                           href="{{ url_for('user.confirm_user', id=data.user.user_id) }}"><span
+                                class="button-description">Potvrdit</span>
+                            <span
+                                    class="material-symbols-outlined">done</span></a>
+                    {% elif data.user.is_active() %}
+                        <a class="pill pill-error" href="{{ url_for('user.ban_user', id=data.user.user_id) }}"><span
+                                class="button-description">Ban</span><span
+                                class="material-symbols-outlined">cancel</span></a>
+                    {% elif data.user.is_banned() %}
+                        <a class="pill pill-warning"
+                           href="{{ url_for('user.unban_user', id=data.user.user_id) }}"><span
+                                class="button-description">Unban</span><span
+                                class="material-symbols-outlined">restart_alt</span></a>
+                    {% endif %}
+                {% endif %}
+                <button class="secondary">Změnit údaje</button>
+            </div>
+        </header>
+        <section id="profile-info">
+            <section id="user-info">
+                <h2>Kontakt</h2>
+                <p><span class="material-symbols-outlined">call</span> {{ data.user.telephone_number }}</p>
+                <p><span
+                        class="material-symbols-outlined">home</span> {{ data.user.permanent_residence.street }} {{ data.user.permanent_residence.house_number }}<br> {{ data.user.permanent_residence.city }}<br>{{ data.user.permanent_residence.zip_code }}
+                </p>
+                {% if data.user.temporary_residence %}
+                    <p><span
+                            class="material-symbols-outlined">other_houses</span> {{ data.user.temporary_residence.street }} {{ data.user.temporary_residence.house_number }}<br> {{ data.user.temporary_residence.city }}<br>{{ data.user.temporary_residence.zip_code }}
+                    </p>
+                {% endif %}
+
+            </section>
+            {% if not (data.user.is_administrator() or data.user.is_worker()) %}
+                <section id="stats">
+                    <h2>Statistiky</h2>
+                </section>
+            {% endif %}
+            <section id="last-purchases">
+                {% if data.user.is_administrator() or data.user.is_worker() %}
+                    <h2>Odkupy provedené tímto pracovníkem</h2>
+                {% else %}
+                    <h2>Poslední sběry uživatele</h2>
+                {% endif %}
+                {% for purchase in data.purchases %}
+                    <div class="list--item">
+                        {% if data.user.is_administrator() or data.user.is_worker() %}
+                            <div class="list--item--text">
+                                <a href="{{ url_for('user.view_profile_page', id=purchase.selling_customer.user_id) }}">{{ purchase.selling_customer.first_name }} {{ purchase.selling_customer.last_name }}</a>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                {{ purchase.material.name }} ({{ purchase.weight }} Kg)
+                            </div>
+                        {% else %}
+                            <div class="list--item--text">
+                                <p>{{ purchase.material.name }}</p>
+                                <p>{{ moment(purchase.date).format('DD. MM. YYYY') }}</p>
+                            </div>
+                            <div class="list--item--right">
+                                ({{ purchase.weight }} Kg)
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+            </section>
+        </section>
+    </main>
+{% endblock %}

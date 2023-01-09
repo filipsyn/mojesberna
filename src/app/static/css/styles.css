@@ -205,6 +205,10 @@ ul.flashes li {
     border-radius: 32px;
 }
 
+a.pill {
+    text-decoration: none;
+}
+
 .pill-success {
     color: var(--success-text);
     background-color: var(--success-bg);
@@ -253,7 +257,7 @@ nav ul li a:hover {
 }
 
 .dropdown {
-    opacity: 0;
+    display: none;
     position: absolute;
     top: 60px;
     transform: translateX(-45%);
@@ -283,7 +287,7 @@ nav ul li a:hover {
 }
 
 .has-dropdown:focus-within .dropdown {
-    opacity: 1;
+    display: flex;
     pointer-events: auto;
 }
 
@@ -312,6 +316,10 @@ nav ul li a:hover {
         position: relative;
         top: 0;
         transform: none;
+    }
+
+    .dropdown {
+        display: flex;
     }
 
 }
@@ -647,4 +655,56 @@ footer span {
     margin: 2rem;
     display: flex;
     list-style-type: none;
+}
+
+header#profile-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header#profile-header .profile-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    header#profile-header {
+        flex-direction: column;
+    }
+
+    header#profile-header .profile-controls {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+}
+
+section#profile-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /*grid-template-columns: 1fr 1fr 2fr;*/
+    gap: 2rem
+}
+
+section#profile-info section {
+    width: 100%;
+}
+
+section#profile-info .list--item {
+    width: 100%;
+}
+
+#user-info p {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    section#profile-info {
+        grid-template-columns: 1fr;
+    }
+
 }

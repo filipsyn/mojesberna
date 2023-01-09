@@ -13,3 +13,8 @@ class PriceList(db.Model):
 
     def __repr__(self):
         return f"Price id: {self.price_id} - {self.price} Kč on {self.date}"
+
+    def __init__(self, material_id, price):
+        self.material_id = material_id
+        self.price = price
+

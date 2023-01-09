@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from flask_login import current_user, login_required
 
 from . import get_user_attributes
@@ -157,3 +157,30 @@ def unban_user(id):
         db.session.commit()
         flash(f"Uživatel {searched_user.login} byl odblokován", 'warning')
     return redirect(url_for('admin.view_users_page'))
+
+
+@user.route('<id>')
+@login_required
+def view_profile_page(id: int):
+    # Page is only accessible by workers and user it belongs to
+    if not ((current_user.user_id == int(id)) or current_user.is_administrator() or current_user.is_worker()):
+        abort(403)
+
+    found_user = User.query.get_or_404(id)
+
+    if current_user.is_administrator() or current_user.is_worker():
+        purchases = Purchase.query. \
+            filter_by(buying_employee_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+    else:
+        purchases = Purchase.query. \
+            filter_by(selling_customer_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+
+    data = dict(user=found_user, purchases=purchases)
+    return render_template('user/profile.jinja2', data=data,
+                           title=f"Profil {found_user.first_name} {found_user.last_name}")
