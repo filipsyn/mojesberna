@@ -27,7 +27,7 @@ def view_purchases_page():
 @purchase.route('/new', methods=['GET', 'POST'])
 @login_required
 @permission_required(Permission.BUYING)
-def purchases_add():
+def view_add_purchase_page():
     form = AddPurchaseForm()
 
     # TODO: Change price
