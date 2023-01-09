@@ -12,7 +12,7 @@ purchase = Blueprint('purchase', __name__)
 
 @purchase.route('/')
 @login_required
-def purchases_page():
+def view_purchases_page():
     if current_user.is_administrator() or current_user.is_worker():
         purchases = Purchase.query.order_by(desc(Purchase.date)).all()
     else:
@@ -43,7 +43,7 @@ def purchases_add():
         db.session.add(new_purchase)
         db.session.commit()
 
-        return redirect(url_for('purchase.purchases_page'))
+        return redirect(url_for('purchase.view_purchases_page'))
 
     return render_template("admin/addPurchase.jinja2", title=f"Přehled výkupů",
                            form=form)
