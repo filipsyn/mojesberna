@@ -2,6 +2,7 @@ from flask import Blueprint
 
 from .... import db
 from ....models import User
+from flask import Blueprint, render_template, flash
 
 stats = Blueprint('stats', __name__)
 
@@ -14,7 +15,7 @@ class Statistics:
 
     @stats.route('/most_redeemed', methods='GET')
     def most_redeemed_material(self):
-        return db.session.execute('''
+        request = db.session.execute('''
         SELECT materials.name, max(count(materials.material_id))
         FROM materials 
         JOIN purchases ON (materials.material_id=purchases.material_id) 
@@ -22,16 +23,18 @@ class Statistics:
         WHERE users.user_id = ? GROUP BY materials.name
          ''', self.m_user.user_id).fetchall()
 
+
     @stats.route('/months_money', methods='GET')
     def this_months_money(self):
-        return db.session.execute('''
+        suma = db.session.execute('''
                 SELECT sum(price)
                 FROM price_list 
                 JOIN materials ON (materials.material_id=price_list.material_id)
-                OIN purchases ON (materials.material_id=purchases.material_id)  
+                JOIN purchases ON (materials.material_id=purchases.material_id)  
                 JOIN users ON (users.user_id=selling_customer_id)
-                WHERE users.user_id = ? AND purchases.date = GETDATE() 
+                WHERE users.user_id = ?
                  ''', self.m_user.user_id).fetchall()
+        return render_template('templates/user/dashboard.jinja2', suma=suma)
 
     @stats.route('/lives_money', methods='GET')
     def live_earnings(self):
