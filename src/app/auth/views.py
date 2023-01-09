@@ -36,7 +36,7 @@ def view_register_page():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def view_login_page():
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         return redirect(url_for('user.view_dashboard_page'))
 
     form = LoginForm()
