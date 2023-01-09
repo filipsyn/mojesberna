@@ -164,5 +164,19 @@ def unban_user(id):
 def view_profile_page(id):
     found_user = User.query.get_or_404(id)
 
-    data = dict(user=found_user)
-    return render_template('user/profile.jinja2', data=data, title="")
+    if current_user.is_administrator() or current_user.is_worker():
+        purchases = Purchase.query. \
+            filter_by(buying_employee_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+    else:
+        purchases = Purchase.query. \
+            filter_by(selling_customer_id=current_user.user_id) \
+            .order_by(Purchase.purchase_id) \
+            .limit(5) \
+            .all()
+
+    data = dict(user=found_user, purchases=purchases)
+    return render_template('user/profile.jinja2', data=data,
+                           title=f"Profil {found_user.first_name} {found_user.last_name}")
