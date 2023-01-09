@@ -2,7 +2,18 @@
 
 {% block content %}
     <main>
-    <h1>Registrace</h1>
+    <div>
+    <h1>Změna údajů</h1>
+        <a href="{{ url_for('user.view_change_password_page') }}">
+                <button class="primary">Změnit heslo</button>
+            </a>
+        <a href="{{ url_for('user.view_change_address_page') }}">
+                <button class="primary">Změnit primární adresu</button>
+            </a>
+        <a href="{{ url_for('user.view_change_secondary_address_page') }}">
+                <button class="primary">Změnit sekundární adresu</button>
+            </a>
+
     <form action="#" method="POST">
         {{ form.hidden_tag() }}
 
@@ -21,5 +32,6 @@
 
         {{ form.submit() }}
     </form>
+        </div>
     </main>
 {% endblock %} {# End of block content #}
