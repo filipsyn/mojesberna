@@ -5,7 +5,7 @@ from . import get_user_attributes
 from .forms import ChangePasswordform, ChangePersonalForm, ChangeAddressForm
 from .. import db
 from ..decorators import permission_required
-from ..models import User, Material, PriceList, Permission, Purchase, UserStatus, Status, Address
+from ..models import User, Permission, Purchase, UserStatus, Status, Address, PriceList, Material
 
 user = Blueprint('user', __name__)
 
@@ -104,14 +104,6 @@ def view_dashboard_page():
         .order_by(User.user_id) \
         .limit(5) \
         .all()
-
-    # price_list = {
-    #    'Noviny': 2.70,
-    #    'Železo': 4.50,
-    #    'Měď': 85,
-    #    'Mosaz': 45,
-    #    'Olovo': 20
-    # }
 
     if current_user.is_administrator() or current_user.is_worker():
         purchases = Purchase.query. \
