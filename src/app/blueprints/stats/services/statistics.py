@@ -1,3 +1,4 @@
+from flask import Blueprint
 
 from .... import db
 from ....models import User
@@ -12,7 +13,22 @@ class Statistics:
     def __init__(self, user=None):
         self.m_user = user
 
-    @main.route('/most_redeemed', methods='GET')
+    @staticmethod
+    def get_price_list():
+        return db.session.execute('''
+    WITH recent_prices AS (SELECT p.price_id, p.material_id
+                       FROM price_list p
+                                JOIN (SELECT material_id, MAX(date) AS max_date
+                                      FROM price_list
+                                      GROUP BY material_id) m ON p.material_id = m.material_id AND p.date = m.max_date)
+    SELECT price, name
+    FROM recent_prices
+         JOIN price_list ON recent_prices.price_id = price_list.price_id
+         JOIN materials ON recent_prices.material_id = materials.material_id
+    ORDER BY name ASC;
+         ''').fetchall()
+
+    @stats.route('/most_redeemed', methods='GET')
     def most_redeemed_material(self):
         request = db.session.execute('''
         SELECT materials.name, max(count(materials.material_id))
