@@ -105,13 +105,13 @@ def view_dashboard_page():
         .limit(5) \
         .all()
 
-    price_list = {
-        'Noviny': 2.70,
-        'Železo': 4.50,
-        'Měď': 85,
-        'Mosaz': 45,
-        'Olovo': 20
-    }
+    # price_list = {
+    #    'Noviny': 2.70,
+    #    'Železo': 4.50,
+    #    'Měď': 85,
+    #    'Mosaz': 45,
+    #    'Olovo': 20
+    # }
 
     if current_user.is_administrator() or current_user.is_worker():
         purchases = Purchase.query. \

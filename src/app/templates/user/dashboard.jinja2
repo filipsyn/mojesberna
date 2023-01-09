@@ -78,10 +78,10 @@
         <div id="price-list">
             <h2>Ceník</h2>
             <div class="list">
-                {% for material, price in data.price_list.items() %}
+                {% for price in data.price_list %}
                     <div class="list--item">
-                        <div class="list--item--text"><span>{{ material }}</span></div>
-                        <div class="list--item--right"><span>{{ price }}&nbsp;Kč/Kg</span></div>
+                        <div class="list--item--text"><span>{{ price.name }}</span></div>
+                        <div class="list--item--right"><span>{{ price.price }}&nbsp;Kč/Kg</span></div>
                     </div>
                 {% endfor %}
             </div>
