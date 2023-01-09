@@ -38,7 +38,8 @@
                 <ul class="dropdown">
                     <li class="dropdown--item"><a
                             href="{{ url_for('user.view_profile_page', id=current_user.user_id) }}">Profil</a></li>
-                    <li><a href="{{ url_for('user.view_change_personal_page') }}">Nastavení</a></li>
+                    <li><a href="{{ url_for('user.view_change_personal_page',id=current_user.user_id) }}">Nastavení</a>
+                    </li>
                     <li><a href="{{ url_for('auth.logout') }}">Odhlásit se</a></li>
                 </ul>
             </li>
