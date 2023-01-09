@@ -23,7 +23,9 @@
                     {% endfor %}
                 </div>
 
-                <button class="secondary">Přehled žádostí</button>
+                <a href="{{ url_for('admin.view_users_page') }}?filter=waiting">
+                    <button class="secondary">Přehled žádostí</button>
+                </a>
             </div>
         {% else %}
             {# Dashboard for "normal" users #}
