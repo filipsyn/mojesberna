@@ -23,7 +23,9 @@
                     {% endfor %}
                 </div>
 
-                <button class="secondary">Přehled žádostí</button>
+                <a href="{{ url_for('admin.view_users_page') }}?filter=waiting">
+                    <button class="secondary">Přehled žádostí</button>
+                </a>
             </div>
         {% else %}
             {# Dashboard for "normal" users #}
@@ -68,9 +70,13 @@
 
                 {% endfor %}
             </div>
-            <button class="secondary">Přehled výkupů</button>
+            <a href="{{ url_for('purchase.view_purchases_page') }}">
+                <button class="secondary">Přehled výkupů</button>
+            </a>
             {% if current_user.is_administrator() or current_user.is_worker() %}
-                <button class="primary">Přidat výkup</button>
+                <a href="{{ url_for('purchase.view_add_purchase_page') }}">
+                    <button class="primary">Přidat výkup</button>
+                </a>
             {% endif %}
         </div>
 
