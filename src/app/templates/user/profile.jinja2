@@ -48,9 +48,18 @@
 
             </section>
             {% if not (data.user.is_administrator() or data.user.is_worker()) %}
-                {% if data.stat %}
+                {% if data.stats %}
                     <section id="stats">
                         <h2>Statistiky</h2>
+                        <div class="tile-list">
+                            <div class="tile">
+                                <p class="tile--title">K vyplacení</p>
+
+                                <p class="tile--value">{{ data.stats[1] }} Kč</p>
+
+                            </div>
+                        </div>
+
                     </section>
                 {% endif %}
             {% endif %}
