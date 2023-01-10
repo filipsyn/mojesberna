@@ -188,6 +188,9 @@ def view_profile_page(id: int):
 
     found_user = User.query.get_or_404(id)
 
+    s = Statistics(found_user)
+    stats = s.this_months_money()
+
     if found_user.is_administrator() or found_user.is_worker():
         purchases = Purchase.query. \
             filter_by(buying_employee_id=found_user.user_id) \
@@ -200,8 +203,6 @@ def view_profile_page(id: int):
             .order_by(Purchase.purchase_id) \
             .limit(5) \
             .all()
-
-    stats = []
 
     data = dict(user=found_user, purchases=purchases, stats=stats)
     return render_template('user/profile.jinja2', data=data,
