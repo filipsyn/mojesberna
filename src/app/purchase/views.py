@@ -6,6 +6,7 @@ from .. import db
 from ..admin.forms import AddPurchaseForm
 from ..decorators import permission_required
 from ..models import Permission, Purchase
+from ..blueprints.stats.services.statistics import Statistics
 
 purchase = Blueprint('purchase', __name__)
 
@@ -32,10 +33,17 @@ def view_add_purchase_page():
 
     # TODO: Change price
     if form.validate_on_submit():
+
+        pList = Statistics.get_price_list()
+        price = 0
+        for item in pList:
+            if item.name == form.material_id.data.name:
+                price = item.price
+
         new_purchase = Purchase(
             form.weight.data,
             form.description.data,
-            10,
+            price*float(form.weight.data),
             form.material_id.data.material_id,
             current_user.user_id,
             form.selling_customer_id.data.user_id

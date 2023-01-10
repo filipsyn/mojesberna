@@ -9,6 +9,7 @@ from ..blueprints.stats.services.statistics import Statistics
 from ..decorators import permission_required
 from ..models import User, Permission, Purchase, UserStatus, Status, Address
 
+
 user = Blueprint('user', __name__)
 
 
@@ -134,9 +135,11 @@ def view_dashboard_page():
             .order_by(desc(Purchase.date)) \
             .limit(5) \
             .all()
+    stats = Statistics(current_user)
+    total = stats.this_months_money()
 
     data = dict(user_attributes=user_attributes, registration_requests=registration_requests, price_list=price_list,
-                purchases=purchases)
+                purchases=purchases, total=total)
     return render_template("user/dashboard.jinja2", title=f"Přehled uživatele {current_user.login}", data=data)
 
 
